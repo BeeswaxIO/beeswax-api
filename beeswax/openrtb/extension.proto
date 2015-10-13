@@ -1,0 +1,229 @@
+// Copyright 2014, Beeswax.IO Inc.
+// Author: ramr@beeswax.com
+//
+// Beeswax extensions to the OpenRTB spec.
+// These extensions are specific to Beeswax and are not a part of
+// the OpenRTB spec.
+// All OpenRTB message objects are extended using
+// an optional Extension message named 'ext'
+
+syntax = "proto2";
+package openrtb;
+
+option java_package = "com.beeswax.openrtb";
+
+import "beeswax/logs/eventid.proto";
+import "beeswax/openrtb/openrtb_common.proto";
+
+// Next available tag: 5
+// Refer to the documentation of BuyerPricingRule in adx.proto
+// to understand the meaning of these fields.
+message AdvertiserInfo {
+  repeated int64 included_advertisers = 1;
+  repeated int64 excluded_advertisers = 2;
+  optional bool blocked = 3;
+  // CPM micros in buyer currency i.e. USD
+  optional int64 minimum_cpm_micros = 4;
+}
+
+// Next available tag: 7
+message BidRequestExtensions {
+  optional Enums.Inventory.Source inventory_source = 1;
+  optional logs.EventId auction_id = 2;
+
+  // This field is used for Geo targeting.
+  // It is populated by the LocalAugmentor in Stinger.
+  optional TargetingGeoExtension targeting_geo = 3;
+
+  // time_of_week is a stinger calculated field used for targetting 
+  optional int32 time_of_week = 4;
+
+  // Used to identify Stinger.
+  optional string buzz_key = 5;
+
+  extensions 1000 to max;
+}
+ 
+
+// Next available tag: 6
+message ImpressionExtensions {
+  optional Enums.Inventory.PlacementType placement_type = 2;
+  optional Enums.Inventory.EnvironmentType environment_type = 3;
+  repeated string placements = 5;
+  optional AdxImpressionExtension adx = 1;
+  repeated AdvertiserInfo advertiser_info = 4;
+
+  extensions 1000 to max;
+}
+
+message BannerExtensions {
+  extensions 1000 to max;
+}
+
+
+// Next available tag: 5
+message VideoExtensions {
+  // player_size can be one of ["S", "M"., "L", "XL", "NA"].
+  // Computed by the LocalAugmentor in Stinger.
+  optional string player_size = 1;
+
+  // Creative attributes that are required by the request.
+  // For e.g. Adx requests that require skippable ads are modeled
+  // as having required_attr = AD_CAN_BE_SKIPPED
+  // Despite the type being an integer, the values in this field
+  // should be a valid enum from openrtb::CreativeAttribute
+  repeated int32 required_attrs = 2;
+
+  enum PlacementType {
+    IN_BANNER = 0;
+    IN_STREAM = 1;
+  }
+  optional PlacementType placement_type = 3 [default = IN_STREAM];
+
+  // Number of seconds into the video ad when the skip button appears.
+  // This is only applicable to skippable video ads.
+  // Some inventory sources such as Google Ad Exchange do not specify
+  // this skip offset explicity in the bid request.
+  // For such sources, skip_offset of 5 seconds is a safe default.
+  optional int32 skip_offset = 4 [default = 5];
+
+  extensions 1000 to max;
+}
+
+message NativeExtensions {
+  extensions 1000 to max;
+}
+
+message PMPExtensions {
+  extensions 1000 to max;
+}
+
+message DirectDealExtensions {
+  extensions 1000 to max;
+}
+
+message SiteExtensions {
+  repeated int32 domain_list_ids = 1;
+  extensions 1000 to max;
+}
+
+message AppExtensions {
+  extensions 1000 to max;
+}
+
+message ContentExtensions {
+  extensions 1000 to max;
+}
+
+
+message ProducerExtensions {
+  extensions 1000 to max;
+}
+
+// Next available tag: 5
+message DeviceExtensions {
+  // LiveRail
+  // Will contain the Apple or Google IDFA value in clear text.
+  // Only supported in iOS 6 or above and Android version Kitkat or newer.
+  optional string idfa = 1;
+
+  // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
+  // Computed by the LocalAugmentor in Stinger.
+  optional string device_screen_size = 2 [default = "NA"];
+
+  // Computed by the LocalAugmentor in Stinger.
+  optional string browser = 3 [default = "-1"];
+
+  // Computed by the LocalAugmentor in Stinger.
+  optional string browser_version = 4 [default = "-1"];
+  
+  extensions 1000 to max;
+}
+
+// Next available tag: 3
+message UserExtensions {
+  // This field identifies the user of the bid request. It will be used 
+  // for user segment lookup and frequency cap.
+  // For WEB request, its value is bito_id (user.id).
+  // For APP request, its value is the first field which has value
+  // in the following order:
+  // device.ifa -> device.dpidsha1 -> device.dpidmd5
+  // And the value is prefixed with the names in Enum.Bidrequest.User.UserIdType
+  // (Except bito_id - we still use bito as prefix)
+  optional string user_id = 1;
+  optional Enums.BidRequest.User.UserIdType user_id_type = 2;
+  extensions 1000 to max;
+}
+
+message PublisherExtensions {
+  extensions 1000 to max;
+}
+
+// Next available tag: 2
+message GeoExtensions {  
+  optional AdxGeoExtension adx = 1;
+  extensions 1000 to max;
+}
+
+message DataExtensions {
+  extensions 1000 to max;
+}
+
+message SegmentExtensions {
+  extensions 1000 to max;
+}
+
+message RegulationsExtensions {
+  extensions 1000 to max;
+}
+
+message BidResponseExtensions {
+  extensions 1000 to max;
+}
+
+message SeatBidExtensions {
+  extensions 1000 to max;
+}
+
+// Next available tag: 11
+message BidExtensions {
+  extensions 1000 to max;
+}
+
+
+// This field is used for Geo targeting.
+// It is populated by the LocalAugmentor in Stinger.
+message TargetingGeoExtension {
+  // Country using ISO-3166-1 Alpha-3.
+  optional string country = 1 [default = "000"];
+  // Region using ISO 3166-2
+  optional string region = 2 [default = "000/00"];
+  // City using United Nations Code for Trade and Transport Locations
+  // (http://www.unece.org/cefact/locode/service/location.htm).
+  optional string city = 3 [default = "-1"];
+  // Zip/postal code.
+  optional string zip = 4 [default = "-1"];
+  optional string metro = 5 [default = "000"];
+}
+
+
+// Exchange specific extensions.
+// 1. Google Ad Exchange
+message AdxImpressionExtension {
+  optional int32 adslot_id = 1;
+}
+
+message AdxGeoExtension {
+  optional int32 dma_region_code = 1;
+  // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
+  optional bytes hyperlocal_set = 2;
+}
+
+// 2. Liverail
+message LiveRailDeviceExtension {
+  // Will contain the Apple or Google IDFA value in clear text.
+  // Only supported in iOS 6 or above and Android version Kitkat or newer.
+  required string idfa = 1;
+
+}
+

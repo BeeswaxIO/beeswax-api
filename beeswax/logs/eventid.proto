@@ -1,0 +1,23 @@
+// Copyright 2015, Beeswax.IO Inc.
+// Author: ramr@beeswax.com
+//
+// Protocol buffer defining a unique EventId
+
+syntax = "proto2";
+package logs;
+
+option java_package = "com.beeswax.logs";
+
+message EventId {
+  optional uint32 hostid = 1;    // 32 bits of md5 hash
+  optional uint32 tid = 2;       // Thread Id from gettid()
+  optional uint64 timestamp = 3;
+}
+
+// Next Tag: 5
+message AdGroupId {
+  optional string buzz_key = 1;
+  optional uint64 accountid = 2;
+  optional uint64 campaignid = 3;
+  optional uint64 lineitemid = 4;
+}

@@ -1,0 +1,67 @@
+// Copyright 2015, Beeswax.IO Inc.
+//
+// Adcandidate represents a line item (along with its attributes) that
+// is eligible to serve on a given bid request.
+// Stinger determines the eligible line items and creatives and generates
+// the adcandidate.
+
+syntax = "proto2";
+package bid;
+
+option java_package = "com.beeswax.bid";
+
+// Bidding agents can implement flexible bidding strategies.
+// A bidding strategy consists of attributes that are used by the bidding agent
+// at run time to compute the bid.
+// CPM and CPC bidding strategy are currently available.
+//
+// All price information is represented as micros which is the actual value
+// multiplied by 1 million i.e. 10e+6.
+// Unless otherwise specified, the currency is USD.
+//
+// Next Tag: 3
+message Bidding {
+  // CPM: Always bid a flat price on all matched requests.
+  message CpmStrategy {
+    optional uint64 flat_bid_micros = 1;
+  }
+  // CPC: Optimize towards a cost per click goal.
+  message CpcStrategy {
+    optional uint64 max_bid_micros = 1;
+    optional uint64 ecpc_target_micros = 2;
+  }
+
+  // Only one of the strategies will be present.
+  optional CpmStrategy cpm_strategy = 1;
+  optional CpcStrategy cpc_strategy = 2;
+
+  // Following fields are only available post auction through the
+  // Event stream API.
+
+  // The final bid price submitted by the bidding agent.
+  optional uint64 bid_price_micros = 3;
+}
+
+// Pacing determines the rate of spend of the budget for a line item.
+// When pace_delivery is set to true, the bidding agent is expected to pace
+// the spend of the line item uniformly over its life time.
+//
+// Next Tag: 2
+message Pacing {
+  optional bool pace_delivery = 1 [default = false];
+}
+
+
+// Adcandidate represents an eligible line item and its attributes.
+// Stinger determines the eligible line items for a given request.
+//
+// Next Tag: 8
+message Adcandidate {
+  optional uint64 line_item_id = 1;
+  optional uint64 campaign_id = 5;
+  optional uint64 account_id = 6;
+  optional string buzz_key = 7;
+  repeated uint64 creative_ids = 2;
+  optional Bidding bidding = 3;
+  optional Pacing pacing = 4;
+}

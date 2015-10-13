@@ -1,0 +1,38 @@
+// Copyright 2015, Beeswax.IO Inc.
+//
+// Beeswax bidder API.
+
+syntax="proto2";
+package bid;
+
+option java_package = "com.beeswax.bid";
+
+import "beeswax/bid/adcandidate.proto";
+import "beeswax/openrtb/openrtb.proto";
+
+// Stinger will issue a HTTP request to the bid agent.
+// The following message will be present in the body of the HTTP request.
+message BidAgentRequest {
+  // Fully augmented bid request.
+  optional openrtb.BidRequest bid_request = 1;
+  // Adcandidate is a wrapper around a line item and creatives.
+  // Stinger determines all the adcandidates that are eligible to serve for
+  // the given bid request.
+  repeated Adcandidate adcandidates = 2;
+}
+
+// Bid agent will respond to Stinger with a HTTP response.
+// The following message will be present in the body of the HTTP response.
+// BidAgent can choose not to bid at all in which case it must still
+// respond to the HTTP request with a 204 status code.
+message BidAgentResponse {
+  // Bid agent needs to select a set of Adcandidates from the request
+  // and for each Adcandidate, submit a bid containing the following
+  // information.
+  message Bid {
+    optional uint64 line_item_id = 1;
+    optional uint64 bid_price_micros_usd = 2 [default = 0];
+    optional uint64 creative_id = 3;
+  }
+  repeated Bid bids = 1;
+}
