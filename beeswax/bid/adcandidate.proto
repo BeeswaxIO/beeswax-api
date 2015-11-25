@@ -9,7 +9,7 @@ syntax = "proto2";
 package bid;
 
 option java_package = "com.beeswax.bid";
-
+option java_outer_classname = "AdcandidateProtos";
 // Bidding agents can implement flexible bidding strategies.
 // A bidding strategy consists of attributes that are used by the bidding agent
 // at run time to compute the bid.
