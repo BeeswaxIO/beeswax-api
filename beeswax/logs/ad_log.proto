@@ -1,0 +1,104 @@
+// Copyright 2015, Beeswax.IO Inc.
+//
+// Protocol buffer defining ad log objects such as
+// Bids, Impressions, Clicks, Conversions etc.
+
+// The "auctionid" uniquely identifies each bid request in the system and
+// should be used to join with other events in the system like RequestLogMessage,
+// ImpressionLogMessage, ClickLogMessage, ActivityLogMessage, etc.
+
+// The "user_id" uniquely identifies the user in the system and should be used
+// for User-level targeting, modeling, etc.
+
+syntax = "proto2";
+package logs;
+
+option java_package = "com.beeswax.logs";
+
+import "beeswax/bid/adcandidate.proto";
+import "beeswax/logs/eventid.proto";
+import "beeswax/openrtb/openrtb.proto";
+
+// Next Tag: 5
+// RequestLogMessage is created for every incoming bid request from the exchange.
+message RequestLogMessage {
+  optional EventId auctionid = 1;
+  optional openrtb.Inventory.Source inventory_source = 2;
+  optional openrtb.BidRequest bidrequest = 3;
+  // All the adcandidates that matched targeting, creative attribute
+  // and budget filtering and finally sent to the exchange.
+  repeated bid.Adcandidate adcandidates = 4;
+}
+
+// Next Tag: 8
+// ImpressionLogMessage is created for every won auction.
+message ImpressionLogMessage {
+  optional EventId auctionid = 1;
+  optional AdGroupId adgroupid = 2;
+
+  // Represents the bid price in the auction.
+  optional uint64 bid_price_micros_usd = 3;
+  optional openrtb.Enums.Inventory.Source inventory_source = 4;
+  optional string user_id = 5;
+
+  // Represents the winning price in the auction.
+  optional uint64 win_price_micros_usd = 6;
+  optional uint64 rx_timestamp_usecs = 7;
+}
+
+// Next Tag: 7
+// ClickLogMessage is created for clicks received.
+message ClickLogMessage {
+  optional EventId auctionid = 1;
+  optional AdGroupId adgroupid = 2;
+  optional openrtb.Enums.Inventory.Source inventory_source = 3;
+  optional string user_id = 4;
+
+  // Represents optional data sent by the customer.
+  optional string user_data = 5;
+  optional uint64 rx_timestamp_usecs = 6;
+}
+
+// Next Tag: 8
+// ActivityLogMessage is created for video and activity events
+// like video "START", "SKIP", etc.
+message ActivityLogMessage {
+  optional EventId auctionid = 1;
+  optional AdGroupId adgroupid = 2;
+  optional openrtb.Enums.Inventory.Source inventory_source = 3;
+  enum Type {
+    START = 1;        // Video Playback Start
+    Q1 = 2;           // Video Playback 25% complete
+    MID = 3;          // Video Playback 50% complete
+    Q3 = 4;           // Video Playback 75% complete
+    COMPLETE = 5;     // Video Playback complete
+    SKIP = 6;         // Video Playback skipped
+    MUTE = 7;         // Video Playback muted
+    UNMUTE  = 8;      // Video Playback unmuted
+    PAUSE = 9;        // Video Playback paused
+    RESUME = 10;      // Video Playback resumed
+    FULLSCREEN = 11;  // Video Playback full screen
+    CLOSE = 12;       // Video Playback closed
+    COMPANION_VIEW = 13; // Companion view
+    COMPANION_CLICK = 14;  // Companion click
+  }
+  optional Type type = 4;
+  optional string user_id = 5;
+
+  // Represents optional data sent by the customer.
+  optional string user_data = 6;
+  optional uint64 rx_timestamp_usecs = 7;
+}
+
+// Next Tag: 5
+// AdLogMessage serves as a wrapper type and holds all ad log objects.
+// This message gets logged to the AWS Kinesis streams.
+
+// Note: BeeswaxIO DOES NOT aggregate the ad log objects on same "auction_id";
+// All events are logged to Kinesis as and when they arrive in the system.
+message AdLogMessage {
+  optional RequestLogMessage request = 1;
+  optional ImpressionLogMessage impression = 2;
+  optional ClickLogMessage click = 3;
+  repeated ActivityLogMessage activity = 4;
+}
