@@ -35,15 +35,38 @@ message BidRequestExtensions {
   // It is populated by the LocalAugmentor in Stinger.
   optional TargetingGeoExtension targeting_geo = 3;
 
-  // time_of_week is a stinger calculated field used for targetting 
+  // time_of_week is a stinger calculated field used for targetting
   optional int32 time_of_week = 4;
 
   // Used to identify Stinger.
   optional string buzz_key = 5;
 
+  // Next available tag: 3
+  message AugmentorData {
+
+    // Next available tag: 3
+    // Segment along with augmentor's ID allows augmentor based targeting
+    message Segment {
+      // ID of a augmentor’s segment
+      optional string id = 1;
+
+      // String representing the value of the segment.
+      optional string value = 2;
+    }
+
+    // Augmentor identifier, used for targeting
+    optional string id = 1;
+
+    // Array of Augmentor segments
+    repeated Segment segment = 2;
+  }
+
+  // This field is used by Augmentors like ManagedListAugmentor
+  repeated AugmentorData augmentor_data = 6;
+
   extensions 1000 to max;
 }
- 
+
 
 // Next available tag: 6
 message ImpressionExtensions {
@@ -56,7 +79,10 @@ message ImpressionExtensions {
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message BannerExtensions {
+  // Blocked ApiFrameworks
+  repeated Enums.BidRequest.Impression.ApiFramework bapis = 1;
   extensions 1000 to max;
 }
 
@@ -121,12 +147,8 @@ message ProducerExtensions {
 }
 
 // Next available tag: 5
+// Tag 1: idfa - Deprecated. Do not resuse.
 message DeviceExtensions {
-  // LiveRail
-  // Will contain the Apple or Google IDFA value in clear text.
-  // Only supported in iOS 6 or above and Android version Kitkat or newer.
-  optional string idfa = 1;
-
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
   // Computed by the LocalAugmentor in Stinger.
   optional string device_screen_size = 2 [default = "NA"];
@@ -136,13 +158,13 @@ message DeviceExtensions {
 
   // Computed by the LocalAugmentor in Stinger.
   optional string browser_version = 4 [default = "-1"];
-  
+
   extensions 1000 to max;
 }
 
 // Next available tag: 3
 message UserExtensions {
-  // This field identifies the user of the bid request. It will be used 
+  // This field identifies the user of the bid request. It will be used
   // for user segment lookup and frequency cap.
   // For WEB request, its value is bito_id (user.id).
   // For APP request, its value is the first field which has value
@@ -160,7 +182,7 @@ message PublisherExtensions {
 }
 
 // Next available tag: 2
-message GeoExtensions {  
+message GeoExtensions {
   optional AdxGeoExtension adx = 1;
   extensions 1000 to max;
 }
@@ -204,6 +226,9 @@ message TargetingGeoExtension {
   // Zip/postal code.
   optional string zip = 4 [default = "-1"];
   optional string metro = 5 [default = "000"];
+  optional bool lat_long_present = 6 [default = false];
+  optional double lat = 7;
+  optional double lon = 8;
 }
 
 
@@ -218,12 +243,3 @@ message AdxGeoExtension {
   // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
   optional bytes hyperlocal_set = 2;
 }
-
-// 2. Liverail
-message LiveRailDeviceExtension {
-  // Will contain the Apple or Google IDFA value in clear text.
-  // Only supported in iOS 6 or above and Android version Kitkat or newer.
-  required string idfa = 1;
-
-}
-
