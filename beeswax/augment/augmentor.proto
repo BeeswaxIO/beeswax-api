@@ -1,0 +1,27 @@
+// Copyright 2016, Beeswax.IO Inc.
+//
+// Beeswax augmentor API.
+
+syntax="proto2";
+package augment;
+
+option java_package = "com.beeswax.augment";
+
+import "beeswax/openrtb/openrtb.proto";
+
+// Stinger will issue a HTTP request to the augmentor.
+// The following message will be present in the body of the HTTP request.
+message AugmentorRequest {
+  // Bid request received from the exchange after it has been processed by Beeswax.
+  optional openrtb.BidRequest bid_request = 1;
+}
+
+// Augmentor will respond to Stinger with a HTTP response.
+// The following message will be present in the body of the HTTP response.
+// Augmentor can choose not to bid at all in which case it must still
+// respond to the HTTP request with a 204 status code.
+message AugmentorResponse {
+  // For targeting to work with the segment names returned by the augmentor, it is necessary
+  // to register the segment names with Beeswax via the Buzz Segments API.
+  repeated openrtb.BidRequest.Data.Segment segments = 1;
+}

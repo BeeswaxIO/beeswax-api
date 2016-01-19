@@ -26,7 +26,7 @@ message AdvertiserInfo {
   optional int64 minimum_cpm_micros = 4;
 }
 
-// Next available tag: 7
+// Next available tag: 8
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional logs.EventId auction_id = 2;
@@ -64,17 +64,26 @@ message BidRequestExtensions {
   // This field is used by Augmentors like ManagedListAugmentor
   repeated AugmentorData augmentor_data = 6;
 
+  // Exchange specific extensions
+  optional AppNexusBidRequestExtension appnexus = 7;
+
   extensions 1000 to max;
 }
 
 
-// Next available tag: 6
+// Next available tag: 7
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
   repeated string placements = 5;
-  optional AdxImpressionExtension adx = 1;
   repeated AdvertiserInfo advertiser_info = 4;
+
+  // Specifies the probability that the impression will be viewable by the user,
+  // based on historical data.
+  optional float predicted_view_rate = 6;
+
+  // Exchange specific extensions
+  optional AdxImpressionExtension adx = 1;
 
   extensions 1000 to max;
 }
@@ -242,4 +251,11 @@ message AdxGeoExtension {
   optional int32 dma_region_code = 1;
   // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
   optional bytes hyperlocal_set = 2;
+}
+
+// 2. AppNexus Exchange
+// Next available tag: 2
+message AppNexusBidRequestExtension {
+  // Specifies the ID of the member selling the inventory.
+  optional int32 seller_member_id = 1;
 }
