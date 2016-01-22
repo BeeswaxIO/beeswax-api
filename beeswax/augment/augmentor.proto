@@ -20,8 +20,23 @@ message AugmentorRequest {
 // The following message will be present in the body of the HTTP response.
 // Augmentor can choose not to bid at all in which case it must still
 // respond to the HTTP request with a 204 status code.
+//
+// Also custom bidding agents can receive this data through the augmentor_data field in
+// the BidRequestExtension.
 message AugmentorResponse {
-  // For targeting to work with the segment names returned by the augmentor, it is necessary
-  // to register the segment names with Beeswax via the Buzz Segments API.
-  repeated openrtb.BidRequest.Data.Segment segments = 1;
+
+  message Segment {
+    // The Id of an augmentor segment.
+    // This field is primarily used for line item targeting.
+    // For targeting to work with the segment ids, it is necessary
+    // to register the segment ids with Beeswax via the Buzz Segments API.
+    optional string id = 1;
+
+    // This field can be used to pass additional information about the segment
+    // that Stinger will forward to the bidding agent.
+    optional string value = 2;
+  }
+
+  // Array of Augmentor segments
+  repeated Segment segments = 1;
 }
