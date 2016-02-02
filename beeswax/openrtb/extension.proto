@@ -138,7 +138,6 @@ message DirectDealExtensions {
 }
 
 message SiteExtensions {
-  repeated int32 domain_list_ids = 1;
   extensions 1000 to max;
 }
 
