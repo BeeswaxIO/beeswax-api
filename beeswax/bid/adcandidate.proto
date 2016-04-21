@@ -55,11 +55,12 @@ message Pacing {
 // Adcandidate represents an eligible line item and its attributes.
 // Stinger determines the eligible line items for a given request.
 //
-// Next Tag: 8
+// Next Tag: 9
 message Adcandidate {
   optional uint64 line_item_id = 1;
   optional uint64 campaign_id = 5;
   optional uint64 account_id = 6;
+  optional uint64 advertiser_id = 8;
   optional string buzz_key = 7;
   repeated uint64 creative_ids = 2;
   optional Bidding bidding = 3;
