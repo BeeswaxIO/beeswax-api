@@ -26,6 +26,22 @@ message BidAgentRequest {
 // BidAgent can choose not to bid at all in which case it must still
 // respond to the HTTP request with a 204 status code.
 message BidAgentResponse {
+  // Next Id: 6
+  message ModelParams {
+    optional string key = 1;
+    oneof value_oneof {
+      string string_value = 2;
+      int32 int_value = 3;
+      double double_value = 4;
+      bool bool_value = 5;
+    }
+  }
+  // Next Id: 3
+  message ModelData {
+    optional string model_id = 1;
+    repeated ModelParams model_params = 2;
+  }
+
   // Bid agent needs to select a set of Adcandidates from the request
   // and for each Adcandidate, submit a bid containing the following
   // information.
@@ -33,6 +49,7 @@ message BidAgentResponse {
     optional uint64 line_item_id = 1;
     optional uint64 bid_price_micros_usd = 2 [default = 0];
     optional uint64 creative_id = 3;
+    optional ModelData model_data = 4;
   }
   repeated Bid bids = 1;
 }
