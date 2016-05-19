@@ -403,8 +403,9 @@ enum ContentCategory {
   IAB26_4 = 392;   // Copyright Infringement
 }
 
-// OpenRTB 6.3: creative attributes that can describe an ad being served
+// creative attributes that can describe an ad being served
 // or serve as restrictions of thereof.
+// Values less than 100 corresponds to CreativeAttribute in OpenRTB(v2.2) 6.3.
 enum CreativeAttribute {
   AUDIO_AUTO_PLAY = 1;
   AUDIO_USER_INITIATED = 2;
@@ -422,6 +423,13 @@ enum CreativeAttribute {
   WINDOWS_DIALOG_OR_ALERT_STYLE = 14;
   HAS_AUDIO_ON_OFF_BUTTON = 15;
   AD_CAN_BE_SKIPPED = 16;
+  AD_HAS_THUMBNAIL = 101;  // Creative needs to have a "thumbnail_url"
+  AD_SIZE_IS_FLEXIBLE = 102;  // Exact size match may be avoided during serving
+  AD_CAN_EXPAND_LEFT = 103;
+  AD_CAN_EXPAND_RIGHT = 104;
+  AD_CAN_EXPAND_UP = 105;
+  AD_CAN_EXPAND_DOWN = 106;
+  AD_CAN_EXPAND_FULLSCREEN = 107;
 }
 
 // Boolean-like enumeration used in various attributes.
@@ -675,6 +683,9 @@ message Enums {
       ADAPTV          =  7;
       MILLENNIAL      =  8;
       APPNEXUS        =  9;
+      OPENX           =  10;
+      PUBMATIC        =  11;
+      OPERA_MEDIA     =  12;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -683,6 +694,7 @@ message Enums {
       BANNER                 =  0;
       VIDEO                  =  1;
       NATIVE                 =  2;
+      BANNER_AND_VIDEO       =  3;
     }
 
     // Environment type of the bid request.
