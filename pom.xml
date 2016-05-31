@@ -23,7 +23,7 @@
   </organization>
 
   <scm>
-    <url>http://svn.apache.org/viewvc/maven</url>
+    <url>https://github.com/BeeswaxIO/beeswax-api</url>
   </scm>
 
   <issueManagement>
