@@ -31,7 +31,7 @@ message RequestLogMessage {
   repeated bid.Adcandidate adcandidates = 4;
 }
 
-// Next Tag: 8
+// Next Tag: 9
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional EventId auctionid = 1;
@@ -45,6 +45,8 @@ message ImpressionLogMessage {
   // Represents the winning price in the auction.
   optional uint64 win_price_micros_usd = 6;
   optional uint64 rx_timestamp_usecs = 7;
+
+  optional openrtb.Enums.Inventory.DataCenter data_center = 8;
 }
 
 // Next Tag: 7
