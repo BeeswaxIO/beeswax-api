@@ -31,13 +31,14 @@ message RequestLogMessage {
   repeated bid.Adcandidate adcandidates = 4;
 }
 
-// Next Tag: 9
+// Next Tag: 10
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional EventId auctionid = 1;
   optional AdGroupId adgroupid = 2;
-
-  // Represents the bid price in the auction.
+  // Exchange bid price is the final price submitted to exchange.
+  optional uint64 exchange_bid_price_micros_usd = 9;
+  // Represents the bid price obtained from the bid agent.
   optional uint64 bid_price_micros_usd = 3;
   optional openrtb.Enums.Inventory.Source inventory_source = 4;
   optional string user_id = 5;
