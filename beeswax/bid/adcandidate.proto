@@ -9,17 +9,17 @@ syntax = "proto2";
 package bid;
 
 option java_package = "com.beeswax.bid";
-option java_outer_classname = "AdcandidateProtos";
+
 // Bidding agents can implement flexible bidding strategies.
 // A bidding strategy consists of attributes that are used by the bidding agent
 // at run time to compute the bid.
-// CPM and CPC bidding strategy are currently available.
+// CPM, CPC and custom bidding strategies are currently available.
 //
 // All price information is represented as micros which is the actual value
 // multiplied by 1 million i.e. 10e+6.
 // Unless otherwise specified, the currency is USD.
 //
-// Next Tag: 3
+// Next Tag: 5
 message Bidding {
   // CPM: Always bid a flat price on all matched requests.
   message CpmStrategy {
@@ -30,10 +30,25 @@ message Bidding {
     optional uint64 max_bid_micros = 1;
     optional uint64 ecpc_target_micros = 2;
   }
+  // Custom strategy is defined using Buzz API.
+  // Customers can define many different strategies and identify them using
+  // a name.
+  // Further, customers can associate multiple key, values with a strategy
+  // that are made available in the matching Adcandidate.
+  // Customers can use the key,values to implement their own optimization.
+  message CustomStrategy {
+    optional string name = 1;
+    message Params {
+      optional string key = 1;
+      optional string value = 2;
+    }
+    repeated Params custom_params = 2;
+  }
 
   // Only one of the strategies will be present.
   optional CpmStrategy cpm_strategy = 1;
   optional CpcStrategy cpc_strategy = 2;
+  optional CustomStrategy custom_strategy = 4;
 
   // Following fields are only available post auction through the
   // Event stream API.
@@ -55,12 +70,13 @@ message Pacing {
 // Adcandidate represents an eligible line item and its attributes.
 // Stinger determines the eligible line items for a given request.
 //
-// Next Tag: 9
+// Next Tag: 10
 message Adcandidate {
   optional uint64 line_item_id = 1;
   optional uint64 campaign_id = 5;
   optional uint64 account_id = 6;
   optional uint64 advertiser_id = 8;
+  optional string line_item_alternative_id = 9;
   optional string buzz_key = 7;
   repeated uint64 creative_ids = 2;
   optional Bidding bidding = 3;
