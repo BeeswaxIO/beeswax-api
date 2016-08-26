@@ -8,6 +8,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option cc_enable_arenas = true;
 
 import "beeswax/openrtb/extension.proto";
 import "beeswax/openrtb/openrtb_common.proto";
@@ -278,15 +279,15 @@ message BidRequest {
       /*
        * Indicates whether the ad impression is linear or non-linear.
        */
-      required Enums.BidRequest.Impression.Video.Linearity linearity = 2;
+      optional Enums.BidRequest.Impression.Video.Linearity linearity = 2 [default = LINEAR];
       /*
        * Minimum video ad duration in seconds.
        */
-      required int32 minduration = 3;
+      optional int32 minduration = 3;
       /*
        * Maximum video ad duration in seconds.
        */
-      required int32 maxduration = 4;
+      optional int32 maxduration = 4;
       /*
        * Video bid response protocols.
        */
@@ -365,7 +366,7 @@ message BidRequest {
       optional VideoExtensions ext = 1000;
     }
 
-    
+
     /**
      * OpenRTB 3.2.5: This object represents a native type impression.
      * Native ad units are intended to blend seamlessly into the surrounding content
@@ -404,7 +405,7 @@ message BidRequest {
        * Blocked creative attributes. Refer to List 5.3.
        */
       repeated CreativeAttribute battr = 4 [packed = true];
-      
+
       optional NativeExtensions ext = 1000;
     }
 
@@ -796,7 +797,7 @@ message BidRequest {
      * Hardware version of the device (e.g., "5S" for iPhone 5S).
      */
     optional string hwv = 21;
-    /* 
+    /*
      * Physical width of the screen in pixels.
      */
     optional int32 w = 22;
@@ -807,11 +808,11 @@ message BidRequest {
     /*
      * Screen size as pixels per linear inch.
      */
-    optional int32 ppi = 24; 
+    optional int32 ppi = 24;
     /*
      * The ratio of physical pixels to device independent pixels.
      */
-    optional double pxratio = 25;   
+    optional double pxratio = 25;
     /*
      * ID sanctioned for advertiser use in the clear (i.e., not hashed).
      */
@@ -824,7 +825,7 @@ message BidRequest {
      * MAC address of the device; hashed via MD5.
      */
     optional string macmd5 = 28;
-    
+
     optional DeviceExtensions ext = 1000;
   }
 
@@ -927,7 +928,7 @@ message BidRequest {
      * URL of the content producer.
      */
     optional string domain = 4;
-    
+
     optional ProducerExtensions ext = 1000;
   }
 
@@ -1030,7 +1031,7 @@ message BidRequest {
        * For example for gender, “male”, or “female”, for age, “30-40”).
        */
       optional string value = 3;
-      
+
       optional SegmentExtensions ext = 1000;
     }
   }
@@ -1045,7 +1046,7 @@ message BidRequest {
      * established by the USA FTC.
      */
     optional Flag coppa = 1;
-    
+
     optional RegulationsExtensions ext = 1000;
   }
 }
@@ -1156,7 +1157,7 @@ message BidResponse {
        * <p>
        * Open Bidder macros are supported for this field.
        */
-      optional string adm = 6;      
+      optional string adm = 6;
       /*
        * Native ad response.
        * You can only set one of adm and adm_native; either will generate the "adm" field in JSON.

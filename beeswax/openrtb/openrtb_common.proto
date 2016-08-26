@@ -633,7 +633,7 @@ message Enums {
 
     message User {
       // UserID types.
-      // This enum should be in sync with
+      // The enum value less then 100 should be in sync with
       // buzz/mysql/data/version 0.5/insert_segment_user_type.sql
       enum UserIdType {
         UNKNOWN = -1;
@@ -645,6 +645,9 @@ message Enums {
         AD_ID = 5;
         AD_ID_MD5 = 6;
         AD_ID_SHA1 = 7;
+        OTHER_MOBILE_ID = 8; // The serving system will use this type when the mobile OS is unknown.
+                             // The request will be processed in the same way as other
+                             // mobile ids. (Prefix with `mid.` and do frequency cap, user_data augmentation, etc)
       }
     }
   }
@@ -670,7 +673,7 @@ message Enums {
   // Openrtb standard.
   message Inventory {
     // Exchange Id.
-    // These values are obtained from inventory_source table in Buzz Db.
+    // These values are obtained from inventory_source table in fes_buzz_db.
     enum Source {
       UNKNOWN_SOURCE  = -1;
       GOOGLE_ADX      =  0;
@@ -687,6 +690,9 @@ message Enums {
       PUBMATIC        =  11;
       OPERA_MEDIA     =  12;
       RTK             =  13;
+      INNERACTIVE     =  14;
+      TREMOR          =  15;
+      INDEX_EXCHANGE  =  16;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -705,10 +711,27 @@ message Enums {
       APP                      =  1;
     }
 
+    // DataCenter, a.k.a. AWS region.
     enum DataCenter {
+      // FIXME(ronr) Deprecating "UNKNOWN" due to ambiguity [2016-08-19]
+      option allow_alias = true;
       UNKNOWN = 0;
+      UNKNOWN_DATA_CENTER = 0;
       US_EAST_1 = 1;
       US_WEST_2 = 2;
+      EU_WEST_1 = 3;
+    }
+
+    // Continents are nonoverlapping geographic areas. Continent-to-DataCenter
+    // is one-to-many. DataCenter-to-Continent is one-to-one.
+    // For example, US-EAST-1 and US-WEST-2 are in NAM, and EU_WEST_1 is in EMEA.
+    // The data centers within a continent share things like budget and user data,
+    // neither of which crosses continent boundaries.
+    enum Continent {
+      // Keep continents in sync with Buzz
+      UNKNOWN_CONTINENT = 0;
+      NAM = 1; // North America
+      EMEA = 2; // Europe, Middle East, Asia
     }
   }
 }

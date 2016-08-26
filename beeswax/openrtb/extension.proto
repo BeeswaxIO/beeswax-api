@@ -11,6 +11,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option cc_enable_arenas = true;
 
 import "beeswax/logs/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
@@ -71,7 +72,7 @@ message BidRequestExtensions {
 }
 
 
-// Next available tag: 7
+// Next available tag: 8
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
@@ -82,16 +83,26 @@ message ImpressionExtensions {
   // based on historical data.
   optional float predicted_view_rate = 6;
 
+  // Seat ids that the exchange considers eligible to serve on this impression.
+  // This feature is currently only supported by Adx.
+  repeated string eligible_seat_ids = 7;
+
   // Exchange specific extensions
   optional AdxImpressionExtension adx = 1;
 
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message BannerExtensions {
   // Blocked ApiFrameworks
   repeated Enums.BidRequest.Impression.ApiFramework bapis = 1;
+
+  // Creative attributes that are required by the request.
+  // For e.g. MoPub request have "AD_HAS_THUMBNAIL" for the creative
+  //          to be returned in the response
+  repeated CreativeAttribute required_attrs = 2;
+
   extensions 1000 to max;
 }
 
@@ -105,9 +116,7 @@ message VideoExtensions {
   // Creative attributes that are required by the request.
   // For e.g. Adx requests that require skippable ads are modeled
   // as having required_attr = AD_CAN_BE_SKIPPED
-  // Despite the type being an integer, the values in this field
-  // should be a valid enum from openrtb::CreativeAttribute
-  repeated int32 required_attrs = 2;
+  repeated CreativeAttribute required_attrs = 2;
 
   enum PlacementType {
     IN_BANNER = 0;
@@ -195,7 +204,9 @@ message GeoExtensions {
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message DataExtensions {
+  optional bool beeswax_augmented = 1 [default = false];
   extensions 1000 to max;
 }
 
@@ -237,6 +248,7 @@ message TargetingGeoExtension {
   optional bool lat_long_present = 6 [default = false];
   optional double lat = 7;
   optional double lon = 8;
+  optional Enums.BidRequest.Geo.LocationType type = 9;
 }
 
 
