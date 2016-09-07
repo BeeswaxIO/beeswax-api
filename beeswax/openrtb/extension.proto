@@ -13,7 +13,7 @@ package openrtb;
 option java_package = "com.beeswax.openrtb";
 option cc_enable_arenas = true;
 
-import "beeswax/logs/eventid.proto";
+import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
 
 // Next available tag: 5
@@ -30,7 +30,7 @@ message AdvertiserInfo {
 // Next available tag: 8
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
-  optional logs.EventId auction_id = 2;
+  optional base.EventId auction_id = 2;
 
   // This field is used for Geo targeting.
   // It is populated by the LocalAugmentor in Stinger.
@@ -81,7 +81,8 @@ message ImpressionExtensions {
 
   // Specifies the probability that the impression will be viewable by the user,
   // based on historical data.
-  optional float predicted_view_rate = 6;
+  // Currently populated for AppNexus and AdX only
+  optional float exchange_predicted_view_rate = 6;
 
   // Seat ids that the exchange considers eligible to serve on this impression.
   // This feature is currently only supported by Adx.

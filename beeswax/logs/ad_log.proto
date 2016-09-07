@@ -17,14 +17,14 @@ option java_package = "com.beeswax.logs";
 
 import "beeswax/bid/adcandidate.proto";
 import "beeswax/bid/request.proto";
-import "beeswax/logs/eventid.proto";
+import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb.proto";
 import "beeswax/openrtb/openrtb_common.proto";
 
 // Next Tag: 6
 // RequestLogMessage is created for every incoming bid request from the exchange.
 message RequestLogMessage {
-  optional EventId auctionid = 1;
+  optional base.EventId auctionid = 1;
   optional openrtb.Enums.Inventory.Source inventory_source = 2;
   optional openrtb.BidRequest bidrequest = 3;
   // All the adcandidates that matched targeting, creative attribute
@@ -36,8 +36,8 @@ message RequestLogMessage {
 // Next Tag: 12
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
-  optional EventId auctionid = 1;
-  optional AdGroupId adgroupid = 2;
+  optional base.EventId auctionid = 1;
+  optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 10;
   optional uint64 advertiser_id = 11;
 
@@ -58,8 +58,8 @@ message ImpressionLogMessage {
 // Next Tag: 9
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
-  optional EventId auctionid = 1;
-  optional AdGroupId adgroupid = 2;
+  optional base.EventId auctionid = 1;
+  optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 7;
   optional uint64 advertiser_id = 8;
 
@@ -75,8 +75,8 @@ message ClickLogMessage {
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
-  optional EventId auctionid = 1;
-  optional AdGroupId adgroupid = 2;
+  optional base.EventId auctionid = 1;
+  optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 8;
   optional uint64 advertiser_id = 9;
 
