@@ -105,7 +105,46 @@ message ActivityLogMessage {
   optional uint64 rx_timestamp_usecs = 7;
 }
 
-// Next Tag: 5
+// Next Tag: 9
+// Conversion tag urls can be created using the Buzz API.
+// Whenever a conversion tag fires, Beeswax records that event into a
+// ConversionLogMessage.
+// Currently, there are two scenarios in which a conversion tag may fire.
+// 1. Conversion Events
+//   This occurs whenever the customer trafficks the conversion tag on a site/app
+//   and the tag fires whenever a user visits the site/app. For example, a conversion tag
+//   may be trafficked on the shopping cart page of a retail portal.
+//   For conversion events, the following fields are always expected to be populated:
+//   a) tag_id
+//   b) user_id (if available)
+//
+// 2 Postback Events
+//  In this scenario, the conversion attribution is determined by a third party and the
+//  conversion tag is used by the third party to credit a particular impression/click for
+//  the conversion. For postback events, the following fields are always expected to be
+//  populated:
+//   a) tag_id
+//   b) auctionid
+//
+message ConversionLogMessage {
+  optional string user_id = 1;
+  // Customer defined transaction value e.g. Price in shopping cart.
+  optional string value = 2;
+  // Usually, the number of items purchased
+  optional string order = 3;
+  // Customer defined unique join key. Also works as cache buster.
+  optional string ord = 4;
+  // Event Id corresponding to the tag created via the Buzz API
+  optional int32 tag_id = 5;
+  // Unique buzz_key of the customer.
+  optional string buzz_key = 6;
+  // Timestamp (usecs) at which event was received by Beeswax.
+  optional uint64 rx_timestamp = 7;
+  // auction id (Filled only for postback events)
+  optional string auctionid = 8;
+}
+
+// Next Tag: 6
 // AdLogMessage serves as a wrapper type and holds all ad log objects.
 // This message gets logged to the AWS Kinesis streams.
 
@@ -116,4 +155,5 @@ message AdLogMessage {
   optional ImpressionLogMessage impression = 2;
   optional ClickLogMessage click = 3;
   repeated ActivityLogMessage activity = 4;
+  optional ConversionLogMessage conversion = 5;
 }
