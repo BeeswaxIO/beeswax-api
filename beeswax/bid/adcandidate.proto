@@ -66,32 +66,43 @@ message Pacing {
   optional bool pace_delivery = 1 [default = false];
 }
 
-// FrequencyCapsInfo contains the information of a lineitem's or campaign's
+// FrequencyCapsInfo contains the information of a lineitem/campaign's
 // frequency cap constraints and the user's impression history.
 // The bidding agent will not receive adcandidates which are not
-// eligible to bid when any of the lineitem's or campaingn's frequency cap's
+// eligible to bid when any of the lineitem/campaingn's frequency cap's
 // limit is hit.
-// `frequency_cap` is defined using Buzz API. `imp_timestamps` are acquired
-// real time per request.
 //
-// Next Id: 3
+// Next Id: 4
 message FrequencyCapsInfo {
-  // FrequencyCap defines the frequency constraints for a given user to not view
-  // the ad more than `max_impressions` times within a duration of
-  // `duration_seconds`. E.g. If a line items specifies hourly frequency cap
-  // constraints of 10 impression/user, it will be converted into
-  // {max_impressions  = 10, duration_secs = 3600}.
+  // FrequencyCap contains the frequency constraints for a given user to not
+  // view the ad more than `max_impressions` times within a duration of
+  // `duration_seconds`, and the actual impression counts within the duration
+  // for the user as in `current_impression_count`.
+  // `max_impressions` and `duration_seconds` are defined using Buzz API, and
+  // `current_impression_count` is populated real-time per request.
+  // E.g. If a line item specifies hourly frequency cap
+  // constraints of 10 impression/user, and it has had impressions for the
+  // past hour, the value will be
+  // {max_impressions = 10, duration_secs = 3600, current_impression_count = 2}.
   //
-  // Next Id: 3
+  //
+  // Next Id: 4
   message FrequencyCap {
+    // Allowed number of impressions in the duration .
     optional uint32 max_impressions = 1;
+    // The duration (in second) in which max_impressions should not be exceeded.
     optional uint32 duration_seconds = 2;
+    // Actual impression numbers served in the duration.
+    optional uint32 current_impression_count = 3;
   }
   repeated FrequencyCap frequency_cap = 1;
-  // The list (not necessarily ascending) of rx timestamp (in seconds) of when
-  // the ad was previously served for the line_item/campaign and user
-  // combination for the past 30 days.
-  repeated uint32 imp_timestamps = 2;
+  repeated uint32 imp_timestamps = 2 [deprecated = true];
+  // The last rx timestamp in seconds when the ad was served for the
+  // line_item/campaign and user combination in the past 30 days. It is
+  // updated real-time per request. It will not be populated if the
+  // line_item/campaign does not have any impression for the user in the past
+  // 30 days.
+  optional uint32 last_imp_timestamp = 3;
 }
 
 // Adcandidate represents an eligible line item and its attributes.
@@ -108,6 +119,10 @@ message Adcandidate {
   repeated uint64 creative_ids = 2;
   optional Bidding bidding = 3;
   optional Pacing pacing = 4;
+  // This field wil be empty if the line_item does not have any frequency
+  // cap associated with it.
   optional FrequencyCapsInfo line_item_frequency_caps_info = 10;
+  // This field wil be empty if the campaign does not have any frequency
+  // cap associated with it.
   optional FrequencyCapsInfo campaign_frequency_caps_info = 11;
 }
