@@ -4,8 +4,8 @@ and http body generated from the specified input file.
 
 Installation:
 
-pip install -r requirements.txt
 tar -xvf bidding_agent_requests_generator.tar
+pip install -r requirements.txt
 
 
 Run:
