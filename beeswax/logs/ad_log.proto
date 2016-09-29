@@ -33,10 +33,13 @@ message RequestLogMessage {
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
-// Next Tag: 12
+// Next Tag: 13
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional EventId auctionid = 1;
+  // The unique identifier of the auction per buzz_key.
+  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
+  optional string auctionid_str = 12;
   optional AdGroupId adgroupid = 2;
   optional uint64 creative_id = 10;
   optional uint64 advertiser_id = 11;
@@ -55,10 +58,13 @@ message ImpressionLogMessage {
   optional openrtb.Enums.Inventory.DataCenter data_center = 8;
 }
 
-// Next Tag: 9
+// Next Tag: 10
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
   optional EventId auctionid = 1;
+  // The unique identifier of the auction per buzz_key.
+  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
+  optional string auctionid_str = 9;
   optional AdGroupId adgroupid = 2;
   optional uint64 creative_id = 7;
   optional uint64 advertiser_id = 8;
@@ -71,11 +77,14 @@ message ClickLogMessage {
   optional uint64 rx_timestamp_usecs = 6;
 }
 
-// Next Tag: 10
+// Next Tag: 11
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
   optional EventId auctionid = 1;
+  // The unique identifier of the auction per buzz_key.
+  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
+  optional string auctionid_str = 10;
   optional AdGroupId adgroupid = 2;
   optional uint64 creative_id = 8;
   optional uint64 advertiser_id = 9;
