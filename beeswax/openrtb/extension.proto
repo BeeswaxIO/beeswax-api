@@ -27,11 +27,14 @@ message AdvertiserInfo {
   optional int64 minimum_cpm_micros = 4;
 }
 
-// Next available tag: 8
+// Next available tag: 9
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
-
+  // The unique identifier of the auction per buzz_key.
+  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
+  // auction_id_str contains buzz_key so it is populated in sbs.
+  optional string auctionid_str = 8;
   // This field is used for Geo targeting.
   // It is populated by the LocalAugmentor in Stinger.
   optional TargetingGeoExtension targeting_geo = 3;
