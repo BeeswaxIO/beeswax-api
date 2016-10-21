@@ -53,13 +53,43 @@ message BidAgentResponse {
     repeated AgentParams agent_params = 2;
   }
 
+  // Next Id: 4
+  // Creative represents the creative to be rendered in the openrtb bid
+  // response.
+  message Creative {
+    // The id of the chosen creative. It should be one of the ids in
+    // Adcandidate.creative_ids where the Adcandidate's line_item_id ==
+    // Bid.line_item_id for the Bid containing this Creative message,
+    // otherwise the bid will not be processed.
+    optional uint64 id = 1;
+    // Pixels that will be fired when the creative is served in addition
+    // to the `pixels` field, which is set in `creative` object from buzz.
+    // (see http://docs.beeswax.com/docs/creative)
+    // This field should not be populated when the battr field has
+    // AD_SUPPORTS_DYNAMIC_PIXELS(108), otherwise this bid will not be
+    // processed.
+    // battr field is under BidAgentRequest.bid_request.imp.(banner/video).battr
+    // ; whether it is banner or video corresponds to the type of this creative.
+    repeated string pixels = 2;
+    // The `creative` object's `click_url` field, which is set from buzz,
+    // will be replaced with this value if it is present.
+    // (see http://docs.beeswax.com/docs/creative)
+    // This field should not be populated when the battr field has
+    // AD_SUPPORTS_DYNAMIC_CLICK_URL(109), otherwise this bid will not be
+    // processed.
+    // battr field is under BidAgentRequest.bid_request.imp.(banner/video).battr
+    // ; whether it is banner or video corresponds to the type of this creative.
+    optional string click_url_override = 3;
+  }
+
   // Bid agent needs to select a set of Adcandidates from the request
   // and for each Adcandidate, submit a bid containing the following
   // information.
   message Bid {
     optional uint64 line_item_id = 1;
     optional uint64 bid_price_micros_usd = 2 [default = 0];
-    optional uint64 creative_id = 3;
+    optional uint64 creative_id = 3 [deprecated = true];
+    optional Creative creative = 5;
     optional AgentData agent_data = 4;
   }
   repeated Bid bids = 1;
