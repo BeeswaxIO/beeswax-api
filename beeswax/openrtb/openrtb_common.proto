@@ -430,6 +430,8 @@ enum CreativeAttribute {
   AD_CAN_EXPAND_UP = 105;
   AD_CAN_EXPAND_DOWN = 106;
   AD_CAN_EXPAND_FULLSCREEN = 107;
+  AD_SUPPORTS_DYNAMIC_PIXELS = 108;
+  AD_SUPPORTS_DYNAMIC_CLICK_URL = 109;
 }
 
 // Boolean-like enumeration used in various attributes.
@@ -693,6 +695,7 @@ message Enums {
       INNERACTIVE     =  14;
       TREMOR          =  15;
       INDEX_EXCHANGE  =  16;
+      YAHOO           =  17;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -727,11 +730,12 @@ message Enums {
     // For example, US-EAST-1 and US-WEST-2 are in NAM, and EU_WEST_1 is in EMEA.
     // The data centers within a continent share things like budget and user data,
     // neither of which crosses continent boundaries.
+    // For more information, https://docs.google.com/document/d/1oACWofpsEZsjXNVNnEINZYAutEtAmvWbznTLLx-Aa9c
     enum Continent {
       // Keep continents in sync with Buzz
       UNKNOWN_CONTINENT = 0;
       NAM = 1; // North America
-      EMEA = 2; // Europe, Middle East, Asia
+      EMEA = 2; // Europe, the Middle East & Asia
     }
   }
 }
