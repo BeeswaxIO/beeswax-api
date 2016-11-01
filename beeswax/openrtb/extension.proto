@@ -75,17 +75,14 @@ message BidRequestExtensions {
 }
 
 
-// Next available tag: 8
+// Next available tag: 9
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
   repeated string placements = 5;
   repeated AdvertiserInfo advertiser_info = 4;
 
-  // Specifies the probability that the impression will be viewable by the user,
-  // based on historical data.
-  // Currently populated for AppNexus and AdX only
-  optional float exchange_predicted_view_rate = 6;
+  optional ViewabilityExtensions viewability = 8;
 
   // Seat ids that the exchange considers eligible to serve on this impression.
   // This feature is currently only supported by Adx.
@@ -95,7 +92,10 @@ message ImpressionExtensions {
   optional AdxImpressionExtension adx = 1;
 
   extensions 1000 to max;
-}
+
+  // Deprecated field. Use ViewabilityExtensions field instead.
+  optional float exchange_predicted_view_rate = 6 [deprecated = true];
+ }
 
 // Next available tag: 3
 message BannerExtensions {
@@ -255,6 +255,16 @@ message TargetingGeoExtension {
   optional Enums.BidRequest.Geo.LocationType type = 9;
 }
 
+// Viewability.predicted_viewability is populated by FES LocalAugmentor
+// and used for targeting in Matcher
+message ViewabilityExtensions {
+  // Specifies the predicted viewability from Beeswax ViewabilityPredictor
+  optional float predicted_viewability = 1;
+  // Specifies the probability that the impression will be viewable by the user,
+  // based on historical data.
+  // Currently populated for AppNexus and AdX only
+  optional float exchange_predicted_view_rate = 2;
+}
 
 // Exchange specific extensions.
 // 1. Google Ad Exchange
