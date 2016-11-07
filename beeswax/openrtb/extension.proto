@@ -13,7 +13,7 @@ package openrtb;
 option java_package = "com.beeswax.openrtb";
 option cc_enable_arenas = true;
 
-import "beeswax/logs/eventid.proto";
+import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
 
 // Next available tag: 5
@@ -30,7 +30,7 @@ message AdvertiserInfo {
 // Next available tag: 9
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
-  optional logs.EventId auction_id = 2;
+  optional base.EventId auction_id = 2;
   // The unique identifier of the auction per buzz_key.
   // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
   // auction_id_str contains buzz_key so it is populated in sbs.

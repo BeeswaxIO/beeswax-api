@@ -4,9 +4,9 @@
 // Protocol buffer defining a unique EventId
 
 syntax = "proto2";
-package logs;
+package base;
 
-option java_package = "com.beeswax.logs";
+option java_package = "com.beeswax.base";
 
 message EventId {
   optional uint32 hostid = 1;    // 32 bits of md5 hash
