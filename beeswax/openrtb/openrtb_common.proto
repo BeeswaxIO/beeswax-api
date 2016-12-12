@@ -696,6 +696,7 @@ message Enums {
       TREMOR          =  15;
       INDEX_EXCHANGE  =  16;
       YAHOO           =  17;
+      SMAATO          =  18;
     }
 
     // Placement Type of the OpenRTB Bid Request
