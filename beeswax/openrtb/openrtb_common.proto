@@ -496,6 +496,18 @@ message Enums {
           DOWN = 4;
           FULLSCREEN = 5;
         }
+
+        message BannerExtensions {
+          // Some exchanges support a "bannertype=rewarded" field for banners. This
+          // signifies that an end user will recieve a reward for interacting with
+          // the ad. E.g. if the user clicks the ad, they get game currency in a
+          // phone game. There aren't other possible "bannertype" values yet, but
+          // there could be in the future.
+          enum BannerType {
+            UNKNOWN = -1;
+            REWARDED = 0;
+          }
+        }
       }
 
       message Video {
@@ -557,6 +569,18 @@ message Enums {
         enum ContentDelivery {
           STREAMING = 1;
           PROGRESSIVE = 2;
+        }
+
+        message VideoExtensions {
+          // Some exchanges support a "videotype=rewarded" field for videos. This
+          // signifies that an end user will recieve a reward for interacting with
+          // the ad. E.g. if the user watches the whole video, they get game currency
+          // in a phone game. There aren't other possible "videotype" values yet, but
+          // there could be in the future.
+          enum VideoType {
+            UNKNOWN = -1;
+            REWARDED = 0;
+          }
         }
       }
     }
@@ -697,6 +721,8 @@ message Enums {
       INDEX_EXCHANGE  =  16;
       YAHOO           =  17;
       SMAATO          =  18;
+      APP_LOVIN       =  19;
+      MOLABS          =  20;
     }
 
     // Placement Type of the OpenRTB Bid Request
