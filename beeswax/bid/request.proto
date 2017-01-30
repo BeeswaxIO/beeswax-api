@@ -53,7 +53,7 @@ message BidAgentResponse {
     repeated AgentParams agent_params = 2;
   }
 
-  // Next Id: 4
+  // Next Id: 5
   // Creative represents the creative to be rendered in the openrtb bid
   // response.
   message Creative {
@@ -80,6 +80,39 @@ message BidAgentResponse {
     // battr field is under BidAgentRequest.bid_request.imp.(banner/video).battr
     // ; whether it is banner or video corresponds to the type of this creative.
     optional string click_url_override = 3;
+    // The creative's macros {{DYNAMIC:<name>:STRING}} in the value of a
+    // creative content or creative template, will be replaced with the
+    // content of `value`.
+    // For example, if name = "foo", value = "bar", the macro
+    // {{DYNAMIC:FOO:STRING}} will be replaced with "bar".
+    //
+    // Please note the following constraints:
+    // (1) Macro expansion will only apply to the creative of the same id as
+    // this containing creative object.
+    // (2) Macro name is case-insensitive. (if name = "foo",
+    // the macro {{DYNAMIC:FOO:STRING}} will still be replaced)
+    // (3) Beeswax will pick up the first 5 dynamic macros. Additional ones will
+    // be ignored.
+    // (4) For a macro to be expanded as an empty string, you should
+    // explicitly set the macro name in the `name` field, and leave the
+    // `value` feild empty; Dynamic macros in creatives that does
+    // not have a match from the `name` field here will not be expanded.
+    // (5) If a dynamic macro was not expanded, a string of {{DY:<name>}}
+    // (instead of {{DYNAMIC:<name>:STRING}}) will be placed at where the
+    // {{DYNAMIC:<name>:STRING}} macro was placed.
+    // (6) Values of dynamic macros cannot contain other Beeswax macros,
+    // (including other dynamic macros), as the contained macros will
+    // not be expanded.
+    // (7) If the macro is part of a url, the value shold be url-safe
+    // (e.g, by escaping). Note that click_url is properly escaped as a whole,
+    // so if the macro is in click_url, its value does not need to
+    // have extra escaping; url-safe is enough.
+    //
+    message Macro {
+      optional string name = 1;
+      optional string value = 2;
+    }
+    repeated Macro dynamic_macros = 4;
   }
 
   // Bid agent needs to select a set of Adcandidates from the request
@@ -87,7 +120,14 @@ message BidAgentResponse {
   // information.
   message Bid {
     optional uint64 line_item_id = 1;
-    optional uint64 bid_price_micros_usd = 2 [default = 0];
+    // Deprecated, use bid_price_micros instead.
+    // (1) Beeswax will do validation (see (2)) and use this value only if
+    // bid_price_micros is not populated.
+    // (2) Validation: The adcandidate with this line_item_id in the
+    // BidAgentRequest must have bidding.currency set to USD;
+    // otherwise this bid will be dropped.
+    optional uint64 bid_price_micros_usd = 2 [default = 0, deprecated = true];
+    optional uint64 bid_price_micros = 6 [default = 0];
     optional uint64 creative_id = 3 [deprecated = true];
     optional Creative creative = 5;
     optional AgentData agent_data = 4;
