@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.beeswax</groupId>
   <artifactId>beeswax-api</artifactId>
-  <version>20160530</version>
+  <version>20170207</version>
   <name>Beeswax API</name>
   <packaging>jar</packaging>
   <description>Builds a jar for all Proto Classes in Beeswax</description>
@@ -89,7 +89,7 @@
   <dependency>
     <groupId>com.google.protobuf</groupId>
     <artifactId>protobuf-java</artifactId>
-    <version>3.0.0-beta-3</version>
+    <version>3.0.2</version>
   </dependency>
 </dependencies>
 
