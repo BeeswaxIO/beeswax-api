@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.beeswax</groupId>
   <artifactId>beeswax-api</artifactId>
-  <version>20170207</version>
+  <version>2017-02-09</version>
   <name>Beeswax API</name>
   <packaging>jar</packaging>
   <description>Builds a jar for all Proto Classes in Beeswax</description>
@@ -11,7 +11,8 @@
 
   <licenses>
     <license>
-      <name>Copyright 2016, Beeswax.IO Inc.</name>
+      <name>The Apache License, Version 2.0</name>
+      <url>https://github.com/BeeswaxIO/beeswax-api/blob/master/LICENSE</url>
     </license>
   </licenses>
 
@@ -19,7 +20,7 @@
     <developer>
       <name>Kalyanaraman Santhanam</name>
       <email>kalyanaraman@beeswax.com</email>
-      <organization>BEESWAXIO CORPORATION</organization>
+      <organization>BeeswaxIO Corporation</organization>
       <organizationUrl>https://www.beeswax.com</organizationUrl>
     </developer>
   </developers>
