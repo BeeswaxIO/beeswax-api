@@ -27,7 +27,16 @@ message AdvertiserInfo {
   optional int64 minimum_cpm_micros = 4;
 }
 
-// Next available tag: 9
+// Next available tag: 3
+// Used to represent <w,h> at various places in the
+// extensions.
+// For e.g. Additional ad sizes supported on an adslot.
+message Dimension {
+  optional int32 width = 1;
+  optional int32 height = 2;
+}
+
+// Next available tag: 10
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
@@ -70,6 +79,7 @@ message BidRequestExtensions {
 
   // Exchange specific extensions
   optional AppNexusBidRequestExtension appnexus = 7;
+  optional AdxBidRequestExtension adx = 9;
 
   extensions 1000 to max;
 }
@@ -97,7 +107,7 @@ message ImpressionExtensions {
   optional float exchange_predicted_view_rate = 6 [deprecated = true];
  }
 
-// Next available tag: 3
+// Next available tag: 5
 message BannerExtensions {
   // Blocked ApiFrameworks
   repeated Enums.BidRequest.Impression.ApiFramework bapis = 1;
@@ -107,11 +117,31 @@ message BannerExtensions {
   //          to be returned in the response
   repeated CreativeAttribute required_attrs = 2;
 
+  // Some exchanges such as Google Adx support multiple allowed sizes for
+  // an impression.
+  // In such cases, the additional dimensions (w, h) that are supported
+  // are present in this field.
+  // For example, if Adx supports 5 sets of allowed sizes in a request.
+  // The first allowed size will be in banner.w and banner.h
+  // The additional 4 sets will be in this field.
+  repeated Dimension additional_dimensions = 3;
+
+  // Some exchanges support "rewarded banners". This signifies that an end user
+  // will recieve a reward for interacting with the ad. E.g. if the user plays
+  // a game in a playable banner, they get game currency in a phone game.
+  //
+  // Two things to note:
+  //   1. Protobufs sets bools false by default. Unless this field exists and
+  //      is explicitly set to true, a banner is considered "nonrewarded".
+  //   2. No exchange actually defines this field here, it is a generalization
+  //      of the different ways that exchanges denote rewarded banners.
+  optional bool rewarded = 4;
+
   extensions 1000 to max;
 }
 
 
-// Next available tag: 5
+// Next available tag: 6
 message VideoExtensions {
   // player_size can be one of ["S", "M"., "L", "XL", "NA"].
   // Computed by the LocalAugmentor in Stinger.
@@ -135,6 +165,17 @@ message VideoExtensions {
   // For such sources, skip_offset of 5 seconds is a safe default.
   optional int32 skip_offset = 4 [default = 5];
 
+  // Some exchanges support "rewarded videos". This signifies that an end user
+  // will recieve a reward for interacting with the ad. E.g. if the user watches
+  // the whole video, they get game currency in a phone game.
+  //
+  // Two things to note:
+  //   1. Protobufs sets bools false by default. Unless this field exists and
+  //      is explicitly set to true, a video is considered "nonrewarded".
+  //   2. No exchange actually defines this field here, it is a generalization
+  //      of the different ways that exchanges denote rewarded videos.
+  optional bool rewarded = 5;
+ 
   extensions 1000 to max;
 }
 
@@ -267,7 +308,11 @@ message ViewabilityExtensions {
 }
 
 // Exchange specific extensions.
-// 1. Google Ad Exchange
+// Next available tag: 2
+message AdxBidRequestExtension {
+  optional bool is_predicted_to_be_ignored = 1;
+}
+
 message AdxImpressionExtension {
   optional int32 adslot_id = 1;
 }

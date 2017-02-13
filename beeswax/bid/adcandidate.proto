@@ -8,6 +8,9 @@
 syntax = "proto2";
 package bid;
 
+import "beeswax/currency/currency.proto";
+
+
 option java_package = "com.beeswax.bid";
 
 // Bidding agents can implement flexible bidding strategies.
@@ -17,9 +20,10 @@ option java_package = "com.beeswax.bid";
 //
 // All price information is represented as micros which is the actual value
 // multiplied by 1 million i.e. 10e+6.
-// Unless otherwise specified, the currency is USD.
+// The currency used for all fields is specified in the `currency` field,
+// which is set per campaign in buzz.
 //
-// Next Tag: 5
+// Next Tag: 6
 message Bidding {
   // CPM: Always bid a flat price on all matched requests.
   message CpmStrategy {
@@ -49,11 +53,10 @@ message Bidding {
   optional CpmStrategy cpm_strategy = 1;
   optional CpcStrategy cpc_strategy = 2;
   optional CustomStrategy custom_strategy = 4;
+  optional currency.Currency.Code currency = 5;
 
-  // Following fields are only available post auction through the
-  // Event stream API.
-
-  // The final bid price submitted by the bidding agent.
+  // The following fields are for internal use by the bidding agents and
+  // will not be set in the request or response.
   optional uint64 bid_price_micros = 3;
 }
 
