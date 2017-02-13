@@ -10,7 +10,6 @@ package bid;
 
 import "beeswax/currency/currency.proto";
 
-
 option java_package = "com.beeswax.bid";
 
 // Bidding agents can implement flexible bidding strategies.
