@@ -1,0 +1,49 @@
+// Copyright 2016, Beeswax.IO Inc.
+//
+// Currency related information
+
+syntax = "proto3";
+package currency;
+
+option java_package = "com.beeswax.base";
+
+message Currency {
+  enum Code {
+    UNKNOWN = 0;
+    USD = 1;  // US Dollar
+    EUR = 2;  // Euro
+    GBP = 3;  // Pound Sterling
+    CAD = 4;  // Canadian Dollar
+    CHF = 5;  // Swiss Franc
+  }
+}
+
+// Next id: 3
+message ExchangeRateUSD {
+  Currency.Code currency_code = 1;
+  double rate = 2;
+}
+
+// Next id: 2
+message CurrencyExchangeRateUSDTable {
+  repeated ExchangeRateUSD rates = 1;
+}
+
+// Next id: 3
+// CurrencyAmount represents an amount of money in a local currency (micros).
+message CurrencyAmount {
+  // how much money
+  int64 micros = 1;
+  // in what unit
+  Currency.Code currency = 2;
+}
+
+// Next id: 3
+// CurrencyTransaction represents an amount of
+// currency at a particular exchange rate.
+message CurrencyTransaction {
+  // how much money
+  CurrencyAmount amount = 1;
+  // exchange rate in effect at time of transaction
+  double rate = 2;
+}

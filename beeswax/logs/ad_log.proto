@@ -58,7 +58,7 @@ message ImpressionLogMessage {
   optional openrtb.Enums.Inventory.DataCenter data_center = 8;
 }
 
-// Next Tag: 10
+// Next Tag: 11
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
   optional base.EventId auctionid = 1;
@@ -75,6 +75,13 @@ message ClickLogMessage {
   // Represents optional data sent by the customer.
   optional string user_data = 5;
   optional uint64 rx_timestamp_usecs = 6;
+
+  enum Type {
+    UNKNOWN = 0;
+    REGULAR = 1;  // clicks received from creatives
+    COMPANION = 2; // clicks received from companion click through url
+  }
+  optional Type click_type = 10 [default = REGULAR];
 }
 
 // Next Tag: 11
@@ -104,7 +111,10 @@ message ActivityLogMessage {
     FULLSCREEN = 11;  // Video Playback full screen
     CLOSE = 12;       // Video Playback closed
     COMPANION_VIEW = 13; // Companion view
-    COMPANION_CLICK = 14;  // Companion click
+
+    // Deprecated. Companion click will be tracked as ClickEvent instead of ActivityEvent
+    // This should be eventually removed by end of Q2 of 2017
+    DEPRECATED_COMPANION_CLICK = 14;  // Companion click
   }
   optional Type type = 4;
   optional string user_id = 5;
