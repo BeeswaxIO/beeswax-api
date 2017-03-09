@@ -724,6 +724,7 @@ message Enums {
       APP_LOVIN       =  19;
       MOLABS          =  20;
       SPOTX           =  21;
+      FYBER           =  22;
     }
 
     // Placement Type of the OpenRTB Bid Request
