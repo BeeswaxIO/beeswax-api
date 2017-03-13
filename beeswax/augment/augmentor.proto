@@ -6,7 +6,6 @@ syntax="proto2";
 package augment;
 
 option java_package = "com.beeswax.augment";
-option cc_enable_arenas = true;
 
 import "beeswax/openrtb/openrtb.proto";
 

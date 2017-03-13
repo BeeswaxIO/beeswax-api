@@ -6,7 +6,6 @@ syntax = "proto3";
 package currency;
 
 option java_package = "com.beeswax.base";
-option cc_enable_arenas = true;
 
 message Currency {
   enum Code {
