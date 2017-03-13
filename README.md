@@ -6,6 +6,6 @@ Beeswax API for custom bidders
     <dependency>
       <groupId>com.beeswax</groupId>
       <artifactId>beeswax-api</artifactId>
-      <version>2017-02-09</version>
+      <version>2017-03-13</version>
     </dependency>
 
