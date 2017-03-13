@@ -8,7 +8,6 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
-option cc_enable_arenas = true;
 
 import "beeswax/openrtb/extension.proto";
 import "beeswax/openrtb/openrtb_common.proto";

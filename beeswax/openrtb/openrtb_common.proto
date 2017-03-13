@@ -6,7 +6,6 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
-option cc_enable_arenas = true;
 
 // OpenRTB 6.1: IAB contextual taxonomy for categorization.
 enum ContentCategory {
