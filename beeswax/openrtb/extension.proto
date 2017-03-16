@@ -307,9 +307,12 @@ message ViewabilityExtensions {
 }
 
 // Exchange specific extensions.
-// Next available tag: 2
+// Next available tag: 3
 message AdxBidRequestExtension {
   optional bool is_predicted_to_be_ignored = 1;
+  // The offset of the user's time from GMT in minutes.
+  // For example, GMT-5 is timezone_offset = -300.
+  optional int32 timezone_offset = 2;
 }
 
 message AdxImpressionExtension {
