@@ -15,6 +15,7 @@ import "beeswax/openrtb/openrtb_common.proto";
 // OpenRTB extensions ("ext" fields in the spec & JSON representation)
 // are represented here by Protocol Buffer extensions.
 
+// Next available tag: 16 - Tag 19 is taken in order to match Google openrtb proto
 /*
  * OpenRTB 3.3.1: The top-level bid request object.
  */
@@ -101,10 +102,51 @@ message BidRequest {
    * Container for any legal, governmental or industry regulations in force for the request.
    */
   optional Regulations regs = 14;
+  /*
+   * A Source object (Section 3.2.2) that provides data about the
+   * inventory source and which entity makes the final decision.
+   */
+  optional Source source = 19;
 
   optional BidRequestExtensions ext = 1000;
 
-  // Next available tag: 14
+  // Next available tag: 4
+  /*
+   * OpenRTB 2.5: This object describes the nature and behavior of the entity
+   * that is the source of the bid request upstream from the exchange.
+   * The primary purpose of this object is to define post-auction or upstream
+   * decisioning when the exchange itself does not control the final decision.
+   * A common example of this is header bidding, but it can also apply to
+   * upstream server entities such as another RTB exchange, a mediation
+   * platform, or an ad server combines direct campaigns with 3rd party
+   * demand in decisioning.
+   */
+  message Source {
+    /*
+     * Entity responsible for the final impression sale decision,
+     * where 0 = exchange, 1 = upstream source
+     * RECOMMENDED by the OpenRTB specification.
+     */
+    optional bool fd = 1;
+    /*
+     * Transaction ID that must be common across all participants in
+     * this bid request (e.g., potentially multiple exchanges).
+     * RECOMMENDED by the OpenRTB specification.
+     */
+    optional string tid = 2;
+    /*
+     * Payment ID chain string containing embedded syntax
+     * described in the TAG Payment ID Protocol v1.0.
+     * RECOMMENDED by the OpenRTB specification.
+     */
+    optional string pchain = 3;
+    /*
+     * Extensions.
+     */
+    extensions 100 to 9999;
+  }
+
+  // Next available tag: 15
   /*
    * OpenRTB 3.3.2: describes the ad position or impression being auctioned.
    * A single bid request can include multiple “imp” objects, a use case for which might be an
@@ -180,6 +222,11 @@ message BidRequest {
      * HTTP creatives.
      */
     optional int32 secure = 12;
+    /*
+     * Advisory as to the number of seconds that may elapse
+     * between the auction and the actual impression.
+     */
+    optional int32 exp = 14;
 
     optional ImpressionExtensions ext = 1000;
 
@@ -264,6 +311,7 @@ message BidRequest {
       optional BannerExtensions ext = 1000;
     }
 
+    // Next available tag: 21 - Tags 26, 27 taken in order to match Google openrtb proto
     /*
      * OpenRTB 3.3.4: A video object typically describes an ad opportunity for in-stream video
      * inventory (including linear pre-roll, mid-roll and post-roll, and non-linear overlays).
@@ -361,6 +409,14 @@ message BidRequest {
        * Recommended if companion objects are included.
        */
       repeated Enums.BidRequest.Impression.Video.CompanionType companiontype = 20;
+      /*
+       * Placement type for the impression.
+       */
+      optional Enums.BidRequest.Impression.Video.VideoPlacementType placement = 26;
+      /*
+       * The event that causes playback to end.
+       */
+      optional Enums.BidRequest.Impression.Video.PlaybackCessationMode playbackend = 27;
 
       optional VideoExtensions ext = 1000;
     }
@@ -695,7 +751,7 @@ message BidRequest {
     optional ContentExtensions ext = 1000;
   }
 
-  // Next available tag: 28
+  // Next available tag: 29 - Tag 30 taken in order to match Google openrtb proto
   /*
    * OpenRTB 3.3.10: Provides information pertaining to the device including its hardware,
    * platform, location, and carrier. This device can refer to a mobile handset, a desktop
@@ -824,6 +880,14 @@ message BidRequest {
      * MAC address of the device; hashed via MD5.
      */
     optional string macmd5 = 28;
+    /*
+     * Mobile carrier as the concatenated MCC-MNC code (e.g.,
+     * "310-005" identifies Verizon Wireless CDMA in the USA).
+     * Refer to https://en.wikipedia.org/wiki/Mobile_country_code
+     * for further examples. Note that the dash between the MCC
+     * and MNC parts is required to remove parsing ambiguity.
+     */
+    optional string mccmnc = 30;
 
     optional DeviceExtensions ext = 1000;
   }
@@ -1231,12 +1295,12 @@ message NativeRequest {
    * The Layout ID of the native ad unit.
    * This field is not required, but it's highly recommended.
    */
-  optional LayoutId layout = 2;
+  optional Enums.BidRequest.Impression.NativeRequest.LayoutId layout = 2;
   /**
    * The Ad unit ID of the native ad unit. This corresponds to one of IAB Core-6 native ad units.
    * This field is not required, but it's highly recommended.
    */
-  optional AdUnitId adunit = 3;
+  optional Enums.BidRequest.Impression.NativeRequest.AdUnitId adunit = 3;
   /**
    * The number of identical placements in this Layout.
    */
@@ -1251,41 +1315,21 @@ message NativeRequest {
    */
   repeated Asset assets = 6;
   /**
+   * The context in which the ad appears.
+   */
+  optional Enums.BidRequest.Impression.NativeRequest.Context context = 7;
+  /**
+   * A more detailed context in which the ad appears.
+   */
+  optional Enums.BidRequest.Impression.NativeRequest.ContextSubtype contextsubtype = 8;
+  /**
+   * The design/format/layout of the ad unit being offered.
+   */
+  optional Enums.BidRequest.Impression.NativeRequest.PlacementType plcmttype = 9;
+  /**
    * Extensions.
    */
   extensions 100 to 9999;
-
-  /**
-   * OpenRTB Native 7.1: Core layouts. An implementing exchange may not support all asset
-   * variants or introduce new ones unique to that system.
-   */
-  enum LayoutId {
-    CONTENT_WALL = 1;
-    APP_WALL = 2;
-    NEWS_FEED = 3;
-    CHAT_LIST = 4;
-    CAROUSEL = 5;
-    CONTENT_STREAM = 6;
-    GRID = 7;
-    // Exchange-specific values above 500.
-  }
-
-  /**
-   * OpenRTB Native 7.2: Below is a list of the core ad unit ids described by IAB here:
-   * http://www.iab.net/media/file/IABNativeAdvertisingPlaybook120413.pdf
-   * In feed unit is essentially a layout, it has been removed from the list.
-   * The in feed units can be identified via the layout parameter on the request.
-   * An implementing exchange may not support all asset variants or introduce new ones
-   * unique to that system.
-   */
-  enum AdUnitId {
-    PAID_SEARCH_UNIT = 1;
-    RECOMMENDATION_WIDGET = 2;
-    PROMOTED_LISTING = 3;
-    IAB_IN_AD_NATIVE = 4;
-    CUSTOM = 5;
-    // Exchange-specific values above 500.
-  }
 
   /**
    * OpenRTB Native 4.2: The main container object for each asset requested or supported by
@@ -1460,6 +1504,9 @@ message NativeRequest {
         /** Text describing a "call to action" button for the destination URL. */
         CTATEXT = 12;
         // Exchange-specific values above 500.
+
+        // STORE bit for ADX NativeAdTemplate
+        STORE = 500;
       }
     }
   }

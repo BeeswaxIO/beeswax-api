@@ -35,7 +35,7 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 10
+// Next available tag: 12
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
@@ -75,6 +75,14 @@ message BidRequestExtensions {
 
   // This field is used by Augmentors like ManagedListAugmentor
   repeated AugmentorData augmentor_data = 6;
+
+  // Determines how impression notifications will happen for this request. See
+  // ImpressionTracker comments for more information.
+  optional Enums.Inventory.ImpressionTracker imp_tracker = 10;
+
+  // Determines how supplier click tracking will happen for this request. See
+  // SupplierClickTracker for more information.
+  optional Enums.Inventory.SupplierClickTracker supplier_click_tracker = 11;
 
   // Exchange specific extensions
   optional AppNexusBidRequestExtension appnexus = 7;
@@ -143,7 +151,7 @@ message BannerExtensions {
 // Next available tag: 6
 message VideoExtensions {
   // player_size can be one of ["S", "M"., "L", "XL", "NA"].
-  // Computed by the LocalAugmentor in Stinger.
+  // Added by augmentor in Beeswax Front End Server (FES)
   optional string player_size = 1;
 
   // Creative attributes that are required by the request.
@@ -207,23 +215,38 @@ message ProducerExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 5
+// Next available tag: 10
 // Tag 1: idfa - Deprecated. Do not resuse.
 message DeviceExtensions {
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
-  // Computed by the LocalAugmentor in Stinger.
-  optional string device_screen_size = 2 [default = "NA"];
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_device_screen_size = 2 [default = "NA"];
 
-  // Computed by the LocalAugmentor in Stinger.
-  optional string browser = 3 [default = "-1"];
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_browser = 3 [default = "-1"];
 
-  // Computed by the LocalAugmentor in Stinger.
-  optional string browser_version = 4 [default = "-1"];
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_browser_version = 4 [default = "-1"];
+
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_os = 5 [default = "-1"];
+
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_osv = 6 [default = "-1"];
+
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_model = 7 [default = "-1"];
+
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_make = 8 [default = "-1"];
+
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional Enums.BidRequest.Device.DeviceType augmented_devicetype = 9 [default = UNKNOWN];
 
   extensions 1000 to max;
 }
 
-// Next available tag: 3
+// Next available tag: 4
 message UserExtensions {
   // This field identifies the user of the bid request. It will be used
   // for user segment lookup and frequency cap.
@@ -235,6 +258,9 @@ message UserExtensions {
   // (Except bito_id - we still use bito as prefix)
   optional string user_id = 1;
   optional Enums.BidRequest.User.UserIdType user_id_type = 2;
+
+  // Number of days since the user cookie has been dropped, for example, 10
+  optional int32 cookie_age = 3;
   extensions 1000 to max;
 }
 
@@ -309,14 +335,23 @@ message ViewabilityExtensions {
 // Exchange specific extensions.
 // Next available tag: 3
 message AdxBidRequestExtension {
+  // If true, then the selective callout model predicted that we will not bid
+  // on this request. ADX sends a sampled percentage of such requests so that they
+  // can automatically update the model when bidding patterns change.
   optional bool is_predicted_to_be_ignored = 1;
   // The offset of the user's time from GMT in minutes.
   // For example, GMT-5 is timezone_offset = -300.
   optional int32 timezone_offset = 2;
 }
 
+// Next available tag: 3
 message AdxImpressionExtension {
   optional int32 adslot_id = 1;
+  // Historical click-through rate for ads served in the ad slot. This is
+  // expressed as a fraction in the range [0.0, 1.0]. The default value of
+  // -1.0 indicates that historical click-through rate data is not available.
+  // This figure does not include data aggregated from AdWords.
+  optional float click_through_rate = 2 [default = -1.0];
 }
 
 message AdxGeoExtension {

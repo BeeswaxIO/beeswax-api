@@ -570,6 +570,54 @@ message Enums {
           PROGRESSIVE = 2;
         }
 
+        // OpenRTB 2.5: The following table lists the various types of video placements
+        // derived largely from the IAB Digital Video Guidelines.
+        enum VideoPlacementType {
+          // The video placement is not defined.
+          // Default value.
+          UNDEFINED_VIDEO_PLACEMENT = 0;
+
+          // Played before, during or after the streaming video content
+          // that the consumer has requested.
+          // E.G.: Pre-roll, Mid-roll, Post-roll.
+          IN_STREAM_PLACEMENT = 1;
+
+          // Exists within a web banner that leverages the banner space
+          // to deliver a video experience as opposed to another static
+          // or rich media format.
+          // The format relies on the existence of display ad inventory
+          // on the page for its delivery.
+          IN_BANNER_PLACEMENT = 2;
+
+          // Loads and plays dynamically between paragraphs of editorial content;
+          // existing as a standalone branded message.
+          IN_ARTICLE_PLACEMENT = 3;
+
+          // In-Feed - Found in content, social, or product feeds.
+          IN_FEED_PLACEMENT = 4;
+
+          // Interstitial/Slider/Floating.
+          // Covers the entire or a portion of screen area,
+          // but is always on screen while displayed
+          // (i.e. cannot be scrolled out of view).
+          // Note that a full-screen interstitial (e.g., in mobile)
+          // can be distinguished from a floating/slider unit by the imp.instl field.
+          FLOATING_PLACEMENT = 5;
+        }
+
+        // OpenRTB 2.5: The various modes for when playback terminates.
+        enum PlaybackCessationMode {
+          // On Video Completion or when Terminated by User
+          COMPLETION_OR_USER = 1;
+
+          // On Leaving Viewport or when Terminated by User
+          LEAVING_OR_USER = 2;
+
+          // On Leaving Viewport Continues as a Floating/Slider Unit until
+          // Video Completion or when Terminated by User
+          LEAVING_CONTINUES_OR_USER = 3;
+        }
+
         message VideoExtensions {
           // Some exchanges support a "videotype=rewarded" field for videos. This
           // signifies that an end user will recieve a reward for interacting with
@@ -580,6 +628,110 @@ message Enums {
             UNKNOWN = -1;
             REWARDED = 0;
           }
+        }
+      }
+
+      message NativeRequest {
+        // OpenRTB Native 7.1: Core layouts. An implementing exchange may not
+        // support all asset variants or introduce new ones unique to that system.
+        enum LayoutId {
+          CONTENT_WALL = 1;
+          APP_WALL = 2;
+          NEWS_FEED = 3;
+          CHAT_LIST = 4;
+          CAROUSEL = 5;
+          CONTENT_STREAM = 6;
+          GRID = 7;
+          // Exchange-specific values above 500.
+        }
+
+        // OpenRTB Native 7.2: Below is a list of the core ad unit ids described
+        // by IAB here:
+        // http://www.iab.net/media/file/IABNativeAdvertisingPlaybook120413.pdf
+        // In feed unit is essentially a layout, it has been removed from the list.
+        // The in feed units can be identified via the layout parameter on the
+        // request. An implementing exchange may not support all asset variants
+        // or introduce new ones unique to that system.
+        enum AdUnitId {
+          PAID_SEARCH_UNIT = 1;
+          RECOMMENDATION_WIDGET = 2;
+          PROMOTED_LISTING = 3;
+          IAB_IN_AD_NATIVE = 4;
+          CUSTOM = 5;
+          // Exchange-specific values above 500.
+        }
+
+
+        // The context in which the ad appears - what type of content is
+        // surrounding the ad on the page at a high level. This maps directly to
+        // the new Deep Dive on In-Feed Ad Units. This denotes the primary
+        // context, but does not imply other content may not exist on the page -
+        // for example it's expected that most content platforms have some
+        // social components, etc.
+        enum Context {
+          // Content-centric context such as newsfeed, article, image gallery, video
+          // gallery, or similar.
+          CONTENT_CENTRIC = 1;
+          // Social-centric context such as social network feed, email, chat, or
+          // similar.
+          SOCIAL_CENTRIC = 2;
+          // Product context such as product listings, details, recommendations,
+          // reviews, or similar.
+          PRODUCT = 3;
+          // Exchange-specific values above 500.
+        }
+
+        // Next-level context in which the ad appears. Again this reflects the
+        // primary context, and does not imply no presence of other
+        // elements. For example, an article is likely to contain images but is
+        // still first and foremost an article. SubType should only be combined
+        // with the primary context type as indicated (ie for a context type of 1,
+        // only context subtypes that start with 1 are valid).
+        enum ContextSubtype {
+          // General or mixed content.
+          GENERAL_OR_MIXED = 10;
+          // Primarily article content (which of course could include images, etc
+          // as part of the article)
+          ARTICLE = 11;
+          // Primarily video content
+          VIDEO = 12;
+          // Primarily audio content
+          AUDIO = 13;
+          // Primarily image content
+          IMAGE = 14;
+          // User-generated content - forums, comments, etc
+          USER_GENERATED = 15;
+          // General social content such as a general social network
+          GENERAL_SOCIAL = 20;
+          // Primarily email content
+          EMAIL = 21;
+          // Primarily chat/IM content
+          CHAT_IM = 22;
+          // Content focused on selling products, whether digital or physical
+          SELLING_PRODUCTS = 30;
+          // Application store/marketplace
+          APPLICATION = 31;
+          // Product reviews site primarily (which may sell product secondarily)
+          REVIEW_SITE = 32;
+          // Exchange-specific values above 500.
+        }
+
+        // The FORMAT of the ad you are purchasing, separate from the surrounding
+        // context
+        enum PlacementType {
+          // In the feed of content - for example as an item inside the organic
+          // feed/grid/listing/carousel.
+          FEED = 1;
+          // In the atomic unit of the content - IE in the article page or
+          // single image page
+          ATOMIC_UNIT = 2;
+          // Outside the core content - for example in the ads section on the right
+          // rail, as a banner-style placement near the content, etc.
+          OUTSIDE_THE_CORE = 3;
+          // Recommendation widget, most commonly presented below the article
+          // content.
+          WIDGET = 4;
+          // Exchange-specific values above 500.
         }
       }
     }
@@ -724,6 +876,112 @@ message Enums {
       MOLABS          =  20;
       SPOTX           =  21;
       FYBER           =  22;
+      ADBUDDIZ        =  23;
+      ADCONDUCTOR     =  24;
+      ADEASY          =  25;
+      ADFORM          =  26;
+      ADLANTIC        =  27;
+      ADMAX           =  28;
+      ADMEDIA         =  29;
+      ADMETA          =  30;
+      ADMIXER         =  31;
+      ADMIZED         =  32;
+      ADOP            =  33;
+      ADTHINK         =  34;
+      ADRIVER         =  35;
+      ADRU            =  36;
+      ADSCALE         =  37;
+      ADSNATIVE       =  38;
+      ADSKOM          =  39;
+      ADSPRUCE        =  40;
+      ADSTIR          =  41;
+      ADSUPPLY        =  42;
+      ADUNITY         =  43;
+      ADYOULIKE       =  44;
+      AMBIENT         =  45;
+      ANCORA          =  46;
+      AOL             =  47;
+      APPVADOR        =  48;
+      AVOCARROT       =  49;
+      AXONIX          =  50;
+      BEACHFRONT      =  51;
+      BETWEEN         =  52;
+      BIDTELLECT      =  53;
+      BLUEWATERADS    =  54;
+      CAULY           =  55;
+      CENTRO          =  56;
+      CHAMELEON       =  57;
+      CLICKONOMETRICS =  58;
+      CONVERGE        =  59;
+      COULL           =  60;
+      DISH            =  61;
+      EXPERIAN        =  62;
+      FALKTECH        =  63;
+      FMX             =  64;
+      FIDELITY        =  65;
+      FLUCT           =  66;
+      COX             =  67;
+      GENIEE          =  68;
+      GMO             =  69;
+      FLOOR6          =  70;
+      GUMGUM          =  71;
+      IBILLBOARD      =  72;
+      IMOIBLE         =  73;
+      KARGO           =  74;
+      KIOSKED         =  75;
+      KRUX            =  76;
+      LIGATUS         =  77;
+      LIVEINTENT      =  78;
+      LKQD            =  79;
+      LUPON           =  80;
+      MADS            =  81;
+      MEDIABONG       =  82;
+      MICROAD         =  83;
+      MOBFOX          =  84;
+      MOBSMART        =  85;
+      MOCOPLEX        =  86;
+      NASMEDIA        =  87;
+      NATIVEADS       =  88;
+      NETSPRINT       =  89;
+      OOYALA          =  90;
+      OPTIMATIC       =  91;
+      POWERLINKS      =  92;
+      PROFITX         =  93;
+      PUBNATIVE       =  94;
+      REALVU          =  95;
+      REPUBLER        =  96;
+      SARA            =  97;
+      SCALEOUT        =  98;
+      SHARETHROUGH    =  99;
+      SMARTADSERVER   =  100;
+      SONOBI          =  101;
+      SORTABLE        =  102;
+      SSPICYADS       =  103;
+      STICKYADS       =  104;
+      SWITCHCONCEPTS  =  105;
+      TEADS           =  106;
+      THIRDPRESENCE   =  107;
+      THRONE          =  108;
+      TPMN            =  109;
+      TRIPLELIFT      =  110;
+      UCFUNNEL        =  111;
+      UNRULYX         =  112;
+      VDOPIA          =  113;
+      VI              =  114;
+      VMG             =  115;
+      VIDMATIC        =  116;
+      VMAX            =  117;
+      VRTCAL          =  118;
+      VUNGLE          =  119;
+      WORDPRESS       =  120;
+      XROST           =  121;
+      YIELDLAB        =  122;
+      YIELDONE        =  123;
+      YIELDONE_ADS    =  124;
+      YIELDONE_INNITY =  125;
+      YUME            =  126;
+      ZEDO            =  127;
+      ZEOTAP          =  128;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -764,6 +1022,47 @@ message Enums {
       UNKNOWN_CONTINENT = 0;
       NAM = 1; // North America
       EMEA = 2; // Europe, the Middle East & Asia
+    }
+
+    // Impression trackers are explicit fields in the BidResponse sent back to the
+    // exchange. The exchange is responsible for pinging the bidder and this helps
+    // reduce discrepancy between the exchange and the bidder.
+    // Exchanges support ImpressionTracker for certain segments of their inventory,
+    // and whether it supports third party impression urls in impression trackers,
+    // are captured by the enum below.
+    // The values in this enum are bit vectors.
+    // |-----------------|------|-----|------|---|---|
+    // |3rd_Party_Impurls|Native|Video|Banner|App|Web|
+    // |-----------------|------|-----|------|---|---|
+    // If 3rd_Party_Impurls is 1, they will be populated into the impression tracker
+    // BidResponse field. Otherwise they will be rendered in the creative markup.
+    enum ImpressionTracker {
+      NEVER_USE_TRACKER      =  0;  // Never render impression trackers.
+      ALWAYS_USE_TRACKER     = 63;  // Always render impression trackers, for both Beeswax and 3rd party impression urls.
+      APP_BANNER_USE_TRACKER = 38;  // Render impression trackers only for In-App Banners, for both Beeswax and 3rd party impression urls.
+      ALWAYS_USE_TRACKER_FOR_BEESWAX_ONLY = 31; // Always render impression trackers for Beeswax impression url.
+                                                // 3rd Party impression urls will be rendered in the markup.
+      VIDEO_USE_TRACKER_FOR_BEESWAX_ONLY = 11;  // Render impression trackers for video creatives in any environment
+                                                // for Beeswax impression url.
+                                                // 3rd Party impression urls will be rendered in the markup.
+    }
+
+    // Suppliers can request that we notify them about clicks and provide us
+    // with a click url macro. They can either request that we do it by
+    // redirecting the click itself to their click url and giving them a url to
+    // redirect the click back to, or by sending them a server call without the
+    // click.
+    // NO_CLICK_TRACKER means that the supplier does not want click
+    // notifications.
+    // CLICK_TRACKER_WITH_REDIRECT means that the supplier wants us to redirect
+    // the click to their click url and they'll redirect back to the url we
+    // provide.
+    // CLICK_TRACKER_WITHOUT_REDIRECT means that the supplier wants us to send
+    // them a server call to notify them about clicks.
+    enum SupplierClickTracker {
+      NO_CLICK_TRACKER = 0;
+      CLICK_TRACKER_WITH_REDIRECT = 1;
+      CLICK_TRACKER_WITHOUT_REDIRECT = 2;
     }
   }
 }
