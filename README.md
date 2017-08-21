@@ -9,7 +9,7 @@ Beewswax offers two types of APIs to our customers, the "Buzz" REST API for camp
 
 The REST API documentation can be found [here](http://docs.beeswax.com/docs/getting-started).
 
-The realtime documentation can be found [here](http://docs.beeswax.com/docs/getting-started).
+The realtime documentation can be found [here](http://docs.beeswax.com/docs/about-the-stinger-bidder).
 
 
 ### Maven Dependency
