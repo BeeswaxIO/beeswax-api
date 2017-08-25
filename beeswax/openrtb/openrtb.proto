@@ -1453,7 +1453,7 @@ message NativeRequest {
        * Type ID of the element supported by the publisher. The publisher can display this
        * information in an appropriate format.
        */
-      required DataAssetType type = 1;
+      optional DataAssetType type = 1;
       /**
        * Maximum length of the text in the element's response.
        */
