@@ -127,6 +127,7 @@ message BidAgentResponse {
     // BidAgentRequest must have bidding.currency set to USD;
     // otherwise this bid will be dropped.
     optional uint64 bid_price_micros_usd = 2 [default = 0, deprecated = true];
+    // Value should be the price of a single impression. Ex: 12$ CPM = 0.012$ => bid_price_micros = 12000
     optional uint64 bid_price_micros = 6 [default = 0];
     optional uint64 creative_id = 3 [deprecated = true];
     optional Creative creative = 5;
