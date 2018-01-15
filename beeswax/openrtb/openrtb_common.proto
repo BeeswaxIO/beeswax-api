@@ -962,6 +962,7 @@ message Enums {
       ZEOTAP          =  128;
       POLAR           =  129;
       UNITY           =  130;
+      DAILYMOTION     =  131;
     }
 
     // Placement Type of the OpenRTB Bid Request
