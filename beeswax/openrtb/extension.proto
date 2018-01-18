@@ -11,6 +11,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option cc_enable_arenas = true;
 
 import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
@@ -35,7 +36,7 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 12
+// Next available tag: 13
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
@@ -88,11 +89,35 @@ message BidRequestExtensions {
   optional AppNexusBidRequestExtension appnexus = 7;
   optional AdxBidRequestExtension adx = 9;
 
+  enum AdsTxtStatus {
+    UNKNOWN = -1;
+    // The request does not contain a domain, either because it is not a web request (ie it is an
+    // app or native request) or it is a web request but does not contain a domain. Since it doesn't
+    // have a domain, we cannot check it's Ads.txt status.
+    NO_DOMAIN = 0;
+    // The request's domain does not have an Ads.txt file
+    NO_ADS_TXT_FILE = 1;
+    // We have not looked up the Ads.txt file for the request's domain
+    ADS_TXT_NOT_SCANNED = 2;
+    // The request's domain does not allow any advertising
+    NO_ADVERTISING_ALLOWED = 3;
+    // The request is missing a publisher id so we cannot check its Ads.txt status
+    MISSING_PUB_ID = 4;
+    // The request's domain does have an Ads.txt file, but it does not allow advertising from this
+    // exchange / publisher ID combination
+    NOT_AUTH = 5;
+    // The domain's Ads.txt file allows this exchange / publisher ID to resell advertising
+    AUTH_RESELLER = 6;
+    // The domain's Ads.txt file allows this exchange / publisher ID to advertise directly
+    AUTH_DIRECT = 7;
+  }
+  optional AdsTxtStatus ads_txt = 12;
+
   extensions 1000 to max;
 }
 
 
-// Next available tag: 9
+// Next available tag: 11
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
@@ -108,11 +133,15 @@ message ImpressionExtensions {
   // Exchange specific extensions
   optional AdxImpressionExtension adx = 1;
 
+  // allowed restricted ad categories for ADX
+  repeated int32 allowed_restricted_category = 9 [packed=true];
+  repeated int32 allowed_restricted_category_for_deals = 10 [packed=true];
+
   extensions 1000 to max;
 
   // Deprecated field. Use ViewabilityExtensions field instead.
   optional float exchange_predicted_view_rate = 6 [deprecated = true];
- }
+}
 
 // Next available tag: 5
 message BannerExtensions {
@@ -182,7 +211,7 @@ message VideoExtensions {
   //   2. No exchange actually defines this field here, it is a generalization
   //      of the different ways that exchanges denote rewarded videos.
   optional bool rewarded = 5;
- 
+
   extensions 1000 to max;
 }
 
@@ -194,7 +223,10 @@ message PMPExtensions {
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message DirectDealExtensions {
+  // Exchange specific extensions
+  optional AdxDirectDealExtension adx = 1;
   extensions 1000 to max;
 }
 
@@ -215,7 +247,7 @@ message ProducerExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 10
+// Next available tag: 12
 // Tag 1: idfa - Deprecated. Do not resuse.
 message DeviceExtensions {
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
@@ -243,10 +275,13 @@ message DeviceExtensions {
   // Added by augmentor in Beeswax Front End Server (FES)
   optional Enums.BidRequest.Device.DeviceType augmented_devicetype = 9 [default = UNKNOWN];
 
+  // Added by augmentor in Beeswax Front End Server (FES)
+  optional string augmented_carrier = 10;
+
   extensions 1000 to max;
 }
 
-// Next available tag: 4
+// Next available tag: 5
 message UserExtensions {
   // This field identifies the user of the bid request. It will be used
   // for user segment lookup and frequency cap.
@@ -259,6 +294,13 @@ message UserExtensions {
   optional string user_id = 1;
   optional Enums.BidRequest.User.UserIdType user_id_type = 2;
 
+  // Next available tag: 3
+  message MatchedUserGroups {
+    repeated string matched_user_ids = 1;
+    optional string partner_handle = 2;
+  }
+  repeated MatchedUserGroups matched_user_groups = 4;
+
   // Number of days since the user cookie has been dropped, for example, 10
   optional int32 cookie_age = 3;
   extensions 1000 to max;
@@ -268,9 +310,11 @@ message PublisherExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message GeoExtensions {
   optional AdxGeoExtension adx = 1;
+  // All granularities of regions in ISO 3166-2.
+  repeated string regions = 2;
   extensions 1000 to max;
 }
 
@@ -308,7 +352,10 @@ message TargetingGeoExtension {
   // Country using ISO-3166-1 Alpha-3.
   optional string country = 1 [default = "000"];
   // Region using ISO 3166-2
-  optional string region = 2 [default = "000/00"];
+  optional string region = 2 [default = "000/00", deprecated = true];
+  // All granularities of regions in ISO 3166-2. If it is empty, "000/00" should
+  // be used as the targeting key.
+  repeated string regions = 10;
   // City using United Nations Code for Trade and Transport Locations
   // (http://www.unece.org/cefact/locode/service/location.htm).
   optional string city = 3 [default = "-1"];
@@ -342,6 +389,11 @@ message AdxBidRequestExtension {
   // The offset of the user's time from GMT in minutes.
   // For example, GMT-5 is timezone_offset = -300.
   optional int32 timezone_offset = 2;
+}
+
+// Next available tag: 2
+message AdxDirectDealExtension {
+  optional bool publisher_blocks_overridden = 1 [default = false];
 }
 
 // Next available tag: 3
