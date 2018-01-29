@@ -44,13 +44,19 @@ message BidAgentResponse {
     }
   }
 
-  // Next Id: 3
+  // Next Id: 4
   // AgentData is a container for the AgentParams (defined above) and an
   // identifier for the Agent.
   // A use case for agent_id could be the release version of the Bid Agent.
   message AgentData {
     optional string agent_id = 1;
     repeated AgentParams agent_params = 2;
+    // By setting this field to true, the bidding agents can instruct Beeswax
+    // to send the agent data to the exchange in the bid response. However,
+    // the exchange must be willing to accept this data from the Bidding Agent.
+    // Beeswax ensures that only the bidders that are whitelisted
+    // by the exchange are able to utilize this feature.
+    optional bool send_to_exchange = 3 [default = false];
   }
 
   // Next Id: 5
