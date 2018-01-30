@@ -22,7 +22,8 @@ option java_package = "com.beeswax.bid";
 // The currency used for all fields is specified in the `currency` field,
 // which is set per campaign in buzz.
 //
-// Next Tag: 6
+
+// Next Tag: 8
 message Bidding {
   // CPM: Always bid a flat price on all matched requests.
   message CpmStrategy {
@@ -30,7 +31,8 @@ message Bidding {
   }
   // CPC: Optimize towards a cost per click goal.
   message CpcStrategy {
-    optional uint64 max_bid_micros = 1;
+    // Deprecated, use Bidding.max_bid_micros instead.
+    optional uint64 max_bid_micros = 1 [deprecated = true];
     optional uint64 ecpc_target_micros = 2;
   }
   // Custom strategy is defined using Buzz API.
@@ -53,7 +55,7 @@ message Bidding {
   optional CpcStrategy cpc_strategy = 2;
   optional CustomStrategy custom_strategy = 4;
   optional currency.Currency.Code currency = 5;
-
+  optional uint64 max_bid_micros = 7;
   // The following fields are for internal use by the bidding agents and
   // will not be set in the request or response.
   optional uint64 bid_price_micros = 3;
