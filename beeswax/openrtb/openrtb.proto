@@ -207,6 +207,13 @@ message BidRequest {
      */
     optional string bidfloorcur = 9 [default = "USD"];
     /*
+     * Indicates the type of browser opened upon clicking the
+     * creative in an app, where 0 = embedded, 1 = native.
+     * Note that the Safari View Controller in iOS 9.x devices is considered
+     * a native browser for purposes of this attribute.
+     */
+    optional bool clickbrowser = 16;
+    /*
      * Array of names for supported iframe busters. Exchange specific.
      */
     repeated string iframebuster = 10;
