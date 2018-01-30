@@ -11,7 +11,6 @@ import "beeswax/openrtb/openrtb.proto";
 
 // Stinger will issue a HTTP request to the augmentor.
 // The following message will be present in the body of the HTTP request.
-// Next id: 2
 message AugmentorRequest {
   // Bid request received from the exchange after it has been processed by Beeswax.
   optional openrtb.BidRequest bid_request = 1;
@@ -24,10 +23,8 @@ message AugmentorRequest {
 //
 // Also custom bidding agents can receive this data through the augmentor_data field in
 // the BidRequestExtension.
-// Next id: 3
 message AugmentorResponse {
 
-  // Next id: 4
   message Segment {
     // The Id of an augmentor segment.
     // This field is primarily used for line item targeting.
@@ -35,23 +32,11 @@ message AugmentorResponse {
     // to register the segment ids with Beeswax via the Buzz Segments API.
     optional string id = 1;
 
-    // This is a deprecated field which is not used any more.
-    optional string deprecated_string_value = 2 [deprecated = true];
-
-    // This field is ONLY used for bid modifiers as a dynamic mulitplier. If
-    // the segment is present in the request, the multiplier will be applied to
-    // the bid price. A valid range of multipliers should be between 0 and 10
-    // and invalid ones will be ignored.
-    optional float value = 3;
+    // This field can be used to pass additional information about the segment
+    // that Stinger will forward to the bidding agent.
+    optional string value = 2;
   }
 
   // Array of Augmentor segments
   repeated Segment segments = 1;
-
-  // Next id: 3
-  message Macro {
-    optional string name = 1;
-    optional string value = 2;
-  }
-  repeated Macro dynamic_macros = 3;
 }
