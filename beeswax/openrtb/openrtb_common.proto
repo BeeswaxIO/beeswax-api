@@ -990,6 +990,7 @@ message Enums {
       US_EAST_1 = 1;
       US_WEST_2 = 2;
       EU_WEST_1 = 3;
+      AP_NORTHEAST_1 = 4;
     }
 
     // Continents are nonoverlapping geographic areas. Continent-to-DataCenter
@@ -1001,8 +1002,9 @@ message Enums {
     enum Continent {
       // Keep continents in sync with Buzz
       UNKNOWN_CONTINENT = 0;
-      NAM = 1; // North America
+      NAM = 1;  // North America
       EMEA = 2; // Europe, the Middle East & Asia
+      APAC = 3; // Asia Pacific
     }
 
     // Impression trackers are explicit fields in the BidResponse sent back to the
