@@ -53,5 +53,5 @@ message AugmentorResponse {
     optional string name = 1;
     optional string value = 2;
   }
-  repeated Macro dynamic_macros = 3;
+  repeated Macro dynamic_macros = 2;
 }
