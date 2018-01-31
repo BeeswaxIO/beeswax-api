@@ -42,6 +42,32 @@ message AugmentorResponse {
   // Array of Augmentor segments
   repeated Segment segments = 1;
 
+  // The creative's macros {{DYNAMIC:<name>:STRING}} in the value of a
+  // creative content or creative template, will be replaced with the
+  // content of `value`.
+  // For example, if name = "foo", value = "bar", the macro
+  // {{DYNAMIC:FOO:STRING}} will be replaced with "bar".
+  //
+  // Please note the following constraints:
+  // (1) Macro values sent via the custom augmentor will apply to whatever
+  // creative matches to the request. In other words, they are not specific
+  // to a particular creative or line item.
+  // (2) Macro name is case-insensitive. (if name = "foo",
+  // the macro {{DYNAMIC:FOO:STRING}} will still be replaced)
+  // (3) For a macro to be expanded as an empty string, you should
+  // explicitly set the macro name in the `name` field, and leave the
+  // `value` feild empty; Dynamic macros in creatives that does
+  // not have a match from the `name` field here will not be expanded.
+  // (4) If a dynamic macro was not expanded, a string of {{DY:<name>}}
+  // (instead of {{DYNAMIC:<name>:STRING}}) will be placed at where the
+  // {{DYNAMIC:<name>:STRING}} macro was placed.
+  // (5) Values of dynamic macros cannot contain other Beeswax macros,
+  // (including other dynamic macros), as the contained macros will
+  // not be expanded.
+  // (6) If the macro is part of a url, the value shold be url-safe
+  // (e.g, by escaping). Note that click_url is properly escaped as a whole,
+  // so if the macro is in click_url, its value does not need to
+  // have extra escaping; url-safe is enough.
   // Next id: 3
   message Macro {
     optional string name = 1;
