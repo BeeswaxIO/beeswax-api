@@ -109,10 +109,32 @@ message FrequencyCapsInfo {
   optional uint32 last_imp_timestamp = 3;
 }
 
+// VendorFeesInfo contains the aggregrated amount and percent of a
+// lineitem/campaign's vendor fees.
+// Next Id: 3
+message VendorFeesInfo {
+  // total_vendor_fees_transactions are grouped by currency.
+  // vendor fees with the same currency are aggregrated into one
+  // CurrencyTransaction object.
+  // For example, if a lineitem/campaign has a vendor fees of 30 micros USD,
+  // another of 20 micros USD, the other 40 micros GBP,
+  // there will be two items in this field - one 50 micros USD,
+  // the other 40 micros GBP. (CurrencyTransaction contains the real-time
+  //conversion rate)
+  // In rare conditions when currency conversion rate is not available,
+  // total_vendor_fees_transactions.rate field will not be populated.
+  repeated currency.CurrencyTransaction total_vendor_fees_transactions = 1;
+  // total_fee_percent_micros is the sum of percent value in micros of all
+  // percent type vendor fees.
+  // For example, a line/campaign has a vendor fees at 5%, another 2%,
+  // this field will be "7" in micros, i.e., 7000000
+  optional int64 total_fee_percent_micros = 2;
+}
+
 // Adcandidate represents an eligible line item and its attributes.
 // Stinger determines the eligible line items for a given request.
 //
-// Next Tag: 12
+// Next Tag: 14
 message Adcandidate {
   optional uint64 line_item_id = 1;
   optional uint64 campaign_id = 5;
@@ -129,4 +151,6 @@ message Adcandidate {
   // This field wil be empty if the campaign does not have any frequency
   // cap associated with it.
   optional FrequencyCapsInfo campaign_frequency_caps_info = 11;
+  optional VendorFeesInfo line_item_vendor_fees_info = 12;
+  optional VendorFeesInfo campaign_vendor_fees_info = 13;
 }
