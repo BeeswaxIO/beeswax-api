@@ -989,6 +989,7 @@ message Enums {
       US_EAST_1 = 1;
       US_WEST_2 = 2;
       EU_WEST_1 = 3;
+      AP_NORTHEAST_1 = 4;
     }
 
     // Continents are nonoverlapping geographic areas. Continent-to-DataCenter
