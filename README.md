@@ -17,6 +17,6 @@ The realtime documentation can be found [here](http://docs.beeswax.com/docs/abou
     <dependency>
       <groupId>com.beeswax</groupId>
       <artifactId>beeswax-api</artifactId>
-      <version>2018-01-31</version>
+      <version>2018-03-13</version>
     </dependency>
 
