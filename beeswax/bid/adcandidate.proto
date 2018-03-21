@@ -55,6 +55,8 @@ message Bidding {
   optional CpcStrategy cpc_strategy = 2;
   optional CustomStrategy custom_strategy = 4;
   optional currency.Currency.Code currency = 5;
+  // The product of all eligible modifiers' multipliers.
+  optional float bid_modifier_multipliers_product = 6 [default = 1.0];
   optional uint64 max_bid_micros = 7;
   // The following fields are for internal use by the bidding agents and
   // will not be set in the request or response.
