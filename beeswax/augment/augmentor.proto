@@ -27,6 +27,7 @@ message AugmentorRequest {
 // Next id: 3
 message AugmentorResponse {
 
+  // Next id: 4
   message Segment {
     // The Id of an augmentor segment.
     // This field is primarily used for line item targeting.
@@ -34,9 +35,14 @@ message AugmentorResponse {
     // to register the segment ids with Beeswax via the Buzz Segments API.
     optional string id = 1;
 
-    // This field can be used to pass additional information about the segment
-    // that Stinger will forward to the bidding agent.
-    optional string value = 2;
+    // This is a deprecated field which is not used any more.
+    optional string deprecated_string_value = 2 [deprecated = true];
+
+    // This field is ONLY used for bid modifiers as a dynamic mulitplier. If
+    // the segment is present in the request, the multiplier will be applied to
+    // the bid price. A valid range of multipliers should be between 0 and 10
+    // and invalid ones will be ignored.
+    optional float value = 3;
   }
 
   // Array of Augmentor segments
