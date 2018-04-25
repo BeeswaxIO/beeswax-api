@@ -802,7 +802,6 @@ message Enums {
         OTHER_MOBILE_ID = 8; // The serving system will use this type when the mobile OS is unknown.
                              // The request will be processed in the same way as other
                              // mobile ids. (Prefix with `mid.` and do frequency cap, user_data augmentation, etc)
-        IP_ADDRESS = 9; // Support for IP Segments
       }
     }
   }
