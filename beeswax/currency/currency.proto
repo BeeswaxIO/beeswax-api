@@ -15,8 +15,6 @@ message Currency {
     GBP = 3;  // Pound Sterling
     CAD = 4;  // Canadian Dollar
     CHF = 5;  // Swiss Franc
-    UAH = 6;  // Ukrainian hryvnia
-    JPY = 7;  // Japanese Yen
   }
 }
 

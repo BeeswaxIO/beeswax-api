@@ -53,7 +53,7 @@ message BidRequestExtensions {
   // Used to identify Stinger.
   optional string buzz_key = 5;
 
-  // Next available tag: 4
+  // Next available tag: 3
   message AugmentorData {
 
     // Next available tag: 3
@@ -71,9 +71,6 @@ message BidRequestExtensions {
 
     // Array of Augmentor segments
     repeated Segment segment = 2;
-
-    // map from dynamic modifier token to float multiplier for custom list items
-    map<string, float> custom_list_modifier_map = 3;
   }
 
   // This field is used by Augmentors like ManagedListAugmentor
@@ -91,8 +88,6 @@ message BidRequestExtensions {
   optional AppNexusBidRequestExtension appnexus = 7;
   optional AdxBidRequestExtension adx = 9;
 
-  // if you add new values to this enum, remember to update the ads.txt continuous queries which
-  // have a where clause that depend on these values
   enum AdsTxtStatus {
     UNKNOWN = -1;
     // The request does not contain a domain, either because it is not a web request (ie it is an
@@ -285,7 +280,7 @@ message DeviceExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 8
+// Next available tag: 5
 message UserExtensions {
   // This field identifies the user of the bid request. It will be used
   // for user segment lookup and frequency cap.
@@ -303,21 +298,10 @@ message UserExtensions {
     repeated string matched_user_ids = 1;
     optional string partner_handle = 2;
   }
-  // This field contains user data (user_ids) across all buzz keys. Readers 
-  // downstream of FES are expected to use the BuzzKeyPartnerHandle (ACL)
-  // mapping to recreate the per buzz key data.
   repeated MatchedUserGroups matched_user_groups = 4;
 
   // Number of days since the user cookie has been dropped, for example, 10
   optional int32 cookie_age = 3;
-  // map from dynamic bid modifier token to multiplier.
-  // Since dynamic modifiers are applied on user/list level,
-  // the key should always be a token rather than a boolean expression.
-  map<string, float> dynamic_modifiers_map = 5;
-  // These fields contain prefixed IP (v4 & v6) addresses for use in
-  // RUF and Userdata augmentors (eg. 'ip.1.2.3.4')
-  optional string ip = 6;
-  optional string ipv6 = 7;
   extensions 1000 to max;
 }
 

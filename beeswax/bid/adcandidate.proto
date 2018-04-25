@@ -1,4 +1,4 @@
-// Copyright 2018, BeeswaxIO Corporation
+// Copyright 2015, Beeswax.IO Inc.
 //
 // Adcandidate represents a line item (along with its attributes) that
 // is eligible to serve on a given bid request.
@@ -9,7 +9,6 @@ syntax = "proto2";
 package bid;
 
 import "beeswax/currency/currency.proto";
-
 
 option java_package = "com.beeswax.bid";
 
@@ -62,8 +61,6 @@ message Bidding {
   // The following fields are for internal use by the bidding agents and
   // will not be set in the request or response.
   optional uint64 bid_price_micros = 3;
-
-  extensions 101 to 199;
 }
 
 // Pacing determines the rate of spend of the budget for a line item.
