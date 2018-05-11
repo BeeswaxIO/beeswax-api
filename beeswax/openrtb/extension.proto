@@ -345,7 +345,6 @@ message RegulationsExtensions {
   extensions 1000 to max;
 }
 
-
 message BidResponseExtensions {
   extensions 1000 to max;
 }
