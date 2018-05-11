@@ -304,9 +304,6 @@ message UserExtensions {
     repeated string matched_user_ids = 1;
     optional string partner_handle = 2;
   }
-  // This field contains user data (user_ids) across all buzz keys. Readers
-  // downstream of FES are expected to use the BuzzKeyPartnerHandle (ACL)
-  // mapping to recreate the per buzz key data.
   repeated MatchedUserGroups matched_user_groups = 4;
 
   // Number of days since the user cookie has been dropped, for example, 10
