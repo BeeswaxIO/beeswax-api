@@ -340,7 +340,6 @@ message SegmentExtensions {
 
 message RegulationsExtensions {
   optional Flag gdpr = 1;
-  optional Flag gdpr_consent = 2;
   extensions 1000 to max;
 }
 
