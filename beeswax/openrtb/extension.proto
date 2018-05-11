@@ -336,9 +336,15 @@ message SegmentExtensions {
 }
 
 message RegulationsExtensions {
+  // When this field is set to true, it implies that Beeswax has determined that
+  // this request needs to comply with the GDPR terms and conditions.
   optional Flag gdpr = 1;
+  // The raw IAB consent string or "daisybit" as provided in the incoming bid
+  // request.
+  optional string gdpr_consent_string = 2;
   extensions 1000 to max;
 }
+
 
 message BidResponseExtensions {
   extensions 1000 to max;

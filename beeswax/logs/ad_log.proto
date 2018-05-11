@@ -154,7 +154,7 @@ message ActivityLogMessage {
 //   may be trafficked on the shopping cart page of a retail portal.
 //   For conversion events, the following fields are always expected to be populated:
 //   a) tag_id
-//   b) user_id or user_id_hashed (if available)
+//   b) user_id
 //
 // 2 Postback Events
 //  In this scenario, the conversion attribution is determined by a third party and the
@@ -166,10 +166,6 @@ message ActivityLogMessage {
 //
 message ConversionLogMessage {
   optional string user_id = 1;
-
-  // On GDPR requests, user_id field is omitted and user_id_hashed is populated instead.
-  optional string user_id_hashed = 9;
-
   // Customer defined transaction value e.g. Price in shopping cart.
   optional string value = 2;
   // Usually, the number of items purchased
