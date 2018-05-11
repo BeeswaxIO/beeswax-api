@@ -33,7 +33,7 @@ message RequestLogMessage {
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
-// Next Tag: 13
+// Next Tag: 15
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional base.EventId auctionid = 1;
@@ -50,15 +50,21 @@ message ImpressionLogMessage {
   optional uint64 bid_price_micros_usd = 3;
   optional openrtb.Enums.Inventory.Source inventory_source = 4;
   optional string user_id = 5;
+  // On GDPR requests, user_id field is omitted and user_id_hashed is populated instead.
+  optional string user_id_hashed = 13;
 
   // Represents the winning price in the auction.
   optional uint64 win_price_micros_usd = 6;
   optional uint64 rx_timestamp_usecs = 7;
 
   optional openrtb.Enums.Inventory.DataCenter data_center = 8;
+
+  // When this field is set to true, it implies that Beeswax has determined that
+  //  this request needs to comply with the GDPR terms and conditions.
+  optional bool is_gdpr = 14 [default = false];
 }
 
-// Next Tag: 11
+// Next Tag: 13
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
   optional base.EventId auctionid = 1;
@@ -71,6 +77,8 @@ message ClickLogMessage {
 
   optional openrtb.Enums.Inventory.Source inventory_source = 3;
   optional string user_id = 4;
+  // On GDPR requests, user_id field is omitted and user_id_hashed is populated instead.
+  optional string user_id_hashed = 11;
 
   // Represents optional data sent by the customer.
   optional string user_data = 5;
@@ -82,9 +90,13 @@ message ClickLogMessage {
     COMPANION = 2; // clicks received from companion click through url
   }
   optional Type click_type = 10 [default = REGULAR];
+
+  // When this field is set to true, it implies that Beeswax has determined that
+  //  this request needs to comply with the GDPR terms and conditions.
+  optional bool is_gdpr = 12 [default = false];
 }
 
-// Next Tag: 11
+// Next Tag: 13
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
@@ -118,13 +130,20 @@ message ActivityLogMessage {
   }
   optional Type type = 4;
   optional string user_id = 5;
+  // On GDPR requests, user_id field is omitted and user_id_hashed is populated instead.
+  optional string user_id_hashed = 11;
 
   // Represents optional data sent by the customer.
   optional string user_data = 6;
   optional uint64 rx_timestamp_usecs = 7;
+
+  // When this field is set to true, it implies that Beeswax has determined that
+  //  this request needs to comply with the GDPR terms and conditions.
+  optional bool is_gdpr = 12 [default = false];
+
 }
 
-// Next Tag: 9
+// Next Tag: 11
 // Conversion tag urls can be created using the Buzz API.
 // Whenever a conversion tag fires, Beeswax records that event into a
 // ConversionLogMessage.
@@ -135,7 +154,7 @@ message ActivityLogMessage {
 //   may be trafficked on the shopping cart page of a retail portal.
 //   For conversion events, the following fields are always expected to be populated:
 //   a) tag_id
-//   b) user_id (if available)
+//   b) user_id or user_id_hashed (if available)
 //
 // 2 Postback Events
 //  In this scenario, the conversion attribution is determined by a third party and the
@@ -147,6 +166,10 @@ message ActivityLogMessage {
 //
 message ConversionLogMessage {
   optional string user_id = 1;
+
+  // On GDPR requests, user_id field is omitted and user_id_hashed is populated instead.
+  optional string user_id_hashed = 9;
+
   // Customer defined transaction value e.g. Price in shopping cart.
   optional string value = 2;
   // Usually, the number of items purchased
@@ -161,6 +184,10 @@ message ConversionLogMessage {
   optional uint64 rx_timestamp = 7;
   // auction id (Filled only for postback events)
   optional string auctionid = 8;
+
+  // When this field is set to true, it implies that Beeswax has determined that
+  //  this request needs to comply with the GDPR terms and conditions.
+  optional bool is_gdpr = 10 [default = false];
 }
 
 // Next Tag: 6
