@@ -33,7 +33,7 @@ message RequestLogMessage {
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
-// Next Tag: 15
+// Next Tag: 16
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional base.EventId auctionid = 1;
@@ -62,6 +62,8 @@ message ImpressionLogMessage {
   // When this field is set to true, it implies that Beeswax has determined that
   //  this request needs to comply with the GDPR terms and conditions.
   optional bool is_gdpr = 14 [default = false];
+  // The raw IAB consent string or "daisybit" as provided in the incoming bid request.
+  optional string gdpr_consent_string = 15;
 }
 
 // Next Tag: 13
