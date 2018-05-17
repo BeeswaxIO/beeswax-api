@@ -120,15 +120,26 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
-  </build>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+         <serverId>ossrh</serverId>
+         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+         <autoReleaseAfterClose>true</autoReleaseAfterClose>
+       </configuration>
+     </plugin>
+   </plugins>
+ </build>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
-      <version>3.4.0</version>
-    </dependency>
-  </dependencies>
+ <dependencies>
+  <dependency>
+    <groupId>com.google.protobuf</groupId>
+    <artifactId>protobuf-java</artifactId>
+    <version>3.4.0</version>
+  </dependency>
+</dependencies>
 
 </project>
