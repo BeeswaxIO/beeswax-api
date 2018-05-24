@@ -1,4 +1,4 @@
-// Copyright 2016, Beeswax.IO Inc.
+// Copyright 2018, Beeswax.IO Inc.
 //
 // Currency related information
 
@@ -6,6 +6,7 @@ syntax = "proto3";
 package currency;
 
 option java_package = "com.beeswax.base";
+option cc_enable_arenas = true;
 
 message Currency {
   enum Code {
@@ -15,6 +16,8 @@ message Currency {
     GBP = 3;  // Pound Sterling
     CAD = 4;  // Canadian Dollar
     CHF = 5;  // Swiss Franc
+    UAH = 6;  // Ukrainian hryvnia
+    JPY = 7;  // Japanese Yen
   }
 }
 
