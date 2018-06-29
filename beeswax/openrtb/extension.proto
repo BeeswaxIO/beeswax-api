@@ -409,7 +409,7 @@ message AdxDirectDealExtension {
   optional bool publisher_blocks_overridden = 1 [default = false];
 }
 
-// Next available tag: 3
+// Next available tag: 5
 message AdxImpressionExtension {
   optional int32 adslot_id = 1;
   // Historical click-through rate for ads served in the ad slot. This is
@@ -417,6 +417,9 @@ message AdxImpressionExtension {
   // -1.0 indicates that historical click-through rate data is not available.
   // This figure does not include data aggregated from AdWords.
   optional float click_through_rate = 2 [default = -1.0];
+  repeated int32 allowed_vendor_type = 3;
+  // This field will be populated and effective when regs.ext.gdpr is YES.
+  repeated int64 consented_providers = 4;
 }
 
 message AdxGeoExtension {
