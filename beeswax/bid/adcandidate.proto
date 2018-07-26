@@ -1,4 +1,4 @@
-// Copyright 2015, Beeswax.IO Inc.
+// Copyright 2018, BeeswaxIO Corporation.
 //
 // Adcandidate represents a line item (along with its attributes) that
 // is eligible to serve on a given bid request.
@@ -66,10 +66,13 @@ message Bidding {
 // Pacing determines the rate of spend of the budget for a line item.
 // When pace_delivery is set to true, the bidding agent is expected to pace
 // the spend of the line item uniformly over its life time.
+// bid_prob is the bid probability set by Beeswax pacing service. Beeswax
+// will bid on adcandidates based on this value.
 //
-// Next Tag: 2
+// Next Tag: 3
 message Pacing {
   optional bool pace_delivery = 1 [default = false];
+  optional float bid_prob = 2 [default = 0.0];
 }
 
 // FrequencyCapsInfo contains the information of a lineitem/campaign's
