@@ -66,8 +66,9 @@ message Bidding {
 // Pacing determines the rate of spend of the budget for a line item.
 // When pace_delivery is set to true, the bidding agent is expected to pace
 // the spend of the line item uniformly over its life time.
-// bid_prob is the bid probability set by Beeswax pacing service. Beeswax
-// will bid on adcandidates based on this value.
+// bid_prob is a float bid probability set by Beeswax pacing service. Beeswax
+// will bid on adcandidates based on this value. The range will be between
+// 0.0 and 1.0
 //
 // Next Tag: 3
 message Pacing {
