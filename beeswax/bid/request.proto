@@ -63,9 +63,11 @@ message BidAgentResponse {
   // Creative represents the creative to be rendered in the openrtb bid
   // response.
   message Creative {
-    // The id of the chosen creative. It should be one of the ids in
-    // Adcandidate.creative_ids where the Adcandidate's line_item_id ==
-    // Bid.line_item_id for the Bid containing this Creative message,
+    // The id of the chosen creative. If the creative or the creative id are not provided,
+    // Stinger will choose the creative based on the creative weighting method selected for
+    // the line item (ie either randomly or in a weighted manner). If it is provided, it
+    // should be one of the ids in Adcandidate.creative_ids where the Adcandidate's
+    // line_item_id == Bid.line_item_id for the Bid containing this Creative message,
     // otherwise the bid will not be processed.
     optional uint64 id = 1;
     // Pixels that will be fired when the creative is served in addition
@@ -124,6 +126,7 @@ message BidAgentResponse {
   // Bid agent needs to select a set of Adcandidates from the request
   // and for each Adcandidate, submit a bid containing the following
   // information.
+  // Next Tag: 7
   message Bid {
     optional uint64 line_item_id = 1;
     // Deprecated, use bid_price_micros instead.
