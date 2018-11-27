@@ -18,6 +18,7 @@ option java_package = "com.beeswax.logs";
 import "beeswax/bid/adcandidate.proto";
 import "beeswax/bid/request.proto";
 import "beeswax/base/eventid.proto";
+import "beeswax/currency/currency.proto";
 import "beeswax/openrtb/openrtb.proto";
 import "beeswax/openrtb/openrtb_common.proto";
 
@@ -33,7 +34,7 @@ message RequestLogMessage {
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
-// Next Tag: 16
+// Next Tag: 17
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
   optional base.EventId auctionid = 1;
@@ -56,6 +57,8 @@ message ImpressionLogMessage {
   // Represents the winning price in the auction.
   optional uint64 win_price_micros_usd = 6;
   optional uint64 rx_timestamp_usecs = 7;
+  // Represents the win price in the bidder's currency, with the given exchange rate
+  optional currency.CurrencyTransaction win_price = 16;
 
   optional openrtb.Enums.Inventory.DataCenter data_center = 8;
 
