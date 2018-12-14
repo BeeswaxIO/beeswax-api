@@ -6,6 +6,7 @@ syntax="proto2";
 package augment;
 
 option java_package = "com.beeswax.augment";
+option cc_enable_arenas = true;
 
 import "beeswax/openrtb/openrtb.proto";
 
@@ -22,11 +23,12 @@ message AugmentorRequest {
 // Augmentor can choose not to bid at all in which case it must still
 // respond to the HTTP request with a 204 status code.
 //
-// Also custom bidding agents can receive this data through the augmentor_data field in
-// the BidRequestExtension.
+// Also custom bidding agents can receive this data through the data field in
+// the BidRequest.User.Data
 // Next id: 3
 message AugmentorResponse {
 
+  // Next id: 4
   message Segment {
     // The Id of an augmentor segment.
     // This field is primarily used for line item targeting.
@@ -37,6 +39,12 @@ message AugmentorResponse {
     // This field can be used to pass additional information about the segment
     // that Stinger will forward to the bidding agent.
     optional string value = 2;
+
+    // This field is ONLY used for bid modifiers as a dynamic mulitplier. If
+    // the segment is present in the request, the multiplier will be applied to
+    // the bid price. A valid range of multipliers should be between 0 and 10
+    // and invalid ones will be ignored.
+    optional float multiplier = 3;
   }
 
   // Array of Augmentor segments
