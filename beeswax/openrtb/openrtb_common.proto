@@ -6,6 +6,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option cc_enable_arenas = true;
 
 // OpenRTB 6.1: IAB contextual taxonomy for categorization.
 enum ContentCategory {
@@ -537,6 +538,8 @@ message Enums {
           AUTOPLAY_SOUND_OFF = 2;
           CLICK_TO_PLAY = 3;
           MOUSE_OVER = 4;
+          VIEWPORT_SOUND_ON = 5;
+          VIEWPORT_SOUND_OFF = 6;
         }
 
         // OpenRTB 6.9: Various options for the video start delay. If the start delay
@@ -786,9 +789,6 @@ message Enums {
     }
 
     message User {
-      // UserID types.
-      // The enum value less then 100 should be in sync with
-      // buzz/mysql/data/version 0.5/insert_segment_user_type.sql
       enum UserIdType {
         UNKNOWN = -1;
         BEESWAX = 0;
@@ -802,6 +802,7 @@ message Enums {
         OTHER_MOBILE_ID = 8; // The serving system will use this type when the mobile OS is unknown.
                              // The request will be processed in the same way as other
                              // mobile ids. (Prefix with `mid.` and do frequency cap, user_data augmentation, etc)
+        IP_ADDRESS = 9; // Support for IP Segments
       }
     }
   }
@@ -969,6 +970,93 @@ message Enums {
       IRON_SOURCE          =  136;
       BIDSWITCH_DEALS_FEED =  137;
       SMARTY_ADS           =  138;
+      // note that 139 is at the bottom
+      BIDSTACK             =  140;
+      ADASIA               =  141;
+      AD_UNITY             =  142;
+      ADVIEW               =  143;
+      AD_GENERATION        =  144;
+      AMOBEE               =  145;
+      ANTS                 =  146;
+      ADSTANDING           =  147;
+      PLAYBUZZ             =  148;
+      COLOSSUS             =  149;
+      CONVERGE_DIGITAL     =  150;
+      CONNECTAD            =  151;
+      CONEX                =  152;
+      CXENSE               =  153;
+      DASHBID              =  154;
+      DATAWRKZ             =  155;
+      DIGITAL_GARAGE       =  156;
+      AD_RU                =  157;
+      ADXMI                =  158;
+      AMEBA                =  159;
+      CHEETAH              =  160;
+      ERICSSON_EMODO       =  161;
+      EXELBID              =  162;
+      ADFULLY              =  163;
+      GIANT_MEDIA          =  164;
+      BROAD_SIGN           =  165;
+      IMPROVE_DIGITAL      =  166;
+      BRAINY               =  167;
+      DISH_NETWORK         =  168;
+      ADVERLINE            =  169;
+      LODEO                =  170;
+      LOOPME               =  171;
+      ADMAN                =  172;
+      ADMATIC              =  173;
+      MADVERTISE_MEDIA     =  174;
+      ADMIX                =  175;
+      GAMMA                =  176;
+      YIELDMO              =  177;
+      ZNAPTAG              =  178;
+      NATIVO               =  179;
+      MEDIA_NET            =  180;
+      CHOCOLATE            =  181;
+      OGURY                =  182;
+      ONETAG               =  183;
+      OUTBRAIN             =  184;
+      PERSONAGRAPH         =  185;
+      DEEP_INTENT          =  186;
+      PLAYTEM              =  187;
+      POKKT                =  188;
+      POLYMORPHICADS       =  189;
+      POWERINBOX           =  190;
+      PRIMIS               =  191;
+      QUANTX               =  192;
+      RAKUTEN              =  193;
+      REKLAMSTORE          =  194;
+      RELAIDO              =  195;
+      REVCONTENT           =  196;
+      ADVERTY              =  197;
+      SEEDTAG              =  198;
+      SELECTMEDIA          =  199;
+      COLUMN6              =  200;
+      SORENSON             =  201;
+      SPICY                =  202;
+      SYNACOR              =  203;
+      TABOOLA              =  204;
+      TAGON                =  205;
+      TENMAX               =  206;
+      ADTOMA               =  207;
+      ATWOX                =  208;
+      THIRTYTHREEACROSS    =  209;
+      UNDERTONE            =  210;
+      VENA_TV              =  211;
+      VERTOZ               =  212;
+      INADVIA              =  213;
+      WEBORAMA             =  214;
+      WOOBI                =  215;
+      YENGO                =  216;
+      YOC                  =  217;
+      ZIFF_DAVIS           =  218;
+      OZONE                =  219;
+      THIRTY_THREE_ACROSS  =  220;
+      SAMSUNG              =  221;
+      PHUNWARE             =  222;
+      IMPROVE              =  223;
+      // This source is used only for testing purposes
+      TEST_SOURCE          =  139;
     }
 
     // Placement Type of the OpenRTB Bid Request
