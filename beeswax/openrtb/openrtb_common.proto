@@ -790,9 +790,6 @@ message Enums {
 
     message User {
       enum UserIdType {
-        // Note: RUF augmentor maintains an explicit whitelist of supported
-        // UserIdTypes which should be kept in sync with the definitions below.
-        // It also uses this info to populate RequestInfo.UserdataLookupKeysMap.
         UNKNOWN = -1;
         BEESWAX = 0;
         CUSTOMER = 1;
