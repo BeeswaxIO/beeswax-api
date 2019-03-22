@@ -34,6 +34,9 @@ message AugmentorResponse {
     // This field is primarily used for line item targeting.
     // For targeting to work with the segment ids, it is necessary
     // to register the segment ids with Beeswax via the Buzz Segments API.
+    // The segments should have the format "BUZZKEY-SEGMENT_ID". So if the segment
+    // is 8 and the customer's buzz_key is "beeswax", the id field should be set to
+    // "beeswax-8".
     optional string id = 1;
 
     // This field can be used to pass additional information about the segment
