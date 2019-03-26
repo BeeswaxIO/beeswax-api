@@ -1,4 +1,5 @@
-ta Prep
+# Part 1: Building a Model
+##Data Prep
 Before we actually train our model, we need to prepare some data for it.  This has two steps:
 
 1) Gather and Clean Some Data
