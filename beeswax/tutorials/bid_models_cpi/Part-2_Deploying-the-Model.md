@@ -1,5 +1,4 @@
-
-# Building a CPI Bid Model (Part 5)
+# Part 2: Deploying the Model
 We now have our final version of the model, we want to actually turn it into a Beeswax Bid Model.  To do that, we need to take the following steps:
 * Generate the Prediction Files
 * Generate the Manifest File
@@ -376,7 +375,9 @@ bid_modifier_id = response.json()['payload']['id']
 
 Congratulations! We've trained, tuned and deployed a live Bid Model to the Beeswax platform.  At this point the Bid Model is ready to use with a campaign; just attach it to a line item like any other Bid Modifier!
 
-Hopefully this tutorial has given you the basics required to get started.  There are a few topics that we've left out, but plan to cover in the future:
+Hopefully this tutorial has given you the basics required to get started. If you're interested in more detail, you can find the full Jupyter notebooks for this tutorial in the ["notebooks"](https://github.com/BeeswaxIO/beeswax-api/blob/beeswax/tutorials/bid_models_cpi/notebooks/) directory.  These notebooks include additional steps that we left out of this tutorial like hyperparameter tuning and evaluating feature importance.
+
+There are a few topics that we haven't discussed at all, but plan to cover in the future:
 * Monitoring a live model and making updates to improve performance
 * Factoring in auction dynamics such as auction type (1st vs 2nd), market price estimation, etc
 * Using a Bid Model in conjunction with device level scores.
