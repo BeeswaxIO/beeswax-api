@@ -13,6 +13,7 @@ Once we have our raw data, we need to transform it into a format that can be use
 * We also need to split the data so that we have separate datasets for training the model, validating the model, and then testing the model once its built.
 
 Let's pick up the modeling process after these steps (if you want to see how this is done, check [here](http://someurl.com)).  At this point we have a dataset that looks like the below, and we have it split into train/test/validation sets written to S3.
+
 |conversion_rate|ad_position_ABOVE_THE_FOLD|ad_position_FULLSCREEN|ad_position_POSITION_UNKNOWN|app_bundle_1040200670|app_bundle_1089048531|app_bundle_1092689152|app_bundle_1114751883|app_bundle_1118431695|app_bundle_1177418991|...|hour_of_day_utc_16|hour_of_day_utc_17|hour_of_day_utc_18|hour_of_day_utc_19|hour_of_day_utc_20|hour_of_day_utc_21|hour_of_day_utc_22|hour_of_day_utc_23|lat_long_present_0|lat_long_present_1|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |---|
 |0.243056|1|0|0|0|0|0|0|0|0|...|0|0|0|1|0|0|0|0|1|0|
