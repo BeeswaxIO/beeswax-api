@@ -33,5 +33,5 @@ We are going to use the following simple equation to calculate bid price:
 In this scenario, our "conversion event" is an app install, so our model will predict the likelihood that a particular auction will lead to an app download. We just need to know how much each install is worth to us and then we can calculate our bid. For the purpose of this exercise, let's assume that we've done some research and determined that the lifetime value of a single app install is $5 (our conversion value).  In other words, our goal is to build a model that can achieve a CPI of <$5.
 
 This tutorial has two parts:
-* In [Part 1](https://github.com/BeeswaxIO/beeswax-api/blob/bid-models/beeswax/tutorials/bid_models_cpi/Part-1_Building-a-Model.md), we discuss ingesting and preparing log data and then generate our CPI model using SageMaker
-* In [Part 2](https://github.com/BeeswaxIO/beeswax-api/blob/bid-models/beeswax/tutorials/bid_models_cpi/Part-2_Deploying-the-Model.md), we create a set of prediction files from our CPI model and then upload to Beeswax 
+* In [Part 1](https://github.com/BeeswaxIO/beeswax-api/blob/beeswax/tutorials/bid_models_cpi/Part-1_Building-a-Model.md), we discuss ingesting and preparing log data and then generate our CPI model using SageMaker
+* In [Part 2](https://github.com/BeeswaxIO/beeswax-api/blob/beeswax/tutorials/bid_models_cpi/Part-2_Deploying-the-Model.md), we create a set of prediction files from our CPI model and then upload to Beeswax 
