@@ -240,4 +240,4 @@ with open('data/prod_model.json', 'w') as f:
     f.write(json.dumps(prod_model))
 ```
 
-In [part 2](https://github.com/BeeswaxIO/beeswax-api/blob/beeswax/tutorials/bid_models_cpi/Part-2_Deploying-the-Model.md) of this tutorial, we'll upload our model to Beeswax and use it in a live campaign.
+In [part 2](https://github.com/BeeswaxIO/beeswax-api/blob/master/beeswax/tutorials/bid_models_cpi/Part-2_Deploying-the-Model.md) of this tutorial, we'll upload our model to Beeswax and use it in a live campaign.
