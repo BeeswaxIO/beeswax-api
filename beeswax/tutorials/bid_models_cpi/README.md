@@ -35,3 +35,5 @@ In this scenario, our "conversion event" is an app install, so our model will pr
 This tutorial has two parts:
 * In [Part 1](https://github.com/BeeswaxIO/beeswax-api/blob/master/beeswax/tutorials/bid_models_cpi/Part-1_Building-a-Model.md), we discuss ingesting and preparing log data and then generate our CPI model using SageMaker
 * In [Part 2](https://github.com/BeeswaxIO/beeswax-api/blob/master/beeswax/tutorials/bid_models_cpi/Part-2_Deploying-the-Model.md), we create a set of prediction files from our CPI model and then upload to Beeswax 
+
+Full code for this tutorial can be found in the ["notebooks"](https://github.com/BeeswaxIO/beeswax-api/tree/master/beeswax/tutorials/bid_models_cpi/notebooks) folder in this repo.
