@@ -191,7 +191,7 @@ message ConversionLogMessage {
   optional bool is_gdpr = 10 [default = false];
 }
 
-// Next Tag: 6
+// Next Tag: 7
 // AdLogMessage serves as a wrapper type and holds all ad log objects.
 // This message gets logged to the AWS Kinesis streams.
 
@@ -200,7 +200,10 @@ message ConversionLogMessage {
 message AdLogMessage {
   optional RequestLogMessage request = 1;
   optional ImpressionLogMessage impression = 2;
-  optional ClickLogMessage click = 3;
+  // click field will be deprecated, start using clicks (field 6) instead
+  optional ClickLogMessage click = 3 [deprecated = true];
   repeated ActivityLogMessage activity = 4;
   optional ConversionLogMessage conversion = 5;
+  // List of all possible clicks, regular and companion
+  repeated ClickLogMessage clicks = 6;
 }
