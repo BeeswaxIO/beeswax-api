@@ -310,7 +310,7 @@ boto3.Session().resource('s3').Bucket(bucket).Object(manifest_path).upload_file(
 
 We've reached the final step and its time to actually upload our model to Beeswax via the [Buzz API](https://docs.beeswax.com). To do this, we will first create a `bid_model` object ([docs](https://docs.beeswax.com/docs/bid-models-overview)) and attach a `bid_model_version` ([docs](https://docs.beeswax.com/docs/bid-model-versions-overview)) that points to our predictions, then we will attach the Bid Model to a Bid Modifier.
 
-These steps can all be done via the UI as well, but since we've written everything else in Python we might as well do our upload that way as well.
+These steps can all be done via the UI as well, but since we've written everything else in Python we might as well do our upload that way as well. Note, you must replace `yourendpoint` with the correct host provided by Beeswax.
 
 First, authenticate:
 
@@ -347,7 +347,7 @@ payload = {
     'bid_model_version_name': 'cpi_tutorial-v_{}'.format(timestamp),
     'manifest_s3_path': 's3://{}/{}'.format(bucket, manifest_path)
 }
-response = s.post('https://canary.api.beeswax.com/rest/bid_model_version', json=payload)
+response = s.post('https://yourendpoint.api.beeswax.com/rest/bid_model_version', json=payload)
 version_id = response.json()['payload']['id']
 ```
 
@@ -359,7 +359,7 @@ payload = {
     'bid_model_id': bid_model_id,
     'current_version': version_id
 }
-response = s.put('https://canary.api.beeswax.com/rest/bid_model', json=payload)
+response = s.put('https://yourendpoint.api.beeswax.com/rest/bid_model', json=payload)
 ```
 
 Next, create a `bid_modifier` and attach the `bid_model` to it:
@@ -369,7 +369,7 @@ payload = {
     'bid_model_id': bid_model_id,
     'bid_modifier_name': 'cpi_tutorial-{}'.format(timestamp)
 }
-response = s.post('https://canary.api.beeswax.com/rest/bid_modifier', json=payload)
+response = s.post('https://yourendpoint.api.beeswax.com/rest/bid_modifier', json=payload)
 bid_modifier_id = response.json()['payload']['id']
 ```
 
