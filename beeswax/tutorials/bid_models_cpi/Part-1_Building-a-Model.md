@@ -1,18 +1,17 @@
 # Part 1: Building a Model
-##Data Prep
-Before we actually train our model, we need to prepare some data for it.  This has two steps:
+## Data Prep
+Before we actually train our model, we need to prepare some data for it. This has two steps:
 
 1) Gather and Clean Some Data
-For our CPI model, we will be using Beeswax Win and Conversion logs as our input dataset.  These datasets contain all the possible features we could use in our model.  Our data is already pretty clean since its in a structured format as dictated by the log formats. Therefore, our "cleansing" process is really focused on eliminating any data that will negatively effect our model.  We want to a) eliminate any outliers from the data and b) remove any columns which we may not need (for example, we don't need `domain` if we're only buying mobile)
-
+For our CPI model, we will be using Beeswax [Win and Conversion logs](https://docs.beeswax.com/docs/data-feeds) as our input dataset. These datasets contain all the possible features we could use in our model. Our data is already pretty clean since its in a structured format as dictated by the log formats. Therefore, our "cleansing" process is really focused on eliminating any data that will negatively effect our model.  We want to a) eliminate any outliers from the data and b) remove any columns which we may not need (for example, we don't need `domain` if we're only buying mobile)
 
 2) Prepare the Data for Modeling
 Once we have our raw data, we need to transform it into a format that can be used be used in our model:
-* In our CPI model, we ultimately want to predict a likeliness that a given bid request will lead to an app install so we need to put this probability metric into our dataset.  We'll aggregate the logs so that every unique combination of keys occurs once and then calculate `conversion_rate` as `conversions`/`impressions`.
+* In our CPI model, we ultimately want to predict a likeliness that a given bid request will lead to an app install so we need to put this probability metric into our dataset. We'll aggregate the logs so that every unique combination of keys occurs once and then calculate `conversion_rate` as `conversions`/`impressions`.
 * Most of the variables in a bid request are categorical.  In order for our regression models to understand them, we'll need to convert them to numeric variables through a process called [one-hot encoding](https://www.kaggle.com/dansbecker/using-categorical-data-with-one-hot-encoding).
 * We also need to split the data so that we have separate datasets for training the model, validating the model, and then testing the model once its built.
 
-Let's pick up the modeling process after these steps (if you want to see how this is done, check [here](https://github.com/BeeswaxIO/beeswax-api/blob/master/beeswax/tutorials/bid_models_cpi/notebooks/bid-model-tutorial_step-1.ipynb)).  At this point we have a dataset that looks like the below, and we have it split into train/test/validation sets written to S3.
+Let's pick up the modeling process after these steps (if you want to see how this is done, check [here](https://github.com/BeeswaxIO/beeswax-api/blob/master/beeswax/tutorials/bid_models_cpi/notebooks/bid-model-tutorial_step-1.ipynb)). At this point we have a dataset that looks like the below, and we have it split into train/test/validation sets written to S3.
 
 |conversion_rate|ad_position_ABOVE_THE_FOLD|ad_position_FULLSCREEN|ad_position_POSITION_UNKNOWN|app_bundle_1040200670|app_bundle_1089048531|app_bundle_1092689152|app_bundle_1114751883|app_bundle_1118431695|app_bundle_1177418991|...|hour_of_day_utc_16|hour_of_day_utc_17|hour_of_day_utc_18|hour_of_day_utc_19|hour_of_day_utc_20|hour_of_day_utc_21|hour_of_day_utc_22|hour_of_day_utc_23|lat_long_present_0|lat_long_present_1|
 |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |---|
@@ -23,13 +22,13 @@ Let's pick up the modeling process after these steps (if you want to see how thi
 |0.235294|1|0|0|0|0|0|0|0|0|...|0|0|0|0|0|0|0|0|1|0|
 
 # Model Training
-At this point, we want to actually build some predictive models.  We might try to fit many different models and see what performs the best.  However, for the sake of keeping this tutorial as brief as possible, we'll use a multi-variate linear regression model.  Most people will be familiar with linear regression from their "intro to statistics" days, but the basic gist of it is that we will assign some coefficient to each feature in the model such that the aggregate sum of features multiplied by their coefficients is our `conversion_rate` prediction.
+At this point, we want to actually build some predictive models. We might try to fit many different models and see what performs the best. However, for the sake of keeping this tutorial as brief as possible, we'll use a multi-variate linear regression model. Most people will be familiar with linear regression from their "intro to statistics" days, but the basic gist of it is that we will assign some coefficient to each feature in the model such that the aggregate sum of features multiplied by their coefficients is our `conversion_rate` prediction.
 
 We will then evaluate our model as follows:
 * We'll train our model with our "train" and "validation" datasets
 * We'll then use our model to generate predictions for our "test" dataset
 * We'll calculate the difference between the actual and predicted `conversion_rate` for each row, our "error"
-* We'll calculate the "mean absolute error" (MAE) from these values.  The lower the MAE, the more accurate the model. 
+* We'll calculate the "mean absolute error" (MAE) from these values. The lower the MAE, the more accurate the model. 
 
 Since SageMaker has a built in `linear learner` model, we can use the AWS modeling APIs to train our model and then deploy an endpoint to score our test data against it.  This is a big advantage because we don't need to worry about deploying infrastructure... we just point the api at our data and get a model back.  That said, if you are used to other modeling tools, those will work as well.
 
@@ -125,24 +124,24 @@ print('mean average error: {error}'.format(error=test_data['error'].mean()))
 ```
     mean average error: 0.00058917052205
 
-So a MAE of 0.0006 is VERY good.  One other thing to look at is the error for rows with non-zero conversion rates since what we really care about is identifying inventory with good conversion rates.  Let's try this by calculating the MAE for only rows that have a `conversion_rate` greater than 0:
+So a MAE of 0.0006 is VERY good. One other thing to look at is the error for rows with non-zero conversion rates since what we really care about is identifying inventory with good conversion rates. Let's try this by calculating the MAE for only rows that have a `conversion_rate` greater than 0:
 
 ```python
 print('mean average error for non-zero conversion rate: {error}'.format(error=test_data.loc[test_data['conversion_rate'] > 0]['error'].mean()))
 ```
     mean average error for non-zero conversion rate: 0.179533322674
 
-Okay, worse than overall but still pretty decent... we have reasonable but notably higher error for rows that actually have a conversion rate.  What does this mean?  It means we are really really good at predicting which inventory will not perform but not as good at predicting what will perform. Let's try to improve performance.
+Okay, worse than overall but still pretty decent... we have reasonable but notably higher error for rows that actually have a conversion rate. What does this mean? It means we are really really good at predicting which inventory will not perform but not as good at predicting what will perform. Let's try to improve performance.
 
 # Model Tuning
-To combat the relatively small number of conversions, we can [upsample](http://www.simafore.com/blog/handling-unbalanced-data-machine-learning-models) the training set so that the conversions are more evenly balanced with the non-conversions.  This will ultimately allow the model to train on a more evenly distributed dataset.  Our goal is to create a balanced dataset for training, and then to test on an unbalanced dataset to make sure the model still works in the real world.
+To combat the relatively small number of conversions, we can [upsample](http://www.simafore.com/blog/handling-unbalanced-data-machine-learning-models) the training set so that the conversions are more evenly balanced with the non-conversions. This will ultimately allow the model to train on a more evenly distributed dataset. Our goal is to create a balanced dataset for training, and then to test on an unbalanced dataset to make sure the model still works in the real world.
 
 Let's start by re-loading our dataset from Step 2:
 ```python
 df = pd.read_pickle("./data/step2-model.pkl")
 ```
 
-Now let's do the sampling.  We'll try to improve the ratio so that at least 5% of rows have some conversion rate.
+Now let's do the sampling. We'll try to improve the ratio so that at least 5% of rows have some conversion rate.
 ```python
 # 100% of the data where conversion_rate > 0
 sampled_data = df.loc[df['conversion_rate'] > 0]
@@ -158,7 +157,7 @@ print('new data size: {}'.format(sampled_data.shape))
     sample rate: 0.0410933604211
     new data size: (1873, 449)
 
-Okay, now we have a much better ratio of converters to non-converters, and the added benefit of a much smaller dataset that will allow us to move much faster from here out.  This should give us a better fitting model.  Let's find out by re-running our modeling process.  We'll first need to re-generate our input datasets:
+Okay, now we have a much better ratio of converters to non-converters, and the added benefit of a much smaller dataset that will allow us to move much faster from here out. This should give us a better fitting model. Let's find out by re-running our modeling process. We'll first need to re-generate our input datasets:
 ```python
 train_data = sampled_data.sample(frac=.9)
 validation_data = sampled_data.drop(train_data.index)
@@ -205,7 +204,7 @@ ll.fit({'train': s3_input_train}, job_name=job_name)
     2019-03-23 14:08:08 Completed - Training job completed
     Billable seconds: 64
 
-Now let's evaluate the model as before.  I'm going to use our original test dataset (without sampling) to make sure that our sampling didn't cause us to overfit the model.
+Now let's evaluate the model as before. I'm going to use our original test dataset (without sampling) to make sure that our sampling didn't cause us to overfit the model.
 ```python
 
 ll_predictor = ll.deploy(initial_instance_count=1, instance_type='ml.m4.xlarge')
@@ -227,7 +226,7 @@ print('mean average error for non-zero conversion rate: {error}'.format(error=te
     mean average error for non-zero conversion rate: 0.120185396491
 
 
-As expected, we've been able to balance our model a little better.  We are now slightly worse at determining what does not perform well but better at determining what does perform well.  At this point we could continue tuning our model by a) tuning the model's hyperparameters (the configuration for the model itself) and b) looking at different combinations of features to include or exclude from the model but these are outside the scope of this tutorial.  Let's call the current version of our model "done" for now and save its metadata so we can access it later.
+As expected, we've been able to balance our model a little better. We are now slightly worse at determining what does not perform well but better at determining what does perform well. At this point we could continue tuning our model by a) tuning the model's hyperparameters (the configuration for the model itself) and b) looking at different combinations of features to include or exclude from the model but these are outside the scope of this tutorial.  et's call the current version of our model "done" for now and save its metadata so we can access it later.
 ```python
 features = list(sampled_data.columns)
 features.remove('conversion_rate')
