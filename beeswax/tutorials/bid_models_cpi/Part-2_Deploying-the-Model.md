@@ -7,7 +7,7 @@ We now have our final version of the model, we want to actually turn it into a B
 We'll start with the Prediction Files.
 
 ### Generate the Prediction Files
-Bid Models are represented as a set of data files referred to as "Prediction Files".  Each file has the following configuration:
+Bid Models are represented as a set of data files referred to as "Prediction Files". Each file has the following configuration:
 * pipe-delimited ("|") text files
 * no compression
 * first row of each file contains headers
@@ -25,7 +25,7 @@ Our prediction files will look something like this:
 | 1016562846 | AerservSDKiOS   | BANNER_AND_VIDEO | null          | 12.0                | expected bid |
 | ...        | ...             | ...              | ...           | ...                 | ...            |
     
-We want to make sure that we have a prediction for any auction we may want to bid on.  To do that, we are going to grab some auction logs and run them through our SageMaker model endpoint to get the probability of conversion and then multiply by our convesion value to get to our actual bid price.
+We want to make sure that we have a prediction for any auction we may want to bid on. To do that, we are going to grab some auction logs and run them through our SageMaker model endpoint to get the probability of conversion and then multiply by our convesion value to get to our actual bid price.
 
 Let's start by loading our auction logs.
 
@@ -61,7 +61,7 @@ for _file in auction_files[NUMFILES:]:
 auction_df = pd.concat(auction_frames, axis=0, ignore_index=True)
 ```
 
-We've got some auction logs, so now we need to make the auction logs match the input for our model endpoint.  To do this, we'll take this data through all the transformations we took the original win/conversion files through.
+We've got some auction logs, so now we need to make the auction logs match the input for our model endpoint. To do this, we'll take this data through all the transformations we took the original win/conversion files through.
 
 ##### 1) fill na values with -1 and select unique rows
 
@@ -130,7 +130,7 @@ for feature in prod_model['features']:
 # rearrange the columns and drop the unsupported ones
 data_to_score = data_to_score[prod_model['features']]
 ```
-Now the data is prepared for scoring.  Using our prediction function from previous tutorials, let's go ahead and generate our predictions:
+Now the data is prepared for scoring. Using our prediction function from previous tutorials, let's go ahead and generate our predictions:
 
 ```python
 from sagemaker.transformer import Transformer
@@ -188,7 +188,7 @@ auction_df['prediction'].hist(bins=1000)
     Name: prediction, dtype: float64
 
 
-So, immediately, we notice that the predictions are reasonably distributed, which is good, but a significant number of the predictions are below 0.  We obviously can't bid below 0, so let's normalize our predictions by replacing any values below 0 with 0:
+So, immediately, we notice that the predictions are reasonably distributed, which is good, but a significant number of the predictions are below 0. We obviously can't bid below 0, so let's normalize our predictions by replacing any values below 0 with 0:
 
 
 ```python
@@ -198,7 +198,7 @@ auction_df['prediction'].hist(bins=100)
 ```
 
 
-Okay that's better.  Now let's calculate our actual CPM bids.  Recall that we will calculate our bid as follows:
+Okay that's better.  Now let's calculate our actual CPM bids. Recall that we will calculate our bid as follows:
 
 >conversion_value * likelihood_of_conversion = bid_price
 
@@ -217,7 +217,7 @@ auction_df['value'].hist(bins=100)
 ```
 
 
-Now we have bids.  You'll notice that we have some very high bids for some rows, probably higher than they need to be for us to win.  We'll set a "max bid" when we upload this so we don't have to worry about capping in the model itself.
+Now we have bids. You'll notice that we have some very high bids for some rows, probably higher than they need to be for us to win.  We'll set a "max bid" when we upload this so we don't have to worry about capping in the model itself.
 
 Okay, we have our prediction data ready, now let's get it ready for upload:
 
@@ -308,7 +308,7 @@ boto3.Session().resource('s3').Bucket(bucket).Object(manifest_path).upload_file(
 
 ### Upload to Buzz
 
-We've reached the final step and its time to actually upload our model to Beeswax via the Buzz API.  To do this, we will first create a `bid_model` object and attach a `bid_model_version` that points to our predictions, then we will attach the Bid Model to a Bid Modifier.
+We've reached the final step and its time to actually upload our model to Beeswax via the [Buzz API](https://docs.beeswax.com). To do this, we will first create a `bid_model` object ([docs](https://docs.beeswax.com/docs/bid-models-overview)) and attach a `bid_model_version` ([docs](https://docs.beeswax.com/docs/bid-model-versions-overview)) that points to our predictions, then we will attach the Bid Model to a Bid Modifier.
 
 These steps can all be done via the UI as well, but since we've written everything else in Python we might as well do our upload that way as well.
 
@@ -321,7 +321,7 @@ payload = {
     'password': buzz_password,
     'keep_logged_in': True
 }
-s.post('https://canary.api.beeswax.com/rest/authenticate', json=payload)
+s.post('https://yourendpoint.api.beeswax.com/rest/authenticate', json=payload)
 ```
 
 Then create the `bid_model` object.  We will use the `value_type` "BID", but could also specify "MULTIPLIER" if we wanted the value to be multiplied into the base bid for the bidding strategy we will select later.
@@ -333,7 +333,7 @@ payload = {
     'bid_model_name': 'cpi_tutorial-{}'.format(timestamp),
     'value_type': 'BID'
 }
-response = s.post('https://canary.api.beeswax.com/rest/bid_model', json=payload)
+response = s.post('https://yourendpoint.api.beeswax.com/rest/bid_model', json=payload)
 bid_model_id = response.json()['payload']['id']
 ```
 
@@ -373,7 +373,7 @@ response = s.post('https://canary.api.beeswax.com/rest/bid_modifier', json=paylo
 bid_modifier_id = response.json()['payload']['id']
 ```
 
-Congratulations! We've trained, tuned and deployed a live Bid Model to the Beeswax platform.  At this point the Bid Model is ready to use with a campaign; just attach it to a line item like any other Bid Modifier!
+Congratulations! We've trained, tuned and deployed a live Bid Model to the Beeswax platform. At this point the Bid Model is ready to use with a campaign; just attach it to a line item like any other Bid Modifier!
 
 Hopefully this tutorial has given you the basics required to get started. If you're interested in more detail, you can find the full Jupyter notebooks for this tutorial in the ["notebooks"](https://github.com/BeeswaxIO/beeswax-api/blob/beeswax/tutorials/bid_models_cpi/notebooks/) directory.  These notebooks include additional steps that we left out of this tutorial like hyperparameter tuning and evaluating feature importance.
 
