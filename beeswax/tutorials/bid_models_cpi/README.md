@@ -3,7 +3,7 @@ Beeswax has recently released a feature called Bid Models, which allows customer
 
 1. Create a model using Beeswax logs (wins, conversions, etc) and/or proprietary data.  Model features are bid request keys, and the prediction is either a bid or a bid multiplier.
 2. Run a bunch of auction logs through the model to get a predicted bid price for each auction and create a set of prediction files from these predictions.
-2. Create a Bid Model via [Beeswax's API](https://api.beeswax.com) or UI, upload the predictions to Amazon S3, and tell Beeswax the location.
+2. Create a Bid Model via [Beeswax's API](https://docs.beeswax.com) or UI, upload the predictions to Amazon S3, and tell Beeswax the location.
 3. Attach the Bid Model to a campaign or line item.
 4. When a bid request is made for that line item, Beeswax does a lookup against the Bid Model. If there is a match, that value is used as the bid or multiplier. If there is no match, the default bid is used.
 5. As the campaign runs, use the performance data to retrain the model and upload new versions.
