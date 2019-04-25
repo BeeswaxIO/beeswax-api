@@ -1,1 +1,32 @@
-{"model_predictions": ["s3://beeswax-data-us-east-1/bid_models/canary/customer_data_files/sagemaker/predictions-1553544572.csv"], "metadata": {"fields": ["lat_long_present", "platform_os", "inventory_interstitial", "inventory_source", "platform_device_make", "geo_metro", "display_manager", "video_companion_required", "platform_os_version", "placement_type", "hour_of_day_utc", "platform_device_screen_size", "banner_height", "rewarded", "banner_width", "geo_region", "platform_bandwidth", "app_bundle"]}}
+{
+    "model_predictions": [
+        "s3://beeswax-data-us-east-1/bid_models/canary/customer_data_files/sagemaker/predictions-1553544572.csv"
+    ],
+    "metadata": {
+        "fields": [
+            "lat_long_present",
+            "platform_os",
+            "inventory_interstitial",
+            "inventory_source",
+            "platform_device_make",
+            "geo_metro",
+            "display_manager",
+            "video_companion_required",
+            "platform_os_version",
+            "placement_type",
+            "hour_of_day_utc",
+            "platform_device_screen_size",
+            "banner_height",
+            "rewarded",
+            "banner_width",
+            "geo_region",
+            "platform_bandwidth",
+            "app_bundle"
+        ],
+        "wildcard_fields": [
+            "app_bundle",
+            "geo_metro",
+            "inventory_source"
+        ]
+    }
+}
