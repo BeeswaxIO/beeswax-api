@@ -1,5 +1,8 @@
-This tool validates the format of model manifest and predictions files.
-Any detected errors are printed to the console.
+This tool is provided by Beeswax under the Apache 2 license as-is for the
+benefit of our customers and partners.
+
+It validates the format of model manifest and predictions files. Any
+detected errors are printed to the console.
 
 Installation:
 

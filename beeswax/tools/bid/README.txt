@@ -1,3 +1,6 @@
+This tool is provided by Beeswax under the Apache 2 license as-is for the
+benefit of our customers and partners.
+
 Beeswax Bid Requests Generator generates Beeswax bid http requests
 and sends to a designated endpoint with http headers used in the biddding service
 and http body generated from the specified input file.

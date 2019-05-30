@@ -1,3 +1,6 @@
+This tool is provided by Beeswax under the Apache 2 license as-is for the
+benefit of our customers and partners.
+
 Beeswax Win Log Requester
 Generates Beeswax win logs (Impression, Click, Activity) http requests to a designated endpoint
 with body generated from the specified input file. Output the http responses to a file
