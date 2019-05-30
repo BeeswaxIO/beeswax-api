@@ -24,17 +24,26 @@ The realtime documentation can be found [here](http://docs.beeswax.com/docs/abou
 # Tools
 
 ### Augmentor requests generator
-beeswax/tools/augmentor/
+
+    beeswax/tools/augmentor/
+
 It generates Beeswax augmentor HTTP requests and sends them to a designated endpoint.
 
 ### Bid requests generator
-beeswax/tools/bid/
+
+    beeswax/tools/bid/
+
 It generates Beeswax bid HTTP requests and sends them to a designated endpoint.
 
 ### Win log requester
-beeswax/tools/win_events/
+
+    beeswax/tools/win_events/
+
 It sends Beeswax win logs (Impression, Click, Activity) HTTP requests to a designated endpoint
 with body generated from specified input file.
 
 ### Bid model validator
+
+    beeswax/tools/bid_model_validator/
+
 It validates format of bid model manifest and prediction files and prints detected errors to the console.
