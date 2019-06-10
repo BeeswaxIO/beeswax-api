@@ -99,6 +99,13 @@ message BidRequest {
    */
   repeated string badv = 13;
   /*
+   * Block list of applications by their platform-specific exchange
+   * independent application identifiers. On Android, these should
+   * be bundle or package names (e.g., com.foo.mygame).
+   * On iOS, these are numeric IDs.
+   */
+  repeated string bapp = 16;
+  /*
    * Container for any legal, governmental or industry regulations in force for the request.
    */
   optional Regulations regs = 14;
