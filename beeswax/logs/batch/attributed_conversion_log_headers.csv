@@ -1,1 +1,1 @@
-account_id,advertiser_id,auction_id,bid_time,bid_time_utc,buzz_key,conversion_id,conversion_ord,conversion_order,rx_timestamp,rx_timestamp_utc,event_id,user_id,conversion_value,create_time_utc,conversion_type
+account_id,advertiser_id,auction_id,bid_time,bid_time_utc,buzz_key,conversion_id,conversion_ord,conversion_order,rx_timestamp,rx_timestamp_utc,event_id,conversion_value,create_time_utc,conversion_type
