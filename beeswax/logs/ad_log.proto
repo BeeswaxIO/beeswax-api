@@ -37,9 +37,9 @@ message RequestLogMessage {
 // Next Tag: 17
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
+  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
+  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
-  // The unique identifier of the auction per buzz_key.
-  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
   optional string auctionid_str = 12;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 10;
@@ -72,9 +72,9 @@ message ImpressionLogMessage {
 // Next Tag: 13
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
+  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
+  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
-  // The unique identifier of the auction per buzz_key.
-  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
   optional string auctionid_str = 9;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 7;
@@ -105,9 +105,9 @@ message ClickLogMessage {
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
+  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
+  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
-  // The unique identifier of the auction per buzz_key.
-  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
   optional string auctionid_str = 10;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 8;
@@ -184,6 +184,8 @@ message ConversionLogMessage {
   // Timestamp (usecs) at which event was received by Beeswax.
   optional uint64 rx_timestamp = 7;
   // auction id (Filled only for postback events)
+  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
+  // of elements within it or the format of the id.
   optional string auctionid = 8;
 
   // When this field is set to true, it implies that Beeswax has determined that

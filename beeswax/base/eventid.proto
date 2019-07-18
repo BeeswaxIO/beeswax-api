@@ -12,6 +12,7 @@ message EventId {
   optional uint32 hostid = 1;    // 32 bits of md5 hash
   optional uint32 tid = 2;       // Thread Id from gettid()
   optional uint64 timestamp = 3;
+  optional uint32 imp_idx = 4; // Impression index within the request
 }
 
 // Next Tag: 5
