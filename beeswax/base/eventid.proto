@@ -9,9 +9,12 @@ package base;
 option java_package = "com.beeswax.base";
 
 message EventId {
-  optional uint32 hostid = 1;    // 32 bits of md5 hash
-  optional uint32 tid = 2;       // Thread Id from gettid()
+  // 32 bits of md5 hash
+  optional uint32 hostid = 1;
+  optional uint32 tid = 2;
   optional uint64 timestamp = 3;
+  // Impression index within the request
+  optional uint32 imp_idx = 4;
 }
 
 // Next Tag: 5
