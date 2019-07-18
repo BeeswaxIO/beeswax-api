@@ -34,13 +34,14 @@ message RequestLogMessage {
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
-// Next Tag: 17
+// Next Tag: 18
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
-  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
-  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
+  // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
+  // of elements within it or on the format of the id.
   optional string auctionid_str = 12;
+  optional string requestid_str = 17;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 10;
   optional uint64 advertiser_id = 11;
@@ -69,13 +70,14 @@ message ImpressionLogMessage {
   optional string gdpr_consent_string = 15;
 }
 
-// Next Tag: 13
+// Next Tag: 14
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
-  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
-  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
+  // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
+  // of elements within it or on the format of the id.
   optional string auctionid_str = 9;
+  optional string requestid_str = 13;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 7;
   optional uint64 advertiser_id = 8;
@@ -101,14 +103,15 @@ message ClickLogMessage {
   optional bool is_gdpr = 12 [default = false];
 }
 
-// Next Tag: 13
+// Next Tag: 14
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
-  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
-  // of elements within it or the format of the id.
   optional base.EventId auctionid = 1;
+  // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
+  // of elements within it or on the format of the id.
   optional string auctionid_str = 10;
+  optional string requestid_str = 13;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 8;
   optional uint64 advertiser_id = 9;
@@ -184,8 +187,6 @@ message ConversionLogMessage {
   // Timestamp (usecs) at which event was received by Beeswax.
   optional uint64 rx_timestamp = 7;
   // auction id (Filled only for postback events)
-  // NOTE: auctionid is an opaque unique id. Client cannot rely on the meaning
-  // of elements within it or the format of the id.
   optional string auctionid = 8;
 
   // When this field is set to true, it implies that Beeswax has determined that
