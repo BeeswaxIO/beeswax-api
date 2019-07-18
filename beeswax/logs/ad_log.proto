@@ -25,6 +25,9 @@ import "beeswax/openrtb/openrtb_common.proto";
 // Next Tag: 6
 // RequestLogMessage is created for every incoming bid request from the exchange.
 message RequestLogMessage {
+  // The unique identifier of the auction per buzz_key.
+  // There can be multiple impression definitions in a single bid request from the
+  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   optional openrtb.Enums.Inventory.Source inventory_source = 2;
   optional openrtb.BidRequest bidrequest = 3;
@@ -37,10 +40,15 @@ message RequestLogMessage {
 // Next Tag: 18
 // ImpressionLogMessage is created for every won auction.
 message ImpressionLogMessage {
+  // The unique identifier of the auction per buzz_key.
+  // There can be multiple impression definitions in a single bid request from the
+  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
   optional string auctionid_str = 12;
+  // The unique identifier of the bid request per buzz_key. This represents a BidRequest
+  // received from an inventory source, which can contain 1 or more impression definitions.
   optional string requestid_str = 17;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 10;
@@ -73,10 +81,15 @@ message ImpressionLogMessage {
 // Next Tag: 14
 // ClickLogMessage is created for clicks received.
 message ClickLogMessage {
+  // The unique identifier of the auction per buzz_key.
+  // There can be multiple impression definitions in a single bid request from the
+  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
   optional string auctionid_str = 9;
+  // The unique identifier of the bid request per buzz_key. This represents a BidRequest
+  // received from an inventory source, which can contain 1 or more impression definitions.
   optional string requestid_str = 13;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 7;
@@ -107,10 +120,15 @@ message ClickLogMessage {
 // ActivityLogMessage is created for video and activity events
 // like video "START", "SKIP", etc.
 message ActivityLogMessage {
+  // The unique identifier of the auction per buzz_key.
+  // There can be multiple impression definitions in a single bid request from the
+  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
   optional string auctionid_str = 10;
+  // The unique identifier of the bid request per buzz_key. This represents a BidRequest
+  // received from an inventory source, which can contain 1 or more impression definitions.
   optional string requestid_str = 13;
   optional base.AdGroupId adgroupid = 2;
   optional uint64 creative_id = 8;
