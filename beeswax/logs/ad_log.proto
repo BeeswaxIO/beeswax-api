@@ -27,7 +27,7 @@ import "beeswax/openrtb/openrtb_common.proto";
 message RequestLogMessage {
   // The unique identifier of the auction per buzz_key.
   // There can be multiple impression definitions in a single bid request from the
-  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
+  // inventory source; each one Beeswax actually bids on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   optional openrtb.Enums.Inventory.Source inventory_source = 2;
   optional openrtb.BidRequest bidrequest = 3;
@@ -42,7 +42,7 @@ message RequestLogMessage {
 message ImpressionLogMessage {
   // The unique identifier of the auction per buzz_key.
   // There can be multiple impression definitions in a single bid request from the
-  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
+  // inventory source; each one Beeswax actually bids on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
@@ -83,7 +83,7 @@ message ImpressionLogMessage {
 message ClickLogMessage {
   // The unique identifier of the auction per buzz_key.
   // There can be multiple impression definitions in a single bid request from the
-  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
+  // inventory source; each one Beeswax actually bids on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
@@ -122,7 +122,7 @@ message ClickLogMessage {
 message ActivityLogMessage {
   // The unique identifier of the auction per buzz_key.
   // There can be multiple impression definitions in a single bid request from the
-  // inventory source; each one Beeswax actually bidus on creates a unique auctionid.
+  // inventory source; each one Beeswax actually bids on creates a unique auctionid.
   optional base.EventId auctionid = 1;
   // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
