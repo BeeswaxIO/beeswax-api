@@ -35,7 +35,7 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 13
+// Next available tag: 15
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
@@ -48,7 +48,10 @@ message BidRequestExtensions {
   // The unique identifier for the exchange bid request per buzz_key.
   // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
   // request_id_str contains buzz_key so it is populated in sbs.
-  optional string request_id_str = 13;
+  optional string requestid_str = 14;
+
+  // This is slated to be removed. It is a typo.
+  optional string request_id_str = 13 [deprecated = true];
 
   // This field is used for Geo targeting.
   // It is populated by the LocalAugmentor in Stinger.
