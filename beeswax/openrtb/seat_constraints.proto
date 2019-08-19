@@ -1,0 +1,15 @@
+// Copyright 2019, Beeswax.IO Inc.
+// Author gil@beeswax.com
+//
+// Constraints on an exchange seat for a BidRequest 
+
+syntax="proto2";
+package openrtb;
+
+option java_package = "com.beeswax.openrtb";
+option cc_enable_arenas = true;
+
+// Next available tag: 2
+message SeatConstraints {
+  optional int64 bid_floor_micros = 1 [default = 0];
+}

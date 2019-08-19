@@ -14,6 +14,7 @@ option java_package = "com.beeswax.openrtb";
 
 import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
+import "beeswax/openrtb/seat_constraints.proto";
 
 // Next available tag: 5
 // Refer to the documentation of BuyerPricingRule in adx.proto
@@ -138,6 +139,8 @@ message ImpressionExtensions {
   // Seat ids that the exchange considers eligible to serve on this impression.
   // This feature is currently only supported by Adx.
   repeated string eligible_seat_ids = 7;
+
+  optional SeatConstraintsExtension seat_constraints = 11;
 
   // Exchange specific extensions
   optional AdxImpressionExtension adx = 1;
@@ -443,4 +446,19 @@ message AdxGeoExtension {
 message AppNexusBidRequestExtension {
   // Specifies the ID of the member selling the inventory.
   optional int32 seller_member_id = 1;
+}
+
+// Next available tag: 3
+message SeatConstraintsExtension {
+  // Constraints for a customer's default seat on this exchange if it exists. It
+  // is valid for there to be no constraints here. That generally means we are
+  // falling back to global auction values, e.g. imp.bid_floor.
+  optional openrtb.SeatConstraints default_seat_constraint = 1;
+  // A map from Beeswax account_id to SeatConstraint. This is used when seat
+  // level information needs to be taken into account during the bidding
+  // process. We associate each seat constraint with a Beeswax account_id for
+  // ease of lookup during the bidding process. Only accounts that have
+  // constraints for a given request will be populated in this map. These values
+  // supercede any constraints found in default_seat_constraint.
+  map<uint64, openrtb.SeatConstraints> account_seat_constraints = 2;
 }
