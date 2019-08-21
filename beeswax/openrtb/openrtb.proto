@@ -1047,9 +1047,9 @@ message BidRequest {
     /*
      * Beeswax does normalization in the following way:
      * (1) user.geo.city field is populated with city IDs of MaxMind database (see notes) if available.
-     * Mapping to city names can be found in the Buzz's `cities` view.
-     * (2) device.geo.city field is populated with the city name defined by google in geo table
-     * for GOOGLE_ADX requests. And Beeswax always clear this field for non-GOOGLE_ADX requests.
+     * Mapping from city IDs to city names can be found in the Buzz's `cities` view.
+     * (2) device.geo.city field is populated with the city name defined by google in geo table (see notes)
+     * for GOOGLE_ADX requests. Beeswax always clear this field for non-GOOGLE_ADX requests.
      *
      * Notes:
      * (1) Beeswax uses Maxmind's database to augment geo information. The database
