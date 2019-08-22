@@ -1045,8 +1045,18 @@ message BidRequest {
      */
     optional string metro = 6;
     /*
-     * City using United Nations Code for Trade and Transport Locations
-     * (http://www.unece.org/cefact/locode/service/location.htm).
+     * Beeswax does normalization in the following way:
+     * (1) user.geo.city field is populated with city IDs of MaxMind database (see notes) if available.
+     * Mapping from city IDs to city names can be found in the Buzz's `cities` view.
+     * (2) device.geo.city field is populated with the city name defined by google in geo table (see notes)
+     * for GOOGLE_ADX requests. Beeswax always clear this field for non-GOOGLE_ADX requests.
+     *
+     * Notes:
+     * (1) Beeswax uses Maxmind's database to augment geo information. The database
+     * is also used in defining targetable cities.
+     * Link to Maxmind: https://www.maxmind.com
+     * Link to Beeswax targeting keys: https://docs.beeswax.com/docs/list-of-targeting-modules-and-keys
+     * (2) Link to google's geo table: https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv
      */
     optional string city = 7;
     /*
