@@ -965,7 +965,7 @@ message Enums {
       ADTELLIGENT          =  132;
       GLISPA               =  133;
       TRUSTX               =  134;
-      DISTRICTM            =  135;
+      // DISTRICTM            =  135; // DEPRECATED SEE 224
       IRON_SOURCE          =  136;
       BIDSWITCH_DEALS_FEED =  137;
       SMARTY_ADS           =  138;
