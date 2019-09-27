@@ -1054,8 +1054,10 @@ message Enums {
       SAMSUNG              =  221;
       PHUNWARE             =  222;
       IMPROVE              =  223;
-      // This source is used only for testing purposes
-      TEST_SOURCE          =  139;
+      DISTRICTM            =  224;
+      INMOBI               =  225;
+      CONNATIX             =  226;
+      EMX                  =  227;
     }
 
     // Placement Type of the OpenRTB Bid Request
