@@ -1,0 +1,14 @@
+// Copyright 2020, Beeswax.IO Inc.
+// Protocol buffer defining ghost bidding attributes of an adgroup
+
+syntax = "proto2";
+package adgroup;
+
+option java_package = "com.beeswax.adgroup";
+option cc_enable_arenas = true;
+
+// Next Tag: 2
+message GhostBidding {
+//if the bid is a ghost bid. If true, the bid will be logged but will NOT be submitted to exchanges.
+  required bool is_ghost_bid = 1;
+}
