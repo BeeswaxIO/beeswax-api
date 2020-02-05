@@ -1,3 +1,4 @@
+// Copyright 2020, Beeswax.IO Inc.
 // Protocol buffer defining ghost bidding attributes of an adgroup
 
 syntax = "proto2";
