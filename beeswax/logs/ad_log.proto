@@ -14,6 +14,7 @@ syntax = "proto2";
 package logs;
 
 option java_package = "com.beeswax.logs";
+option cc_enable_arenas = true;
 
 import "beeswax/bid/adcandidate.proto";
 import "beeswax/bid/request.proto";
@@ -34,6 +35,7 @@ message RequestLogMessage {
   // All the adcandidates that matched targeting, creative attribute
   // and budget filtering and finally sent to the exchange.
   repeated bid.Adcandidate adcandidates = 4;
+  // Only data from the winning bid is populated for agent_data.
   optional bid.BidAgentResponse.AgentData agent_data = 5;
 }
 
@@ -212,7 +214,7 @@ message ConversionLogMessage {
   optional bool is_gdpr = 10 [default = false];
 }
 
-// Next Tag: 7
+// Next Tag: 8
 // AdLogMessage serves as a wrapper type and holds all ad log objects.
 // This message gets logged to the AWS Kinesis streams.
 
