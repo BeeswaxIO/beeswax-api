@@ -1,3 +1,7 @@
+/* This file represents a protobuf that has been decoded to a human readable form using the protoc utiltiy. */
+/* Note that as a "joined" protobuf payload, differing payloads may have additional messages joined to the message. This sample message has a joined */
+/* Impression and Request message. */
+
   auctionid {
     hostid: 2548437633
     tid: 20025
