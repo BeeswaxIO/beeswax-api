@@ -1,0 +1,35 @@
+{
+    "impression": {
+      "auctionid": {
+        "hostid": 3639509630,
+        "tid": 21276,
+        "timestamp": "1594144799542230"
+      },
+      "adgroupid": {
+        "buzz_key": "canary",
+        "accountid": "1",
+        "campaignid": "216",
+        "lineitemid": "822"
+      },
+      "bid_price_micros_usd": "2000",
+      "inventory_source": "MOPUB",
+      "user_id": "REDACTED",
+      "win_price_micros_usd": "1509",
+      "rx_timestamp_usecs": "1594144800461896",
+      "data_center": "US_EAST_1",
+      "exchange_bid_price_micros_usd": "1881",
+      "creative_id": "897",
+      "advertiser_id": "13",
+      "auctionid_str": "1594144799542230.3639509630.21276.canary",
+      "is_gdpr": false,
+      "gdpr_consent_string": "",
+      "win_price": {
+        "amount": {
+          "micros": "1509",
+          "currency": "USD"
+        },
+        "rate": 1
+      },
+      "requestid_str": "1594144799542230.3639509630.21276.canary"
+    }
+  }
