@@ -1,0 +1,208 @@
+/* This file represents a protobuf that has been decoded to a human readable form using the protoc utiltiy. */
+/* Note that as a "joined" protobuf payload, differing payloads may have additional messages joined to the message. This sample message has a joined */
+/* Impression and Request message. */
+
+  auctionid {
+    hostid: 2548437633
+    tid: 20025
+    timestamp: 1594143171297924
+  }
+  inventory_source: MOPUB
+  bidrequest {
+    id: "f88f5a06-c997-4474-a70f-0c4060ee1f07_008f24b000f26470"
+    imp {
+      id: "1"
+      banner {
+        w: 320
+        h: 50
+        pos: ABOVE_THE_FOLD
+        btype: IFRAME
+        battr: EXPANDABLE_AUTOMATIC
+        battr: POP_UP
+        battr: PROVOCATIVE_OR_SUGGESTIVE
+        battr: ANNOYING
+        battr: WINDOWS_DIALOG_OR_ALERT_STYLE
+        battr: VIDEO_IN_BANNER_AUTO_PLAY
+        battr: VIDEO_IN_BANNER_USER_INITIATED
+        api: MRAID
+        api: MRAID_2
+        ext {
+          required_attrs: AD_HAS_THUMBNAIL
+        }
+      }
+      displaymanager: "mopub"
+      displaymanagerver: "5.11.1"
+      instl: NO
+      tagid: "2852be614a4d4b6da028e9bc1be7eb08"
+      bidfloor: 0.09
+      pmp {
+        private_auction: NO
+        deals {
+          id: "REDACTED"
+          bidfloor: 0.09
+          at: 2
+        }
+        deals {
+          id: "REDACTED"
+          bidfloor: 0.09
+          at: 2
+        }
+      }
+      secure: 0
+      ext {
+        placement_type: BANNER
+        environment_type: APP
+      }
+    }
+    app {
+      id: "6857022586ae49e6af9a0eab75f7436a"
+      name: "PBN_amazon"
+      cat: "IAB1"
+      ver: "2.21.21"
+      publisher {
+        id: "b40d3c1cd8eb4fceac59ef207d74a5de"
+        name: "LEARNINGS CO., LIMITED"
+      }
+    }
+    device {
+      dnt: NO
+      ua: "REDACTED"
+      ip: "0.0.0.0"
+      geo {
+        country: "USA"
+        region: "NJ"
+        metro: "501"
+        zip: "07512"
+      }
+      language: "en"
+      make: "Amazon"
+      model: "KFSUWI"
+      os: "Android"
+      osv: "5.1.1"
+      js: YES
+      connectiontype: WIFI
+      w: 1200
+      h: 1920
+      pxratio: 1.5
+      ifa: "REDACTED"
+      ext {
+        augmented_device_screen_size: "XL"
+        augmented_browser: "Chrome Mobile"
+        augmented_browser_version: "70"
+        augmented_os: "Android"
+        augmented_osv: "5.1"
+        augmented_model: "Fire HD 10 (2017)"
+        augmented_make: "Amazon"
+        augmented_devicetype: TABLET
+        augmented_models: "Fire HD 10 (2017)"
+      }
+    }
+    user {
+      geo {
+        country: "USA"
+        region: "USA/NJ"
+        metro: "501"
+        city: "5096699"
+        zip: "07011"
+        utcoffset: -240
+        ext {
+          regions: "USA/NJ"
+        }
+      }
+      data {
+        id: "canary"
+        segment {
+          id: "canary-segmentabsent"
+        }
+        ext {
+          beeswax_augmented: true
+        }
+      }
+      ext {
+        user_id: "REDACTED"
+        user_id_type: AD_ID
+        experiment_user_index: 507
+      }
+    }
+    at: 1
+    tmax: 410
+    regs {
+      ext {
+        gdpr: NO
+      }
+    }
+    source {
+      pchain: "74b46c0ea83967ca:b40d3c1cd8eb4fceac59ef207d74a5de"
+    }
+    ext {
+      inventory_source: MOPUB
+      auction_id {
+        hostid: 2548437633
+        tid: 20025
+        timestamp: 1594143171297924
+      }
+      targeting_geo {
+        country: "USA"
+        region: "USA/NJ"
+        city: "5096699"
+        zip: "07011"
+        metro: "501"
+        regions: "USA/NJ"
+      }
+      time_of_week: 3692
+      imp_tracker: ALWAYS_USE_TRACKER
+      supplier_click_tracker: NO_CLICK_TRACKER
+      ads_txt: NO_DOMAIN
+      user_time_of_week: 3692
+      seller_id: "b40d3c1cd8eb4fceac59ef207d74a5de"
+    }
+  }
+  adcandidates {
+    creative_ids: 897
+    bidding {
+      cpm_strategy {
+        flat_bid_micros: 1000
+      }
+      bid_price_micros: 1000
+    }
+    pacing {
+      pace_delivery: false
+    }
+    campaign_id: 216
+    account_id: 1
+    buzz_key: "canary"
+  }
+}
+impression {
+  auctionid {
+    hostid: 2548437633
+    tid: 20025
+    timestamp: 1594143171297924
+  }
+  adgroupid {
+    buzz_key: "canary"
+    accountid: 1
+    campaignid: 216
+    lineitemid: 778
+  }
+  bid_price_micros_usd: 1000
+  inventory_source: MOPUB
+  user_id: "REDACTED"
+  win_price_micros_usd: 999
+  rx_timestamp_usecs: 1594143172101886
+  data_center: US_EAST_1
+  exchange_bid_price_micros_usd: 940
+  creative_id: 897
+  advertiser_id: 13
+  auctionid_str: "1594143171297924.2548437633.20025.canary"
+  is_gdpr: false
+  gdpr_consent_string: ""
+  win_price {
+    amount {
+      micros: 999
+      currency: USD
+    }
+    rate: 1.0
+  }
+  requestid_str: "1594143171297924.2548437633.20025.canary"
+}

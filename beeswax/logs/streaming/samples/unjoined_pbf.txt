@@ -1,0 +1,34 @@
+/* This file represents a protobuf that has been decoded to a human readable form using the protoc utiltiy. */
+
+auctionid {
+    hostid: 4032519186
+    tid: 21425
+    timestamp: 1594145268592074
+  }
+  adgroupid {
+    buzz_key: "canary"
+    accountid: 1
+    campaignid: 713
+    lineitemid: 2753
+  }
+  bid_price_micros_usd: 1000
+  inventory_source: FMX
+  user_id: "REDACTED"
+  win_price_micros_usd: 999
+  rx_timestamp_usecs: 1594145269261719
+  data_center: US_EAST_1
+  exchange_bid_price_micros_usd: 922
+  creative_id: 3859
+  advertiser_id: 119
+  auctionid_str: "1594145268592074.4032519186.21425.canary"
+  is_gdpr: false
+  gdpr_consent_string: ""
+  win_price {
+    amount {
+      micros: 999
+      currency: USD
+    }
+    rate: 1.0
+  }
+  requestid_str: "1594145268592074.4032519186.21425.canary"
+}
