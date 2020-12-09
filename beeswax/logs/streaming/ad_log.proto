@@ -1,4 +1,4 @@
-// Copyright 2015, Beeswax.IO Inc.
+// Copyright 2020, Beeswax.IO Inc.
 //
 // Protocol buffer defining ad log objects such as
 // Bids, Impressions, Clicks, Conversions etc.
