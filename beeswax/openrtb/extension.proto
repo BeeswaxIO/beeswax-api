@@ -127,7 +127,7 @@ message BidRequestExtensions {
 }
 
 
-// Next available tag: 11
+// Next available tag: 13
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
@@ -144,6 +144,7 @@ message ImpressionExtensions {
 
   // Exchange specific extensions
   optional AdxImpressionExtension adx = 1;
+  optional SamsungImpressionExtension samsung = 12;
 
   // allowed restricted ad categories for ADX
   repeated int32 allowed_restricted_category = 9 [packed=true];
@@ -433,6 +434,11 @@ message AdxImpressionExtension {
   repeated int32 allowed_vendor_type = 3;
   // This field will be populated and effective when regs.ext.gdpr is YES.
   repeated int64 consented_providers = 4;
+}
+
+// Next available tag: 2
+message SamsungImpressionExtension {
+  optional string native = 1;
 }
 
 message AdxGeoExtension {
