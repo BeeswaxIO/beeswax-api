@@ -127,7 +127,7 @@ message BidRequestExtensions {
 }
 
 
-// Next available tag: 13
+// Next available tag: 12
 message ImpressionExtensions {
   optional Enums.Inventory.PlacementType placement_type = 2;
   optional Enums.Inventory.EnvironmentType environment_type = 3;
@@ -144,7 +144,6 @@ message ImpressionExtensions {
 
   // Exchange specific extensions
   optional AdxImpressionExtension adx = 1;
-  optional SamsungImpressionExtension samsung = 12;
 
   // allowed restricted ad categories for ADX
   repeated int32 allowed_restricted_category = 9 [packed=true];
@@ -228,7 +227,10 @@ message VideoExtensions {
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message NativeExtensions {
+  // Exchange specific extensions
+  optional SamsungNativeExtension samsung = 1;
   extensions 1000 to max;
 }
 
@@ -437,7 +439,7 @@ message AdxImpressionExtension {
 }
 
 // Next available tag: 2
-message SamsungImpressionExtension {
+message SamsungNativeExtension {
   optional string native = 1;
 }
 
