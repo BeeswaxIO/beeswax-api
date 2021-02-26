@@ -45,13 +45,19 @@ The segment_recency value refers to a predefined recency window, as enumerated h
 
 | Recency Window | Enum |
 |------------|-----------------|
-| Less than 1 day | 1 |
-| Greater than 1 day, less than 2 | 2 |
-| Greater than 2 days, less than 3 | 3 |
-| Greater than 3 days, less than 7 | 4 |
-| Greater than 7 days, less than 14 | 5 |
-| Greater than 14 days, less than 21 | 6 |
-| Greater than 21 days, less than 30 | 7 |
+| Less than 15 minutes | 1 |
+| Greater than 15 minutes, less than 1 hour | 2 |
+| Greater than 1 hour, less than 3 hours | 3 |
+| Greater than 3 hours, less than 6 | 4 |
+| Greater than 6 hours, less than 12 | 5 |
+| Greater than 12 hours, less than 24 | 6 |
+| Less than 1 day | 7 |
+| Greater than 1 day, less than 2 | 8 |
+| Greater than 2 days, less than 3 | 9 |
+| Greater than 3 days, less than 7 | 10 |
+| Greater than 7 days, less than 14 | 11 |
+| Greater than 14 days, less than 21 | 12 |
+| Greater than 21 days, less than 30 | 13 |
 
 ## Frequency
 Similar to Segment Recency, the Frequency feature requires two columns in order to be activated. One column specifies the user ID type and frequency count, while the other specifies the frequency look back window.
