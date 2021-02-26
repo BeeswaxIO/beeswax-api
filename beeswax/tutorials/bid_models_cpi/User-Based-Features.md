@@ -51,7 +51,7 @@ The segment_recency value refers to a predefined recency window, as enumerated h
 | Greater than 3 hours, less than 6 | 4 |
 | Greater than 6 hours, less than 12 | 5 |
 | Greater than 12 hours, less than 24 | 6 |
-| Less than 1 day | 7 |
+| Any time less than 1 day | 7 |
 | Greater than 1 day, less than 2 | 8 |
 | Greater than 2 days, less than 3 | 9 |
 | Greater than 3 days, less than 7 | 10 |
