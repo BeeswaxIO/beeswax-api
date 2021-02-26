@@ -122,9 +122,6 @@ Each of the \*_freq_count and frequency_window values refer to a predefined enum
 **Are Wild Cards supported in user based features?**
 Yes, except for frequency_window which does not support Wild Cards.
 
-**What happens if multiple Segment Recency windows overlap?**
-We will use the row with the highest multiplier value. The reason is that this results in the highest chance to win an auction while still respecting the customer's valuation as expressed in the Bid Model.
-
 **Are there any changes to how I create prediction files or upload to S3?**
 No, the addition of new features does not affect the workflow for creating or uploading new bid models.
 
