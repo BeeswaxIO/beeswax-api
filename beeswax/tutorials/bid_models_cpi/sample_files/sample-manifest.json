@@ -6,6 +6,10 @@
         "fields": [
             "lat_long_present",
             "platform_os",
+            "targeted_segment",
+            "segment_recency",
+            "standard_freq_count",
+            "frequency_window",
             "inventory_interstitial",
             "inventory_source",
             "platform_device_make",
