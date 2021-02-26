@@ -33,6 +33,11 @@ Segment Recency introduces a new convention to Bid Models, as this feature requi
 
 **Log Headers:** targeted_segment, segment_recency
 
+The segment_recency value refers to a predefined recency window, as enumerated below. Since recency windows do not overlap, multiple Bid Model rows need to be created in order to define Segment Recency across a broader time horizon.
+
+In the following example, the three canary-456 Segment Recency definitions functionally mean, “Bid 2.5x for users in canary-456 if the user was added in the last 3 days.”
+* Hourly Segment Recency enums do not need to be included if the “Any time less than 1 day” value (enum #7 below) is used.
+
 **Example:**
 
 | targeted_segment | segment_recency | domain | value |
@@ -40,8 +45,6 @@ Segment Recency introduces a new convention to Bid Models, as this feature requi
 | canary-123 | 1 | espn.com | [expected bid ]|
 | canary-456 | 5 | abc.com | [expected bid ]|
 | ...        | ... | ...             |...  |
-
-The segment_recency value refers to a predefined recency window, as enumerated here:
 
 | Recency Window | Enum |
 |------------|-----------------|
