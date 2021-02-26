@@ -43,7 +43,9 @@ In the following example, the three canary-456 Segment Recency definitions funct
 | targeted_segment | segment_recency | domain | value |
 |------------|----------|-------|------------------|
 | canary-123 | 1 | espn.com | [expected bid ]|
-| canary-456 | 5 | abc.com | [expected bid ]|
+| canary-456 | 7 | abc.com | 2.5 |
+| canary-456 | 8 | abc.com | 2.5 |
+| canary-456 | 9 | abc.com | 2.5 |
 | ...        | ... | ...             |...  |
 
 | Recency Window | Enum |
