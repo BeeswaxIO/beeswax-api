@@ -1,6 +1,6 @@
 # Background
 
-Bid models support several user based features: Targeted Segment, Segment Recency, and Frequency. These features have unique requirements in the context of bid models.
+Bid models support several user based features: Targeted Segment, Segment Recency, and Frequency. These features and their use are outlined in this document.
 
 * **Targeted Segment** allows users to adjust bid prices based on which targeted segment a user falls into. Only segments explicitly targeted by the line item are eligible features in the bid model. 
 
