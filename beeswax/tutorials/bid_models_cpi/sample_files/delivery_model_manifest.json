@@ -1,0 +1,7 @@
+{
+    "model_predictions": ["s3://beeswax-model-us-east-1/bid_models/test/predictions/delivery_weights_test-658e635587aac71e9c75fe8540ba66c2.json"],
+    "metadata": {
+        "fields": ["domain_list"],
+        "wildcard_fields": []
+    }
+}
