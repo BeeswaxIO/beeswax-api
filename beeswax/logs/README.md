@@ -1,3 +1,9 @@
+## Overview
+
+Beeswax offers its customers many different types of logs in differing formats, delivery cadences and of different event types. The below table summarizes the offerings of Beeswax log types for its customers.
+
+## Log Summary
+
 | Log Type | Description | Expected Delivery Timing | Delivered Via | S3 Region Requirements | Supported Delivery Formats | Log Headers GitHub | More Information |
 | -------- | ----------- | ------------------------ | ------------- | --------- | --------------- | ------------------ | ---------------- |
 | Batch Hourly Wins | The winning auctions impressions, clicks and video activities | Up to 7.5 hours after event occurrence. We wait 6 hours to join late arriving clicks and video activities, and delivery occurs with 90 mins of the 6 hour window. | S3 | Single bucket across regions | Gzipped CSV or Parquet | TBD | Bach files are joined, which means bid, click and activity data matched against impression data will be included |
