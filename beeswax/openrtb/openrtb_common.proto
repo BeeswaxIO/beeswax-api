@@ -1069,6 +1069,7 @@ message Enums {
       QWARRY               =  239;
       MGID                 =  240;
       CHICORY              =  241;
+      AMAZON               =  242;
     }
 
     // Placement Type of the OpenRTB Bid Request
