@@ -220,3 +220,6 @@
 |account_level_revenue_share_micros_usd |218  |As above, but populates the calcualted value of the rev share in the local currency as expressed in micros. |INT8 | |
 |tmax |219  |The required time in milliseconds for the bid to respond to the exchange to be considered in the auction |INT4 | |
 |video_skippable  |220  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
+|is_skadnetwork  |221  |Flags whether the inventory is SKAdNetwork enabled. |INT2 | |
+|dnt  |222  |Do Not Track |INT4 | |
+|lmt  |223  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT4 | |
