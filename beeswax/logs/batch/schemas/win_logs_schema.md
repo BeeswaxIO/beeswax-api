@@ -216,4 +216,4 @@
 |video_skippable  |214  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
 |is_skadnetwork  |215  |Flags whether the inventory is SKAdNetwork enabled. |INT2 | |
 |dnt  |216  |Do Not Track |INT4 | |
-|lmt  |217  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT4 | |
+|lmt  |217  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
