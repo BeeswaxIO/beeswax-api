@@ -125,3 +125,6 @@
 |deal_ats  |123  |If the impression was purchased via a deal, this logs the auction type for all deals on the auction in the same order as the deal_ids column. 1 = First Price, 2 = Second Price, 3 = Fixed Price. Overrides "auction_type" | |
 |tmax |124  |The required time in milliseconds for the bid to respond to the exchange to be considered in the auction |INT4 | |
 |video_skippable  |125  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
+|is_skadnetwork  |126  |Flags whether the inventory is SKAdNetwork enabled. |INT2 | |
+|lmt  |127  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
+|banner_format  |128  |Comma-separated list of banner formats (wxh) that are accepted by the publisher |VARCHAR(255) | |
