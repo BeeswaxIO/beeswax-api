@@ -157,7 +157,8 @@
 |deal_ats  |155  |If the impression was purchased via a deal, this logs the auction type for all deals on the auction in the same order as the deal_ids column. 1 = First Price, 2 = Second Price, 3 = Fixed Price. Overrides "auction_type" | |
 |account_level_revenue_share_fee_type |156  |If using the account-level revenue share feature, this column populates whether the fee is expressed as a reduction or fee.  |VARCHAR(255) | |
 |account_level_revenue_share_percent_micros |157  |If using the account-level revenue share feature, this column populates the percentage of the rev share for the given impression in micros.  |INT8 | |
-|account_level_revenue_share_micros_usd |158  |As above, but populates the calcualted value of the rev share in USD as expressed in micros. |INT8 | |
-|account_level_revenue_share_micros_usd |159  |As above, but populates the calcualted value of the rev share in the local currency as expressed in micros. |INT8 | |
-|tmax |160  |The required time in milliseconds for the bid to respond to the exchange to be considered in the auction |INT4 | |
-|video_skippable  |161  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
+|tmax |158  |The required time in milliseconds for the bid to respond to the exchange to be considered in the auction |INT4 | |
+|video_skippable  |159  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
+|is_skadnetwork  |160  |Flags whether the inventory is SKAdNetwork enabled. |INT2 | |
+|lmt  |161  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
+|banner_format  |162  |Comma-separated list of banner formats (wxh) that are accepted by the publisher |VARCHAR(255) | |
