@@ -155,4 +155,8 @@ message Adcandidate {
   optional FrequencyCapsInfo campaign_frequency_caps_info = 11;
   optional VendorFeesInfo line_item_vendor_fees_info = 12;
   optional VendorFeesInfo campaign_vendor_fees_info = 13;
+  // This field will be populated if the line item is associated with
+  // any experiment grouped by user.
+  optional uint64 experiment_user_test_group_id = 14;
+  optional string deal_id = 15;
 }
