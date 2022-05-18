@@ -129,3 +129,5 @@ _AKA Bid Response Feedback Logs_
 |experiment_id_type |125  |The ID type used for segregation of impressions for Beeswax's experiment feature.  |VARCHAR(255) | |
 |tmax |126  |The required time in milliseconds for the bid to respond to the exchange to be considered in the auction |INT4 | |
 |video_skippable  |127  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
+|advertiser_id  |128  |Advertiser ID |INT8 | |
+|lmt  |129  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
