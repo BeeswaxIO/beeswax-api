@@ -218,3 +218,20 @@
 |dnt  |216  |Do Not Track |INT4 | |
 |lmt  |217  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
 |banner_format  |218  |Comma-separated list of banner formats (wxh) that are accepted by the publisher |VARCHAR(255) | |
+|content_id  |219  |ID uniquely identifying the content |VARCHAR(255) | |
+|content_episode  |220  |Episode number |VARCHAR(255) | |
+|content_title  |221  |Content title |VARCHAR(255) | |
+|content_series  |222  |Content series |VARCHAR(255) | |
+|content_season  |223  |Content season |VARCHAR(255) | |
+|content_genre |224  |Genre that best describes the content  |VARCHAR(255) | |
+|content_contentrating  |225  |Content rating (e.g., MPAA) |VARCHAR(255) | |
+|content_keywords  |226  |Comma separated list of keywords describing the content |VARCHAR(255) | |
+|content_livestream  |227  |0 = not live, 1 = content is live (e.g., stream, live blog) |INT4 | |
+|content_len  |228  |Length of content in seconds; appropriate for video or audio |VARCHAR(255) | |
+|content_network_id  |229  |ID of the network the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
+|content_network_name  |230  |Network the content is on (e.g., a TV network like “ABC") |VARCHAR(255) | |
+|content_network_domain  |231  |The primary domain of the network (e.g. “abc.com” in the case of the network ABC). |VARCHAR(255) | |
+|content_channel_id  |232  |ID of the channel the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
+|content_channel_name  |233  |Channel the content is on (e.g., a local channel like “WABC-TV") |VARCHAR(255) | |
+|content_channel_domain  |234  |The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) |VARCHAR(255) | |
+|content_cat  |235  |Array of IAB content categories that describe the content |VARCHAR(255) | |
