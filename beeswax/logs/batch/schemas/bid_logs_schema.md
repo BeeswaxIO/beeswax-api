@@ -162,3 +162,20 @@
 |is_skadnetwork  |160  |Flags whether the inventory is SKAdNetwork enabled. |INT2 | |
 |lmt  |161  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
 |banner_format  |162  |Comma-separated list of banner formats (wxh) that are accepted by the publisher |VARCHAR(255) | |
+|content_id  |163  |ID uniquely identifying the content |VARCHAR(255) | |
+|content_episode  |164  |Episode number |VARCHAR(255) | |
+|content_title  |165  |Content title |VARCHAR(255) | |
+|content_series  |166  |Content series |VARCHAR(255) | |
+|content_season  |167  |Content season |VARCHAR(255) | |
+|content_genre |168  |Genre that best describes the content  |VARCHAR(255) | |
+|content_contentrating  |169  |Content rating (e.g., MPAA) |VARCHAR(255) | |
+|content_keywords  |170  |Comma separated list of keywords describing the content |VARCHAR(255) | |
+|content_livestream  |171  |0 = not live, 1 = content is live (e.g., stream, live blog) |INT4 | |
+|content_len  |172  |Length of content in seconds; appropriate for video or audio |VARCHAR(255) | |
+|content_network_id  |173  |ID of the network the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
+|content_network_name  |174  |Network the content is on (e.g., a TV network like “ABC") |VARCHAR(255) | |
+|content_network_domain  |175  |The primary domain of the network (e.g. “abc.com” in the case of the network ABC). |VARCHAR(255) | |
+|content_channel_id  |176  |ID of the channel the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
+|content_channel_name  |177  |Channel the content is on (e.g., a local channel like “WABC-TV") |VARCHAR(255) | |
+|content_channel_domain  |178  |The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) |VARCHAR(255) | |
+|content_cat  |179  |Array of IAB content categories that describe the content |VARCHAR(255) | |
