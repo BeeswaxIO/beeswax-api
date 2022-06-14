@@ -138,14 +138,10 @@
 |content_keywords  |136  |Comma separated list of keywords describing the content |VARCHAR(255) | |
 |content_livestream  |137  |0 = not live, 1 = content is live (e.g., stream, live blog) |INT4 | |
 |content_len  |138  |Length of content in seconds; appropriate for video or audio |VARCHAR(255) | |
-|content_network_id  |139  |ID of the network the content is on. This may not be
-a unique identifier across all supply sources |VARCHAR(255) | |
+|content_network_id  |139  |ID of the network the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
 |content_network_name  |140  |Network the content is on (e.g., a TV network like “ABC") |VARCHAR(255) | |
-|content_network_domain  |141  |The primary domain of the network (e.g. “abc.com” in the
-case of the network ABC). |VARCHAR(255) | |
-|content_channel_id  |142  |ID of the channel the content is on. This may not be
-a unique identifier across all supply sources |VARCHAR(255) | |
+|content_network_domain  |141  |The primary domain of the network (e.g. “abc.com” in the case of the network ABC). |VARCHAR(255) | |
+|content_channel_id  |142  |ID of the channel the content is on. This may not be a unique identifier across all supply sources |VARCHAR(255) | |
 |content_channel_name  |143  |Channel the content is on (e.g., a local channel like “WABC-TV") |VARCHAR(255) | |
-|content_channel_domain  |144  |The primary domain of the channel (e.g. “abc7ny.com” in the
-case of the local channel WABC-TV) |VARCHAR(255) | |
+|content_channel_domain  |144  |The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) |VARCHAR(255) | |
 |content_cat  |145  |Array of IAB content categories that describe the content |VARCHAR(255) | |
