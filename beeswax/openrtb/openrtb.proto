@@ -674,7 +674,7 @@ message BidRequest {
     optional AppExtensions ext = 1000;
   }
 
-  // Next available tag: 20
+  // Next available tag: 23
   /*
    * OpenRTB 3.3.7: describes the content of a site or app.
    * This object may be useful in the situation where syndicated content contains impressions and
@@ -761,6 +761,18 @@ message BidRequest {
      * Language of the content. Use alpha-2/ISO 639-1 codes.
      */
     optional string language = 19;
+    /*
+     * Genre that best describes the content (e.g., rock, pop, etc).
+     */
+    optional string genre = 20;
+    /*
+     * Network Object
+     */
+    optional Network network = 21;
+    /*
+     * Channel Object
+     */
+    optional Channel channel = 22;
 
     optional ContentExtensions ext = 1000;
   }
@@ -906,7 +918,7 @@ message BidRequest {
     optional DeviceExtensions ext = 1000;
   }
 
-  // Next available tag: 9
+  // Next available tag: 10
   /*
    * OpenRTB 3.3.12: contains information known or derived about the human user of the device.
    * Note that the user ID is an exchange artifact (refer to the “device” object for hardware or
@@ -952,6 +964,56 @@ message BidRequest {
      * User's custom Data.
      */
     repeated Data data = 8;
+
+    /* OpenRTB 2.6: 3.7.27: Object: Extended identifiers
+     *
+     * Extended identifiers support in the OpenRTB specification allows
+     * buyers to use audience data in real-time bidding. This object can
+     * contain one or more UIDs from a single source or a technology
+     * provider. The exchange should ensure that business agreements
+     * allow for the sending of this data.
+     */
+    message ExtendedID {
+        /* Source or technology provider responsible for the set of
+         * included IDs. Expressed as a top-level domain.
+         */
+        optional string source = 1;
+
+        /* OpenRTB 2.6: 3.7.28: Object: Extended Identifier UIDs
+         *
+         * This object contains a single user identifier provided as
+         * part of extended identifiers. The exchange should ensure that
+         * business agreements allow for the sending of this data.
+         */
+        message UID {
+            optional string id = 1;
+            /* AdCOM 1.0 List: AgentTypes
+             *
+             * This list identifies the user agent types a user
+             * identifier is from.
+             *
+             * 1: An ID which is tied to a specific web browser or
+             *    device (cookie-based, probabilistic, or other).
+             *
+             * 2: In-app impressions, which will typically contain a
+             *    type of device ID (or rather, the privacy-compliant
+             *    versions of device IDs).
+             *
+             * 3: A person-based ID, i.e., that is the same across
+             *    devices.
+             *
+             * 500+: Vendor-specific codes.
+             */
+            optional int32 atype = 2;
+        }
+
+        /* Array of extended ID UID objects from the given source. Refer
+         * to 3.2.28 (Extended Identifier UIDs.)
+         */
+        repeated UID uids = 2;
+    }
+
+    repeated ExtendedID eids = 9;
 
     optional UserExtensions ext = 1000;
   }
@@ -1715,3 +1777,58 @@ message NativeResponse {
     }
   }
 }
+// Next available tag: 4
+/**
+ * OpenRTB 2.6: This object describes the network an ad will be displayed on. A Network is
+ * defined as the parent entity of the Channel object’s entity for the purposes of organizing
+ * Channels. Examples are companies that own and/or license a collection of content channels
+ * (Viacom, Discovery, CBS, WarnerMedia, Turner and others), or studio that creates such content
+ * and self-distributes content. Name is a human-readable field while domain and id can be used for
+ * reporting and targeting purposes.
+ */
+message Network {
+  /**
+   * A unique identifier assigned by the publisher. This may not be
+   * a unique identifier across all supply sources.
+   */
+  optional string id = 1;
+  /**
+   * Network the content is on (e.g., a TV network like “ABC")
+   */
+  optional string name = 2;
+  /**
+   * The primary domain of the network (e.g. “abc.com” in the
+   * case of the network ABC). It is recommended to include the
+   * top private domain (PSL+1) for DSP targeting normalization
+   * purposes.
+   */
+  optional string domain = 3;
+}
+// Next available tag: 4
+/**
+ * OpenRTB 2.6: This object describes the channel an ad will be displayed on. A Channel is defined
+ * as the entity that curates a content library, or stream within a brand name for viewers. Examples
+ * are specific view selectable ‘channels’ within linear and streaming television (MTV, HGTV, CNN, BBC One, etc)
+ * or a specific stream of audio content commonly called ‘stations.’ Name is a human-readable field while domain
+ * and id can be used for reporting and targeting purposes.
+ */
+message Channel {
+  /**
+   * A unique identifier assigned by the publisher. This may not be
+   * a unique identifier across all supply sources.
+   */
+  optional string id = 1;
+  /**
+   * Channel the content is on (e.g., a local channel like “WABC-TV")
+   */
+  optional string name = 2;
+  /**
+   * The primary domain of the channel (e.g. “abc7ny.com” in the
+   * case of the local channel WABC-TV). It is recommended to
+   * include the top private domain (PSL+1) for DSP targeting
+   * normalization purposes.
+   */
+  optional string domain = 3;
+}
+
+
