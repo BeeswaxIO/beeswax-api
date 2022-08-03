@@ -1,0 +1,26 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Protocol buffer defining a creative of an adgroup
+
+syntax = "proto2";
+package adgroup;
+
+option java_package = "com.beeswax.adgroup";
+option cc_enable_arenas = true;
+
+message Creative {
+  // Next Tag: 3
+  // A macro of {{`name`}} will be expanded as `value`.
+  // Currently we use the Macro message for dynamic_macros,
+  // which is set by custom bidding agent (see `Creative` in bid/request.proto)
+  // and stinger will move them to `Adcandidate` message.
+  // (see `Adcandidate` and `Creative` in stinger/adgroup.proto)
+  // dynamic_macros may exist in creative template, creative
+  // content's values (e.g. tag) and derived macros (click_destination_url
+  // and click_tracking_url).
+  message Macro {
+    optional string name = 1;
+    optional string value = 2;
+  }
+}
+

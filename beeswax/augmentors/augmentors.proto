@@ -1,0 +1,24 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Augmentors Protobuf
+
+syntax = "proto2";
+package augmentors;
+
+option cc_enable_arenas = true;
+
+enum Augmentors {
+    ADS_TXT = 0;
+    CUSTOM_LIST = 1;
+    RUF = 2;
+    SEGMENT_FILTER = 3;
+    USER_DATA = 4;
+    GEO_DISK = 5;
+    HOSTED_MATCH = 6;
+    GRAPESHOT_CONTEXTUAL = 7;
+    IAS_VIEWABILITY = 8;
+    DOUBLE_VERIFY = 9;
+    CUSTOM_AUGMENTOR = 10;
+    WIN_LATENCY_AUGMENTOR = 11;
+}
+

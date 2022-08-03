@@ -1,0 +1,18 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// vendor ids
+
+syntax="proto2";
+package privacy;
+
+option cc_enable_arenas = true;
+
+// Google Adx does not follow the IAB spec so buzz has to store two sets of vendor ids.
+message VendorIds {
+  // IAB vendors and format: go/iab_vendor
+  repeated int32 iab_vendor_ids = 1;
+  // Google Adx does not follow the IAB spec so buzz has to store two sets of vendor ids.
+  // go/adx_vendor
+  repeated int32 adx_vendor_ids = 2;
+}
+

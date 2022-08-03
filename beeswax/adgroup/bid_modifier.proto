@@ -1,0 +1,82 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// A bid modifier is a multiplicative factor (multiplier) associated
+// with a matching criteria.
+// The matching criteria can be a simple predicate of the format key=value
+// or a more complicated boolean expression.
+//
+// A line item can have multiple bid modifiers associated with it.
+// Bid modifiers are applied after targeting and creative matching.
+// Bid modifiers are currently only applicable to line items where the
+// bidding strategy is CPM.
+//
+// To determine the final bid price
+// 1. First determine all the eligible bid modifiers for a line item.
+// 2. Then group the eligible bid modifiers into sets based on the
+//    targeting key.
+// 3. Find the maximum multiplicative factor from each
+//    bid modifier set.
+// 4. Multiply all the factors to get the final multiplier which
+//    is applied to the base bid price to obtain the final bid price.
+//    Hexbid will ensure that the final bid price does not exceed the
+//    max bid price.
+
+syntax="proto2";
+package adgroup;
+
+option cc_enable_arenas = true;
+
+import "beeswax/adgroup/bid_model.proto";
+import "beeswax/matcher/query.proto";
+
+// Next Tag: 2
+enum MultiplierType {
+    // Multiplier value is static with respect to the serving system.
+    // The serving system obtains the multiplier value from Buzz and
+    // treats it as a constant.
+    // The multiplier value can be modified via the Buzz REST API.
+    STATIC = 0;
+    // Multiplier value is obtained at run time and can change per request.
+    // For example, every user to segment association can have a different
+    // multiplier.
+    DYNAMIC = 1;
+    // Model type indicates the modifier value comes from a bid model uploaded
+    // by customer. The modifier value could be a multiplier, bid price, etc
+    // depending on the strategy that's associated with the line item.
+    MODEL = 2;
+}
+
+// Next Tag: 8
+message BidModifier {
+  // modifier_id has the form as <lineitem_id>/<modifier index>
+  // This is NOT the identifier of the bid modifier in Buzz.
+  // This identifier is only used by the serving system.
+  optional string modifier_id = 1;
+  // The targeting key of the bid modifier.
+  // Full list of targeting keys is available here:
+  // https://docs.beeswax.com/docs/list-of-targeting-modules-and-keys
+  optional string key = 2;
+  optional string boolean_expr_str = 3;
+  optional matcher.QueryMessage query = 4;
+  optional MultiplierType type = 5;
+  optional float multiplier = 6;
+  optional BidModel bid_model = 7;
+}
+
+// Next Tag: 3
+message BidModifierInvertedIndex {
+  optional string token = 1;
+  repeated BidModifierInvertedIndexItem index_items = 2;
+}
+
+// Next Tag: 3
+message BidModifierInvertedIndexItem {
+  optional BidModifier bid_modifier = 1;
+  optional int64 line_item_id = 2;
+}
+
+// Next Tag: 2
+message BidModifierInvertedIndexList {
+  repeated BidModifierInvertedIndex inverted_indices = 1;
+}
+

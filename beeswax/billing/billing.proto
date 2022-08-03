@@ -1,0 +1,91 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Contains all the billing related information such as:
+// Customers, Seats, Bid Reduction etc.
+
+syntax="proto2";
+package billing;
+
+option java_package = "com.beeswax.billing";
+option cc_enable_arenas = true;
+
+import "beeswax/openrtb/openrtb_common.proto";
+
+// Serial representation of a single Beeswax customer.
+// This data is stored in Buzz FES and is serialized by Pusher.
+// FES loads information about all the active customers in the system
+// through the FesConfigData message defined in beeswax/fes/config.proto
+//
+// SBS loads information about the customer specific to a given SBS cluster
+// through the StingerConfigData message defined in beeswax/stinger/config.proto
+// Next tag: 8
+message Customer {
+  // Each account is associated with 1 or more seats.
+  // Next tag: 8
+  message Seat {
+    enum Type {
+      // Exchange will bill Beeswax for this seat type and normally Beeswax
+      // will charge a non-zero media fee to the customer.
+      // There are two use cases for this seat type:
+      // Case 1:
+      // For some exchanges that we partner with, there will be a default seat
+      // for that exchange in our system and the default seat will be of this
+      // type.
+      // Case 2:
+      // Some exchanges may require us to identify our customer in the bid
+      // response but still continue to bill Beeswax. In those cases, we will
+      // create a customer specific seat of this type for that particular
+      // exchange.
+      BEESWAX_BILLABLE = 1;
+      // Exchange will bill the customer directly for this seat type and FES
+      // will check media fee for such bid is 0.
+      CUSTOMER_BILLABLE = 2;
+    }
+    enum FeeType {
+      NONE = 1;
+      BID_REDUCTION = 2;
+      FEE = 3;
+    }
+    optional Type type = 8 [default = BEESWAX_BILLABLE];
+    optional openrtb.Enums.Inventory.Source exchange = 1;
+    optional string seat_id = 2;
+    optional FeeType fee_type = 3;
+    optional int64 fee_rate_micros = 4;  // Corresponds to fee_amount stored in Buzz.
+    optional int64 direct_deal_fee_rate_micros = 5;  // Corresponds to deal_fee in Buzz.
+    optional bool blocked = 6 [default = false];
+    optional int64 buzz_account_id = 7;
+  }
+
+  optional string customer_name = 4;
+  optional int64 customer_id = 1;
+  enum Status {
+    ACTIVE = 1;
+    INACTIVE = 2;
+  }
+  optional Status status = 2 [default = ACTIVE];
+
+  // Each customer can have a main seat for an exchange, plus they can optionally have
+  // override seats for each buzz_account_id that they have. When determining what seat
+  // to use for a customer, we first check to see if they have a seat for a given
+  // buzz_account_id for the exchange. If not, we see if they have a default seat for the
+  // exchange (ie a seat without a buzz_account_id, represented by
+  // default_buzz_account_seat). If they don't have either, then we see if the exchange has
+  // a default seat for all customers.
+  // Next tag: 3
+  message ExchangeSeats {
+    optional Seat default_buzz_account_seat = 1;
+    // this is a mapping of buzz_account_id to seat
+    map<int64, Seat> buzz_account_to_seat_map = 2;
+  }
+
+  // map of inventory source to set of seats for that exchange
+  // enums are not a valid key in protobuf maps (they have to be an integral or string
+  // type), but the int key is actually the value of the inventory source enum
+  map<int32, ExchangeSeats> exchange_to_seats_map = 5;
+
+  // bid_shading_fee_pct_micros is the BW revenue sharing percent on the bid shade reduction amount.
+  optional uint32 bid_shading_fee_pct_micros = 6;
+  // max_bid_shading_fee_micros_usd is the upper bound on BW revenue sharing on the bid shade reduction amount.
+  optional uint64 max_bid_shading_fee_micros_usd = 7;
+}
+

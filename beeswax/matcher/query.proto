@@ -1,0 +1,97 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Query representing a boolean expression of predicates.
+
+syntax="proto2";
+package matcher;
+
+option cc_enable_arenas = true;
+
+// Query encodes a boolean expression of predicates.
+// For e.g. "Country EQ US" AND "Duration GT 30" is a valid boolean expression.
+message QueryMessage {
+  enum  Operator {
+    AND = 1;
+    OR = 2;
+  }
+
+  // Predicate is a statement that evaluates to true or false.
+  // Predicate is evaluated on a document (such as a BidRequest).
+  // Examples of a predicate:
+  // Country EQ US
+  // Duration GT 30
+  // All the leaf nodes of a Query are Predicates.
+  // Next Id: 9
+  message PredicateMessage {
+    // Next Id: 9
+    enum Comparator {
+      EQ = 1; // Equal to
+      GT = 2; // Greater than
+      GE = 3; // Greater than or equal to
+      LT = 4; // Less than
+      LE = 5; // Less than or equal to
+      IN = 6; // In range
+      EO = 7; // Element Of
+      RECENCY_EQ = 8; // Segment matches RecencyValue. Used for segment recency targeting.
+    }
+
+    // A RecencyValue matches a given segment if the following conditions all match:
+    // 1. the segment_id field matches the segment's ID
+    // 2. if max_segment_age_in_secs is present, the segment association must not have been
+    // created more than that many seconds in the past.
+    // 3. if min_segment_age_in_secs is present, the segment association must not have been
+    // created less than that many seconds in the past.
+    // At least one of max_segment_age_in_secs or min_segment_age_in_secs must be present,
+    // but both can be present.
+    // If both values are present, then min_segment_age_in_secs <= segment_age <= max_segment_age_in_secs
+    // where segment_age refers to the age of the user/segment association.
+    // Note that the only applicable comparator for RecencyValue is RECENCY_EQ, and the
+    // only applicable value for RECENCY_EQ is RecencyValue.
+    // Next Id: 4
+    message RecencyValue {
+      optional string segment_id = 1;
+      optional int64 max_segment_age_in_secs = 2;
+      optional int64 min_segment_age_in_secs = 3;
+    }
+
+    // Next Id: 3
+    message Range {
+      required int64 start = 1;
+      required int64 end = 2;
+    }
+
+    // Next Id: 2
+    message Set {
+      repeated string val_strs = 1;
+    }
+
+    required Comparator comparator = 1;
+    required string key = 2;
+    // Only one value should be set in a valid token.
+    oneof value {
+      string val_str = 3;
+      int64 val_int = 4;
+      double val_double = 5;
+      Range val_range = 6;
+      Set val_set = 7;
+      RecencyValue val_recency = 8;
+    }
+
+    // Next Extension Tag: 105
+    extensions 101 to 1000;
+  }
+
+  optional Operator op = 1;
+  optional bool negate = 2 [default = false];
+  // A query contains a list of subqueries and a list of Predicates.
+  // They are each evaluated identically based on op.
+  repeated PredicateMessage predicates = 3;
+  repeated QueryMessage subqueries = 4;
+  // Additional metadata can optionally be added to any node in the expression
+  // tree.
+  // Tagging a Query with a module name implies that all the nodes below it in
+  // the expression tree belong to the same module.
+  // Example of module name is "Geo".
+  optional string label = 5;
+}
+
