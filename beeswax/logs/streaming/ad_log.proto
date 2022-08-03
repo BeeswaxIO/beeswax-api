@@ -23,7 +23,6 @@ import "beeswax/currency/currency.proto";
 import "beeswax/openrtb/openrtb.proto";
 import "beeswax/openrtb/openrtb_common.proto";
 
-
 // Next Tag: 6
 // RequestLogMessage is created for every incoming bid request from the exchange.
 message RequestLogMessage {
