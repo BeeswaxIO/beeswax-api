@@ -77,6 +77,10 @@ message ImpressionLogMessage {
   optional bool is_gdpr = 14 [default = false];
   // The raw IAB consent string or "daisybit" as provided in the incoming bid request.
   optional string gdpr_consent_string = 15;
+  optional stinger.BidShadingInfo bid_shading_info = 18;
+
+  optional adgroup.VendorFeesInfo campaign_vendor_fees_info = 19;
+  optional adgroup.VendorFeesInfo line_item_vendor_fees_info = 20;
 }
 
 // Next Tag: 14
