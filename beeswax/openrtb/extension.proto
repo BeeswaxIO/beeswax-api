@@ -262,7 +262,7 @@ message ProducerExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 13
+// Next available tag: 17
 // Tag 1: idfa - Deprecated. Do not resuse.
 message DeviceExtensions {
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
@@ -298,6 +298,17 @@ message DeviceExtensions {
 
   // GDPR-compliant hashed ipv6
   optional string ipv6_hashed = 12;
+
+  // Identifier for Advertising (IFA) type, indicating how the IFA is generated
+  // https://iabtechlab.com/wp-content/uploads/2018/12/OTT-IFA-guidelines.final_Dec2018.pdf
+  optional string ifa_type = 14;
+
+  // IDFV of device in that publisher. Only passed when IDFA is unavailable or
+  // all zeros. Listed as ifv to match ifa field format.
+  optional string ifv = 15;
+
+  // GDPR-compliant hashed IDFV.
+  optional string ifv_hashed = 16;
 
   extensions 1000 to max;
 }
