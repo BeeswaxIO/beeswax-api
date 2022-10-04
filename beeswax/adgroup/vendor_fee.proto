@@ -29,3 +29,4 @@ message VendorFeesInfo {
   // this field will be "7" in micros, i.e., 7000000
   optional int64 total_fee_percent_micros = 2;
 }
+
