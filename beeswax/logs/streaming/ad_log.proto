@@ -15,6 +15,7 @@ package logs;
 
 option java_package = "com.beeswax.logs";
 
+import "beeswax/adgroup/vendor_fee.proto";
 import "beeswax/bid/adcandidate.proto";
 import "beeswax/bid/request.proto";
 import "beeswax/base/eventid.proto";
