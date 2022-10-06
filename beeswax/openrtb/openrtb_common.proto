@@ -1070,6 +1070,10 @@ message Enums {
       MGID                 =  240;
       CHICORY              =  241;
       AMAZON               =  242;
+      OTM                  =  243;
+      TUBI                 =  244;
+      THEMEDIAGRID         =  245;
+      AIDEM                =  246;
     }
 
     // Placement Type of the OpenRTB Bid Request
