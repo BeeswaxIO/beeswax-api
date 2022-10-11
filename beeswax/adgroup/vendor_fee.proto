@@ -1,0 +1,32 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Protocol buffer defining vendor fees
+
+syntax = "proto2";
+package adgroup;
+
+import "beeswax/currency/currency.proto";
+
+option java_package = "com.beeswax.adgroup";
+option cc_enable_arenas = true;
+
+
+// VendorFeesInfo contains the aggregrated amount and percent of a
+// lineitem/campaign's vendor fees.
+// Next Id: 3
+message VendorFeesInfo {
+  // total_vendor_fees_transactions are grouped by currency.
+  // vendor fees with the same currency are aggregrated into one
+  // CurrencyAmount object.
+  // For example, if a lineitem/campaign has a vendor fees of 30 micros USD,
+  // another of 20 micros USD, the other 40 micros GBP,
+  // there will be two items in this field - one 50 micros USD,
+  // the other 40 micros GBP.
+  repeated currency.CurrencyAmount total_vendor_fees_amounts = 1;
+  // total_fee_percent_micros is the sum of percent value in micros of all
+  // percent type vendor fees.
+  // For example, a line/campaign has a vendor fees at 5%, another 2%,
+  // this field will be "7" in micros, i.e., 7000000
+  optional int64 total_fee_percent_micros = 2;
+}
+

@@ -15,12 +15,14 @@ package logs;
 
 option java_package = "com.beeswax.logs";
 
+import "beeswax/adgroup/vendor_fee.proto";
 import "beeswax/bid/adcandidate.proto";
 import "beeswax/bid/request.proto";
 import "beeswax/base/eventid.proto";
 import "beeswax/currency/currency.proto";
 import "beeswax/openrtb/openrtb.proto";
 import "beeswax/openrtb/openrtb_common.proto";
+import "beeswax/stinger/adgroup.proto";
 
 // Next Tag: 6
 // RequestLogMessage is created for every incoming bid request from the exchange.
