@@ -1,0 +1,47 @@
+// Copyright 2022, Beeswax.IO Inc.
+//
+// Protocol buffer defining BidShadingInfo
+
+syntax = "proto2";
+package stinger;
+
+option java_package = "com.beeswax.stinger";
+
+// Next Tag: 3
+message BidShadingFee {
+    enum BidShadingFeeType {
+      UNKNOWN = 0;
+      VENDOR_FEE = 1;
+      INCLUDED_IN_WINPRICE = 2;
+    }
+  
+    optional BidShadingFeeType bid_shading_fee_type = 1;
+    optional int64 bid_shading_fee_micros_usd = 2;
+  }
+
+// Information about bid shading like what group the event is in
+// and what slice the request belongs to
+// Next Tag: 6
+message BidShadingInfo {
+    enum BidGroup {
+      UNKNOWN = 0;
+      CONTROL = 1;
+      TEST = 2;
+    }
+  
+    enum BidShadeState {
+      NOT_ELIGIBLE = 0;
+      CONTROL_GROUP = 1;
+      BID_SHADED = 2;
+      RANDOM = 3;
+  
+    }
+    optional BidGroup bid_group = 1 [default=UNKNOWN];
+    optional string slice_id = 2;
+    // state of bid shading
+    optional BidShadeState bid_shade = 3 [default=NOT_ELIGIBLE];
+    // micros we reduced the customer's bid price by.
+    optional int64 bid_shade_reduction_micros = 4;
+    optional BidShadingFee bid_shading_fee = 5;
+  }
+  
