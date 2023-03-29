@@ -235,3 +235,6 @@
 |content_channel_name  |233  |Channel the content is on (e.g., a local channel like “WABC-TV") |VARCHAR(255) | |
 |content_channel_domain  |234  |The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) |VARCHAR(255) | |
 |content_cat  |235  |Array of IAB content categories that describe the content |VARCHAR(255) | |
+|ip_conversions  |236  |Number of IP conversions associated to a particular impression |INT4 | |
+|ip_conversion_order  |237  |IP conversion order, constitutes how many orders a particular IP conversion represents; info provided by the advertiser in Beeswax UI/API |NUMERIC(18,6) | |
+|ip_conversion_value  |238  |Value of a given IP conversion as ispecified by the advertiser in Beeswax UI/API |NUMERIC(18,6) | |
