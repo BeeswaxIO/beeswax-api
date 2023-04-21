@@ -153,7 +153,7 @@ message BidRequest {
     extensions 100 to 9999;
   }
 
-  // Next available tag: 15
+  // Next available tag: 18
   /*
    * OpenRTB 3.3.2: describes the ad position or impression being auctioned.
    * A single bid request can include multiple “imp” objects, a use case for which might be an
@@ -241,6 +241,13 @@ message BidRequest {
      * between the auction and the actual impression.
      */
     optional int32 exp = 14;
+    /*
+     * Indicates if server-side ad insertion is in use and the impact
+     * of this on asset and tracker retrieval, where 0 = status unknown,
+     * 1 = all client-side, 2 = assets stitched server-side but
+     * tracking pixels fired client-side, 3 = all server-side.
+     */
+     optional int32 ssai = 17;
 
     optional ImpressionExtensions ext = 1000;
 
