@@ -127,3 +127,11 @@ No, the addition of new features does not affect the workflow for creating or up
 
 **Is there a limit to the size of a Bid Model prediction file?**
 Yes, prediction files are limited to 100 MB. However, there is no limit to the number of prediction files that can be uploaded to a single Bid Model.
+
+
+**Which row will be picked if two segment recency windows overlap**
+If multiple rows in a Bid Model are eligible for selection, we’ll always use the one with the highest multiplier value. 
+
+
+**What happens if a user falls into two segments that are each included in a Bid Model row?**
+In this case both rows would be eligible to be selected, we’ll pick the one with the higher multiplier value. 
