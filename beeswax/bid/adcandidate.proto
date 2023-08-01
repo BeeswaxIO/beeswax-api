@@ -23,7 +23,7 @@ option java_package = "com.beeswax.bid";
 // which is set per campaign in buzz.
 //
 
-// Next Tag: 8
+// Next Tag: 9
 message Bidding {
   // CPM: Always bid a flat price on all matched requests.
   message CpmStrategy {
@@ -58,6 +58,7 @@ message Bidding {
   // The product of all eligible modifiers' multipliers.
   optional float bid_modifier_multipliers_product = 6 [default = 1.0];
   optional uint64 max_bid_micros = 7;
+  optional uint64 min_bid_micros = 8;
   // The following fields are for internal use by the bidding agents and
   // will not be set in the request or response.
   optional uint64 bid_price_micros = 3;
