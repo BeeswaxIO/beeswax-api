@@ -1599,7 +1599,7 @@ message NativeRequest {
         // Exchange-specific values above 500.
 
         // STORE bit for ADX NativeAdTemplate
-        STORE = 500;
+        STORE = 500 [deprecated = true];
       }
     }
   }
