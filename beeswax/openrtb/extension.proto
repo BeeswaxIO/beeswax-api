@@ -460,6 +460,7 @@ message SamsungNativeExtension {
 message AdxGeoExtension {
   optional int32 dma_region_code = 1;
   // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
+  // DEPRECATED. Will be fully removed 08/2024.
   optional bytes hyperlocal_set = 2 [deprecated = true];
 }
 

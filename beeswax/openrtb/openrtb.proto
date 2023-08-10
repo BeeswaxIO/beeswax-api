@@ -1599,6 +1599,7 @@ message NativeRequest {
         // Exchange-specific values above 500.
 
         // STORE bit for ADX NativeAdTemplate
+        // DEPRECATED. Will be fully removed 08/2024.
         STORE = 500 [deprecated = true];
       }
     }
