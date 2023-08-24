@@ -1,6 +1,7 @@
 // Copyright 2014, Beeswax.IO Inc.
 // Author: ramr@beeswax.com
 //
+
 // Beeswax extensions to the OpenRTB spec.
 // These extensions are specific to Beeswax and are not a part of
 // the OpenRTB spec.
@@ -36,15 +37,21 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 15
+// Next available tag: 19
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
+
   // The unique identifier of the auction per buzz_key.
   // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<auctionid.imp_idx>.<buzz_key>
   // imp_idx: currently is present iff more than one impressions are present in the original exchange bid request.
   // auction_id_str: contains buzz_key so it is populated in sbs.
   optional string auctionid_str = 8;
+
+  // The unique identifier of the auction, irrelevant to buzz_key.
+  // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<auctionid.imp_idx>
+  // Populated in FES.
+  optional string global_auctionid_str = 17;
 
   // The unique identifier for the exchange bid request per buzz_key.
   // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<buzz_key>
@@ -58,13 +65,17 @@ message BidRequestExtensions {
   // It is populated by the LocalAugmentor in Stinger.
   optional TargetingGeoExtension targeting_geo = 3;
 
-  // time_of_week is a stinger calculated field used for targetting
+  // Matches time_of_week targeting keyword. Always set to EST/EDT.
   optional int32 time_of_week = 4;
+
+  // Matches timezone aware user_time_of_week targeting keyword.
+  // Set to the end user's timezone.
+  optional int32 user_time_of_week = 15;
 
   // Used to identify Stinger.
   optional string buzz_key = 5;
 
-  // Next available tag: 3
+  // Next available tag: 4
   message AugmentorData {
 
     // Next available tag: 3
@@ -75,6 +86,9 @@ message BidRequestExtensions {
 
       // String representing the value of the segment.
       optional string value = 2;
+
+      // available: 102 - 199
+      extensions 100 to 199;
     }
 
     // Augmentor identifier, used for targeting
@@ -82,9 +96,17 @@ message BidRequestExtensions {
 
     // Array of Augmentor segments
     repeated Segment segment = 2;
+
+    // map from dynamic modifier token to float multiplier for custom list items
+    map<string, float> custom_list_modifier_map = 3;
+
+    // available: 101 - 199
+    extensions 100 to 199;
   }
 
-  // This field is used by Augmentors like ManagedListAugmentor
+  // This field is used by Beeswax internal augmentors.
+  // The segments augmented by custom augmentor and 1st/3rd party
+  // user data augmentation can be found in BidRequest.User.Data instead.
   repeated AugmentorData augmentor_data = 6;
 
   // Determines how impression notifications will happen for this request. See
@@ -99,6 +121,8 @@ message BidRequestExtensions {
   optional AppNexusBidRequestExtension appnexus = 7;
   optional AdxBidRequestExtension adx = 9;
 
+  // if you add new values to this enum, remember to update the ads.txt continuous queries which
+  // have a where clause that depend on these values
   enum AdsTxtStatus {
     UNKNOWN = -1;
     // The request does not contain a domain, either because it is not a web request (ie it is an
@@ -122,6 +146,15 @@ message BidRequestExtensions {
     AUTH_DIRECT = 7;
   }
   optional AdsTxtStatus ads_txt = 12;
+
+  // appnexus sends this as seller_member_id
+  // in other exchanges this should be the publisher id, which can come in the Site or App objects.
+  // a string field to be in-line with publisher id and site id
+  optional string seller_id = 16;
+
+  // exchange discrepancy rate, get it from the inventory config (inventory.proto)
+  // for downstream services that need to calculate specific price (currently win prediction).
+  optional int64 exchange_discrepancy_rate_micros = 18;
 
   extensions 1000 to max;
 }
@@ -149,6 +182,19 @@ message ImpressionExtensions {
   repeated int32 allowed_restricted_category = 9 [packed=true];
   repeated int32 allowed_restricted_category_for_deals = 10 [packed=true];
 
+
+  // SKAdNetwork represents the object as one part of the solution to the iOS 14
+  // attribution support. More details can be found in documentation:
+  // https://developer.apple.com/documentation/storekit/skadnetwork
+  // Next available tag: 4
+  message SKAdNetwork {
+    optional string version = 1;
+    optional string sourceapp = 2;
+    repeated string skadnetids = 3;
+
+    optional bool is_skadnetwork = 15;
+  }
+  optional SKAdNetwork skadn = 14;
   extensions 1000 to max;
 
   // Deprecated field. Use ViewabilityExtensions field instead.
@@ -189,7 +235,9 @@ message BannerExtensions {
 }
 
 
-// Next available tag: 6
+// Next available tag: 7
+// This is Beeswax internal definition of openrtb VideoPlacementType.
+// see also openrtb_common.proto: enum VideoPlacementType.
 message VideoExtensions {
   // player_size can be one of ["S", "M"., "L", "XL", "NA"].
   // Added by augmentor in Beeswax Front End Server (FES)
@@ -201,8 +249,12 @@ message VideoExtensions {
   repeated CreativeAttribute required_attrs = 2;
 
   enum PlacementType {
+    UNKNOWN = -1;
     IN_BANNER = 0;
     IN_STREAM = 1;
+    IN_ARTICLE = 2;
+    IN_FEED = 3;
+    FLOATING = 4;
   }
   optional PlacementType placement_type = 3 [default = IN_STREAM];
 
@@ -224,11 +276,17 @@ message VideoExtensions {
   //      of the different ways that exchanges denote rewarded videos.
   optional bool rewarded = 5;
 
+  // The maximum duration in milliseconds for the ad, if the ad is skippable.
+  // If this is not set or has value <=0, any duration is allowed.
+  // This is currently only populated for requests from ADX.
+  optional int32 skippable_max_ad_duration = 6;
+
   extensions 1000 to max;
 }
 
 // Next available tag: 2
 message NativeExtensions {
+
   // Exchange specific extensions
   optional SamsungNativeExtension samsung = 1;
   extensions 1000 to max;
@@ -238,10 +296,11 @@ message PMPExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message DirectDealExtensions {
   // Exchange specific extensions
   optional AdxDirectDealExtension adx = 1;
+  optional bool programmatic_guaranteed = 2;
   extensions 1000 to max;
 }
 
@@ -263,7 +322,7 @@ message ProducerExtensions {
 }
 
 // Next available tag: 17
-// Tag 1: idfa - Deprecated. Do not resuse.
+// Tag 1: idfa - Deprecated. Do not reuse.
 message DeviceExtensions {
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
   // Added by augmentor in Beeswax Front End Server (FES)
@@ -281,8 +340,10 @@ message DeviceExtensions {
   // Added by augmentor in Beeswax Front End Server (FES)
   optional string augmented_osv = 6 [default = "-1"];
 
-  // Deprecated. Use augmented_models (field 13) instead.
+  // Deprecated. Use augmented_models instead.
   optional string augmented_model = 7 [default = "-1", deprecated = true];
+  // Added by augmentor in Beeswax Front End Server (FES)
+  repeated string augmented_models = 13;
 
   // Added by augmentor in Beeswax Front End Server (FES)
   optional string augmented_make = 8 [default = "-1"];
@@ -299,9 +360,6 @@ message DeviceExtensions {
   // GDPR-compliant hashed ipv6
   optional string ipv6_hashed = 12;
 
-  // Added by augmentor in Beeswax Front End Server (FES)
-  repeated string augmented_models = 13;
-
   // Identifier for Advertising (IFA) type, indicating how the IFA is generated
   // https://iabtechlab.com/wp-content/uploads/2018/12/OTT-IFA-guidelines.final_Dec2018.pdf
   optional string ifa_type = 14;
@@ -316,7 +374,7 @@ message DeviceExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 9
+// Next available tag: 20
 message UserExtensions {
   // This field identifies the user of the bid request. It will be used
   // for user segment lookup and frequency cap.
@@ -334,12 +392,73 @@ message UserExtensions {
     repeated string matched_user_ids = 1;
     optional string partner_handle = 2;
   }
+  // This field contains user data (user_ids) across all buzz keys. Readers
+  // downstream of FES are expected to use the BuzzKeyPartnerHandle (ACL)
+  // mapping to recreate the per buzz key data.
   repeated MatchedUserGroups matched_user_groups = 4;
 
   // Number of days since the user cookie has been dropped, for example, 10
   optional int32 cookie_age = 3;
+  // map from dynamic bid modifier token to multiplier.
+  // Since dynamic modifiers are applied on user/list level,
+  // the key should always be a token rather than a boolean expression.
+  map<string, float> dynamic_modifiers_map = 5;
+  // These fields contain prefixed IP (v4 & v6) addresses for use in
+  // RUF and Userdata augmentors (eg. 'ip.1.2.3.4')
+  optional string ip = 6;
+  optional string ipv6 = 7;
+  // This contains the IDFV, with "ipfv." prefix.
+  optional string ifv = 17;
   // GDPR-compliant hashed user_id
   optional string user_id_hashed = 8;
+  // IAB specification for gdpr.
+  // https://iabtechlab.com/wp-content/uploads/2018/02/OpenRTB_Advisory_GDPR_2018-02.pdf
+  optional Flag gdpr = 9;
+  optional string consent = 10;
+
+  // Next available tag: 3
+  message CrossDeviceLinkedIds {
+    repeated string person_linked_ids = 1;
+    repeated string household_linked_ids = 2;
+  }
+  // This field will store cross_device_linked_ids categorized by type of
+  // association WRT the lookup ID.
+  // This field will soon be deprecated in favor of `cross_device_mappings`
+  optional CrossDeviceLinkedIds cross_device_linked_ids = 11;
+
+  // wiki for link type semantics by vendor https://wiki.freewheel.tv/pages/viewpage.action?pageId=228103358
+  enum CrossDeviceLinkedIdType {
+    PERSON = 0;
+    HOUSEHOLD = 1;
+    PERSON_VENDOR = 2;
+    HOUSEHOLD_VENDOR = 3;
+    PERSON_VENDOR_VIA_HOUSEHOLD = 4;
+  }
+  // List of cross device IDs of a particular link type.
+  message CrossDeviceIds {
+    repeated string ids = 1;
+  }
+  message CrossDeviceVendorLinkedIds {
+    // List of CrossDeviceIds, indexed by CrossDeviceLinkedIdType.
+    // So, for example, the CrossDeviceIds at index 1 contains the ID's for HOUSEHOLD.
+    repeated CrossDeviceIds link_ids = 1;
+  }
+  // Map of CrossDeviceVendorLinkedIds, keyed by Vendor ID.
+  map<string, CrossDeviceVendorLinkedIds> cross_device_mappings = 16;
+  optional uint32 device_experiment_index = 12 [deprecated = true];
+  optional uint32 experiment_user_index = 13 [deprecated = true];
+  optional uint32 forecasting_user_index = 18;
+  optional string liveramp_idl = 14;
+  // The Experian Living User IDs, resolved through the TAPAD cross-device graph
+  repeated string luids = 19;
+
+  //extended consumer identifiers
+  message ExtendedConsumerIds {
+    repeated string uids = 1;
+    required string partner_handle = 2;
+  }
+  repeated ExtendedConsumerIds passthru_consumer_ids = 15;
+
   extensions 1000 to max;
 }
 
@@ -355,13 +474,22 @@ message GeoExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message DataExtensions {
-  optional bool beeswax_augmented = 1 [default = false];
+  optional bool beeswax_augmented = 1;
+  // Used by Beeswax internally to more efficiently filter 3p segments
+  optional bool is_3p = 2;
+  optional string human_lookup_id = 3;
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message SegmentExtensions {
+  // Creation time of the user/segment association, in epoch seconds.
+  // Since the creation time is for the user/segment association, this field only
+  // applies only to userdata segments.
+  optional int64 creation_time = 1;
+
   extensions 1000 to max;
 }
 
@@ -372,6 +500,9 @@ message RegulationsExtensions {
   // The raw IAB consent string or "daisybit" as provided in the incoming bid
   // request.
   optional string gdpr_consent_string = 2;
+  // The raw IAB "us_privacy" string that contains the version of U.S. Privacy String spec used.
+  // The string content also indicates if user is given notice and whether user opts out.
+  optional string us_privacy = 3;
   extensions 1000 to max;
 }
 
@@ -413,13 +544,40 @@ message TargetingGeoExtension {
 
 // Viewability.predicted_viewability is populated by FES LocalAugmentor
 // and used for targeting in Matcher
+// Next available tag: 4
 message ViewabilityExtensions {
   // Specifies the predicted viewability from Beeswax ViewabilityPredictor
   optional float predicted_viewability = 1;
   // Specifies the probability that the impression will be viewable by the user,
   // based on historical data.
-  // Currently populated for AppNexus and AdX only
-  optional float exchange_predicted_view_rate = 2;
+  // It is a float between 0 and 1
+  // Currently populated for AppNexus, AdX, Bidswitch, StickyAds, and Rubicon
+  // Rubicon sends predicted view rates from multiple vendors, and to accommodate that we have moved
+  // to the exchange_predicted_view_rates repeated field. This field (exchange_predicted_view_rate)
+  // is deprecated, but it is currently populated for backwards compatibility. If an exchange sends us
+  // multiple values we set this field to the first one.
+  optional float exchange_predicted_view_rate = 2 [deprecated = true];
+
+  // Next available tag: 3
+  message ExchangePredictedViewRate {
+    // This is an optional field that we populate if it is sent by the exchange, specifying which
+    // vendor has made the view rate prediction
+    optional string vendor = 1;
+    // Specifies the probability that the impression will be viewable by the user,
+    // based on historical data.
+    // It is a float between 0 and 1
+    optional float exchange_predicted_view_rate = 2;
+  }
+  // Currently populated for AppNexus, AdX, Bidswitch, StickyAds, and Rubicon
+  repeated ExchangePredictedViewRate exchange_predicted_view_rates = 3;
+
+  // The viewability rate used for targeting.
+  // It is augmented in FES with the following logic:
+  // If Beeswax's predicted_viewability is valid, convert it to percentage and use it;
+  // otherwise use the max value of the converted exchange_predicted_view_rate.
+  // A viewability rate is valid iff it's in the range [0..1].
+  // This field will be empty if no valid viewability rate was set.
+  optional float targetable_viewability_percent = 4;
 }
 
 // Exchange specific extensions.
@@ -431,12 +589,22 @@ message AdxBidRequestExtension {
   optional bool is_predicted_to_be_ignored = 1;
   // The offset of the user's time from GMT in minutes.
   // For example, GMT-5 is timezone_offset = -300.
-  optional int32 timezone_offset = 2;
+  optional int32 timezone_offset = 2 [deprecated=true];
 }
 
 // Next available tag: 2
 message AdxDirectDealExtension {
   optional bool publisher_blocks_overridden = 1 [default = false];
+  // The type of the deal.
+  enum DealType {
+    UNKNOWN_DEAL_TYPE = 0;
+    PREFERRED_DEAL = 1;
+    PRIVATE_AUCTION = 2;
+
+    // See https://support.google.com/adxbuyer/answer/7174589
+    PROGRAMMATIC_GUARANTEED = 3;
+  }
+  optional DealType deal_type = 3 [default = UNKNOWN_DEAL_TYPE];
 }
 
 // Next available tag: 5
@@ -452,16 +620,21 @@ message AdxImpressionExtension {
   repeated int64 consented_providers = 4;
 }
 
-// Next available tag: 2
+// Next avaiable tag: 2
 message SamsungNativeExtension {
   optional string native = 1;
 }
 
+// Next available tag: 5
 message AdxGeoExtension {
+  // Location of the end user. Uses a subset of the codes used in the AdWords
+  // API. See the geo-table.csv table in the technical documentation for a list
+  // of ids. The geo_criteria_id field replaces the deprecated country, region,
+  // city, and metro fields.
+  optional int32 geo_criteria_id = 3;
   optional int32 dma_region_code = 1;
-  // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
-  // DEPRECATED. Will be fully removed 08/2024.
-  optional bytes hyperlocal_set = 2 [deprecated = true];
+  //Local time as the number +/- of minutes from UTC.
+  optional int32 utcoffset = 4;
 }
 
 // 2. AppNexus Exchange
@@ -473,15 +646,14 @@ message AppNexusBidRequestExtension {
 
 // Next available tag: 3
 message SeatConstraintsExtension {
-  // Constraints for a customer's default seat on this exchange if it exists. It
-  // is valid for there to be no constraints here. That generally means we are
-  // falling back to global auction values, e.g. imp.bid_floor.
+  // If an account does not have an override seat, we will try to use the default_seat_constraint.
+  // It is valid for this to not exist as there may not be any seat-specific constraints. We'll
+  // generally fall back to the OpenRTB spec in this case. E.g. the Impression.bid_floor
   optional openrtb.SeatConstraints default_seat_constraint = 1;
-  // A map from Beeswax account_id to SeatConstraint. This is used when seat
-  // level information needs to be taken into account during the bidding
-  // process. We associate each seat constraint with a Beeswax account_id for
-  // ease of lookup during the bidding process. Only accounts that have
-  // constraints for a given request will be populated in this map. These values
-  // supercede any constraints found in default_seat_constraint.
+  // A map from Beeswax account_id to SeatConstraint. This is used when seat level
+  // information needs to be taken into account during the bidding process. We associate
+  // each seat with a Beeswax account_id for ease of lookup during the bidding process.
+  // Only accounts that have constraints for a given request will be populated in this map.
+  // These are overrides to the default_seat_constraint
   map<uint64, openrtb.SeatConstraints> account_seat_constraints = 2;
 }

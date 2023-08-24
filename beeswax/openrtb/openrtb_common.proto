@@ -431,6 +431,7 @@ enum CreativeAttribute {
   AD_CAN_EXPAND_FULLSCREEN = 107;
   AD_SUPPORTS_DYNAMIC_PIXELS = 108;
   AD_SUPPORTS_DYNAMIC_CLICK_URL = 109;
+  AD_HAS_NATIVE_SCRIPTS = 110;
 }
 
 // Boolean-like enumeration used in various attributes.
@@ -451,6 +452,9 @@ message Enums {
         MRAID_1 = 3;  // OpenRTB 2.3
         ORMMA = 4;
         MRAID_2 = 5;
+        MRAID_3 = 6;
+        OMID_1 = 7;
+
         // Following values are not in openRTB standard.
 
         // Mopub requests will have MRAID_PLAYABLE in banner.ext.bapis
@@ -789,6 +793,9 @@ message Enums {
 
     message User {
       enum UserIdType {
+        // Note: RUF augmentor maintains an explicit whitelist of supported
+        // UserIdTypes which should be kept in sync with the definitions below.
+        // It also uses this info to populate RequestInfo.UserdataLookupKeysMap.
         UNKNOWN = -1;
         BEESWAX = 0;
         CUSTOMER = 1;
@@ -802,6 +809,13 @@ message Enums {
                              // The request will be processed in the same way as other
                              // mobile ids. (Prefix with `mid.` and do frequency cap, user_data augmentation, etc)
         IP_ADDRESS = 9; // Support for IP Segments
+        LIVERAMP_IDL = 10; // Support for Liveramp IDL
+        CONNECTED_TV = 11; // Not used in serving, but by other Python services that use this enum value
+        TAPAD_INDIVIDUAL_ID = 12;
+        TAPAD_HOUSEHOLD_ID = 13;
+        LUID = 14; // Support for Experian Living Unit ID
+        BLOCKGRAPH_ID = 38; // Support for BlockGraph ID
+        // INTERNAL: Please consult go/newid before adding new IDs.
       }
     }
   }
@@ -829,7 +843,7 @@ message Enums {
     // Exchange Id.
     // These values are obtained from inventory_source table in fes_buzz_db.
     enum Source {
-      reserved 22, 135, 209; // Deprecated exchanges
+      reserved 135, 209; // Deprecated exchanges
       UNKNOWN_SOURCE       = -1;
       GOOGLE_ADX           =  0;
       LIVERAIL             =  1;
@@ -852,7 +866,8 @@ message Enums {
       SMAATO               =  18;
       APP_LOVIN            =  19;
       MOLABS               =  20;
-      SPOTX                =  21;
+      SPOTX                =  21 [deprecated = true];
+      FYBER                =  22;
       ADBUDDIZ             =  23;
       ADCONDUCTOR          =  24;
       ADEASY               =  25;
@@ -965,9 +980,11 @@ message Enums {
       ADTELLIGENT          =  132;
       GLISPA               =  133;
       TRUSTX               =  134;
+      // DISTRICTM            =  135; // DEPRECATED SEE 224
       IRON_SOURCE          =  136;
       BIDSWITCH_DEALS_FEED =  137;
       SMARTY_ADS           =  138;
+      // note that 139 is at the bottom
       BIDSTACK             =  140;
       ADASIA               =  141;
       AD_UNITY             =  142;
@@ -1037,6 +1054,7 @@ message Enums {
       TENMAX               =  206;
       ADTOMA               =  207;
       ATWOX                =  208;
+      // THIRTYTHREEACROSS    =  209; // DEPRECATED see 220
       UNDERTONE            =  210;
       VENA_TV              =  211;
       VERTOZ               =  212;
@@ -1057,7 +1075,7 @@ message Enums {
       EMX                  =  227;
       SPRINGSERVE          =  228;
       VERVE                =  229;
-      PILOTX               =  230; 
+      PILOTX               =  230;
       ADPRIME              =  231;
       RICHAUDIENCE         =  232;
       CRITEO               =  233;
@@ -1074,6 +1092,9 @@ message Enums {
       TUBI                 =  244;
       THEMEDIAGRID         =  245;
       AIDEM                =  246;
+      VIBE                 =  247;
+      // This source is used only for testing purposes
+      TEST_SOURCE          =  139;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -1130,6 +1151,7 @@ message Enums {
     // |-----------------|------|-----|------|---|---|
     // If 3rd_Party_Impurls is 1, they will be populated into the impression tracker
     // BidResponse field. Otherwise they will be rendered in the creative markup.
+    // Next label: 65 (one more than the greatest value)
     enum ImpressionTracker {
       NEVER_USE_TRACKER      =  0;  // Never render impression trackers.
       ALWAYS_USE_TRACKER     = 63;  // Always render impression trackers, for both Beeswax and 3rd party impression urls.
@@ -1137,6 +1159,9 @@ message Enums {
       ALWAYS_USE_TRACKER_FOR_BEESWAX_ONLY = 31; // Always render impression trackers for Beeswax impression url.
                                                 // 3rd Party impression urls will be rendered in the markup.
       VIDEO_USE_TRACKER_FOR_BEESWAX_ONLY = 11;  // Render impression trackers for video creatives in any environment
+                                                // for Beeswax impression url.
+                                                // 3rd Party impression urls will be rendered in the markup.
+      BANNER_USE_TRACKER_FOR_BEESWAX_ONLY = 64; // Render impression trackers for banner creatives in any environment
                                                 // for Beeswax impression url.
                                                 // 3rd Party impression urls will be rendered in the markup.
     }
