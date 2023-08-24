@@ -153,10 +153,6 @@ message BidRequestExtensions {
   // a string field to be in-line with publisher id and site id
   optional string seller_id = 16;
 
-  // exchange discrepancy rate, get it from the inventory config (inventory.proto)
-  // for downstream services that need to calculate specific price (currently win prediction).
-  optional int64 exchange_discrepancy_rate_micros = 18;
-
   extensions 1000 to max;
 }
 
