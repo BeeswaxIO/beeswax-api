@@ -12,6 +12,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option java_outer_classname = "Extension";
 
 import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
