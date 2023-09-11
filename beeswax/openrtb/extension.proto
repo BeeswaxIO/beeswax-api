@@ -82,9 +82,6 @@ message BidRequestExtensions {
 
       // String representing the value of the segment.
       optional string value = 2;
-
-      // available: 102 - 199
-      extensions 100 to 199;
     }
 
     // Augmentor identifier, used for targeting
@@ -92,9 +89,6 @@ message BidRequestExtensions {
 
     // Array of Augmentor segments
     repeated Segment segment = 2;
-
-    // available: 101 - 199
-    extensions 100 to 199;
   }
 
   repeated AugmentorData augmentor_data = 6;
@@ -357,7 +351,8 @@ message UserExtensions {
 
   // Number of days since the user cookie has been dropped, for example, 10
   optional int32 cookie_age = 3;
-
+  // GDPR-compliant hashed user_id
+  optional string user_id_hashed = 8;
   extensions 1000 to max;
 }
 
