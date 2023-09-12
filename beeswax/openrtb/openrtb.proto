@@ -247,7 +247,7 @@ message BidRequest {
      * 1 = all client-side, 2 = assets stitched server-side but
      * tracking pixels fired client-side, 3 = all server-side.
      */
-     optional int32 ssai = 17;
+    optional int32 ssai = 17;
 
     optional ImpressionExtensions ext = 1000;
 
@@ -784,7 +784,7 @@ message BidRequest {
     optional ContentExtensions ext = 1000;
   }
 
-  // Next available tag: 29 - Tag 30 taken in order to match Google openrtb proto
+  // Next available tag: 31 - Tag 30 taken in order to match Google openrtb proto
   /*
    * OpenRTB 3.3.10: Provides information pertaining to the device including its hardware,
    * platform, location, and carrier. This device can refer to a mobile handset, a desktop
@@ -921,6 +921,9 @@ message BidRequest {
      * and MNC parts is required to remove parsing ambiguity.
      */
     optional string mccmnc = 30;
+
+    // Structured User Agent device identification object which we will use in place of ua when available
+    optional UserAgent sua = 29;
 
     optional DeviceExtensions ext = 1000;
   }
@@ -1597,10 +1600,6 @@ message NativeRequest {
         /** Text describing a "call to action" button for the destination URL. */
         CTATEXT = 12;
         // Exchange-specific values above 500.
-
-        // STORE bit for ADX NativeAdTemplate
-        // DEPRECATED. Will be fully removed 08/2024.
-        STORE = 500 [deprecated = true];
       }
     }
   }
@@ -1839,4 +1838,47 @@ message Channel {
   optional string domain = 3;
 }
 
+// Next available tag: 8
+/**
+* UserAgent is the object for Structured User Agent
+*/
+message UserAgent
+{
 
+  // each of these identifies a browser or similar component
+  repeated BrandVersion browsers = 1;
+
+  // platform / os
+  optional BrandVersion platform = 2;
+
+  // if the agent prefers mobile version of content (0 if desktop)
+  optional int32 mobile = 3;
+
+  // major binary architecture
+  optional string architecture = 4;
+
+  // device bitness, eg "arm" or "x86"
+  optional string bitness = 5;
+
+  // device model
+  optional string model = 6;
+
+  // source used for this object (so far Client Hints or standard UA string)
+  optional int32 source = 7;
+
+  // lastly there is an extensions objects where vendors can pass dynamic values TBD
+  // as we see more vendors pass sua
+}
+
+// Brand Version object used within Structured User Agent object
+// next available tag: 3
+message BrandVersion
+{
+
+  required string brand = 1;
+
+  repeated string version = 2;
+
+  // lastly there is an extensions objects where vendors can pass dynamic values TBD
+  // as we see more vendors pass sua
+}

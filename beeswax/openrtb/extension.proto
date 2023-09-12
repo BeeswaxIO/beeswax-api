@@ -1,6 +1,7 @@
 // Copyright 2014, Beeswax.IO Inc.
 // Author: ramr@beeswax.com
 //
+
 // Beeswax extensions to the OpenRTB spec.
 // These extensions are specific to Beeswax and are not a part of
 // the OpenRTB spec.
@@ -11,6 +12,7 @@ syntax = "proto2";
 package openrtb;
 
 option java_package = "com.beeswax.openrtb";
+option java_outer_classname = "Extension";
 
 import "beeswax/base/eventid.proto";
 import "beeswax/openrtb/openrtb_common.proto";
@@ -36,10 +38,11 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 15
+// Next available tag: 19
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
+
   // The unique identifier of the auction per buzz_key.
   // Format: <auctionid.timestamp>.<auctionid.hostid>.<auctionid.tid>.<auctionid.imp_idx>.<buzz_key>
   // imp_idx: currently is present iff more than one impressions are present in the original exchange bid request.
@@ -58,13 +61,17 @@ message BidRequestExtensions {
   // It is populated by the LocalAugmentor in Stinger.
   optional TargetingGeoExtension targeting_geo = 3;
 
-  // time_of_week is a stinger calculated field used for targetting
+  // Matches time_of_week targeting keyword. Always set to EST/EDT.
   optional int32 time_of_week = 4;
+
+  // Matches timezone aware user_time_of_week targeting keyword.
+  // Set to the end user's timezone.
+  optional int32 user_time_of_week = 15;
 
   // Used to identify Stinger.
   optional string buzz_key = 5;
 
-  // Next available tag: 3
+  // Next available tag: 4
   message AugmentorData {
 
     // Next available tag: 3
@@ -84,7 +91,6 @@ message BidRequestExtensions {
     repeated Segment segment = 2;
   }
 
-  // This field is used by Augmentors like ManagedListAugmentor
   repeated AugmentorData augmentor_data = 6;
 
   // Determines how impression notifications will happen for this request. See
@@ -99,6 +105,8 @@ message BidRequestExtensions {
   optional AppNexusBidRequestExtension appnexus = 7;
   optional AdxBidRequestExtension adx = 9;
 
+  // if you add new values to this enum, remember to update the ads.txt continuous queries which
+  // have a where clause that depend on these values
   enum AdsTxtStatus {
     UNKNOWN = -1;
     // The request does not contain a domain, either because it is not a web request (ie it is an
@@ -201,8 +209,12 @@ message VideoExtensions {
   repeated CreativeAttribute required_attrs = 2;
 
   enum PlacementType {
+    UNKNOWN = -1;
     IN_BANNER = 0;
     IN_STREAM = 1;
+    IN_ARTICLE = 2;
+    IN_FEED = 3;
+    FLOATING = 4;
   }
   optional PlacementType placement_type = 3 [default = IN_STREAM];
 
@@ -229,6 +241,7 @@ message VideoExtensions {
 
 // Next available tag: 2
 message NativeExtensions {
+
   // Exchange specific extensions
   optional SamsungNativeExtension samsung = 1;
   extensions 1000 to max;
@@ -238,7 +251,7 @@ message PMPExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message DirectDealExtensions {
   // Exchange specific extensions
   optional AdxDirectDealExtension adx = 1;
@@ -263,7 +276,7 @@ message ProducerExtensions {
 }
 
 // Next available tag: 17
-// Tag 1: idfa - Deprecated. Do not resuse.
+// Tag 1: idfa - Deprecated. Do not reuse.
 message DeviceExtensions {
   // Device screen size. Valid values are "S", "M", "L", "XL", and "NA"
   // Added by augmentor in Beeswax Front End Server (FES)
@@ -281,8 +294,10 @@ message DeviceExtensions {
   // Added by augmentor in Beeswax Front End Server (FES)
   optional string augmented_osv = 6 [default = "-1"];
 
-  // Deprecated. Use augmented_models (field 13) instead.
+  // Deprecated. Use augmented_models instead.
   optional string augmented_model = 7 [default = "-1", deprecated = true];
+  // Added by augmentor in Beeswax Front End Server (FES)
+  repeated string augmented_models = 13;
 
   // Added by augmentor in Beeswax Front End Server (FES)
   optional string augmented_make = 8 [default = "-1"];
@@ -298,9 +313,6 @@ message DeviceExtensions {
 
   // GDPR-compliant hashed ipv6
   optional string ipv6_hashed = 12;
-
-  // Added by augmentor in Beeswax Front End Server (FES)
-  repeated string augmented_models = 13;
 
   // Identifier for Advertising (IFA) type, indicating how the IFA is generated
   // https://iabtechlab.com/wp-content/uploads/2018/12/OTT-IFA-guidelines.final_Dec2018.pdf
@@ -334,6 +346,7 @@ message UserExtensions {
     repeated string matched_user_ids = 1;
     optional string partner_handle = 2;
   }
+
   repeated MatchedUserGroups matched_user_groups = 4;
 
   // Number of days since the user cookie has been dropped, for example, 10
@@ -355,12 +368,13 @@ message GeoExtensions {
   extensions 1000 to max;
 }
 
-// Next available tag: 2
+// Next available tag: 3
 message DataExtensions {
-  optional bool beeswax_augmented = 1 [default = false];
+  optional bool beeswax_augmented = 1;
   extensions 1000 to max;
 }
 
+// Next available tag: 2
 message SegmentExtensions {
   extensions 1000 to max;
 }
@@ -372,6 +386,9 @@ message RegulationsExtensions {
   // The raw IAB consent string or "daisybit" as provided in the incoming bid
   // request.
   optional string gdpr_consent_string = 2;
+  // The raw IAB "us_privacy" string that contains the version of U.S. Privacy String spec used.
+  // The string content also indicates if user is given notice and whether user opts out.
+  optional string us_privacy = 3;
   extensions 1000 to max;
 }
 
@@ -413,13 +430,19 @@ message TargetingGeoExtension {
 
 // Viewability.predicted_viewability is populated by FES LocalAugmentor
 // and used for targeting in Matcher
+// Next available tag: 4
 message ViewabilityExtensions {
   // Specifies the predicted viewability from Beeswax ViewabilityPredictor
   optional float predicted_viewability = 1;
   // Specifies the probability that the impression will be viewable by the user,
   // based on historical data.
-  // Currently populated for AppNexus and AdX only
-  optional float exchange_predicted_view_rate = 2;
+  // It is a float between 0 and 1
+  // Currently populated for AppNexus, AdX, Bidswitch, StickyAds, and Rubicon
+  // Rubicon sends predicted view rates from multiple vendors, and to accommodate that we have moved
+  // to the exchange_predicted_view_rates repeated field. This field (exchange_predicted_view_rate)
+  // is deprecated, but it is currently populated for backwards compatibility. If an exchange sends us
+  // multiple values we set this field to the first one.
+  optional float exchange_predicted_view_rate = 2 [deprecated = true];
 }
 
 // Exchange specific extensions.
@@ -431,7 +454,7 @@ message AdxBidRequestExtension {
   optional bool is_predicted_to_be_ignored = 1;
   // The offset of the user's time from GMT in minutes.
   // For example, GMT-5 is timezone_offset = -300.
-  optional int32 timezone_offset = 2;
+  optional int32 timezone_offset = 2 [deprecated=true];
 }
 
 // Next available tag: 2
@@ -457,11 +480,11 @@ message SamsungNativeExtension {
   optional string native = 1;
 }
 
+// Next available tag: 5
 message AdxGeoExtension {
   optional int32 dma_region_code = 1;
-  // Use fes.exchange.adx.AdxBidRequest.HyperlocalSet to parse.
-  // DEPRECATED. Will be fully removed 08/2024.
-  optional bytes hyperlocal_set = 2 [deprecated = true];
+  //Local time as the number +/- of minutes from UTC.
+  optional int32 utcoffset = 4;
 }
 
 // 2. AppNexus Exchange
@@ -473,15 +496,14 @@ message AppNexusBidRequestExtension {
 
 // Next available tag: 3
 message SeatConstraintsExtension {
-  // Constraints for a customer's default seat on this exchange if it exists. It
-  // is valid for there to be no constraints here. That generally means we are
-  // falling back to global auction values, e.g. imp.bid_floor.
+  // If an account does not have an override seat, we will try to use the default_seat_constraint.
+  // It is valid for this to not exist as there may not be any seat-specific constraints. We'll
+  // generally fall back to the OpenRTB spec in this case. E.g. the Impression.bid_floor
   optional openrtb.SeatConstraints default_seat_constraint = 1;
-  // A map from Beeswax account_id to SeatConstraint. This is used when seat
-  // level information needs to be taken into account during the bidding
-  // process. We associate each seat constraint with a Beeswax account_id for
-  // ease of lookup during the bidding process. Only accounts that have
-  // constraints for a given request will be populated in this map. These values
-  // supercede any constraints found in default_seat_constraint.
+  // A map from Beeswax account_id to SeatConstraint. This is used when seat level
+  // information needs to be taken into account during the bidding process. We associate
+  // each seat with a Beeswax account_id for ease of lookup during the bidding process.
+  // Only accounts that have constraints for a given request will be populated in this map.
+  // These are overrides to the default_seat_constraint
   map<uint64, openrtb.SeatConstraints> account_seat_constraints = 2;
 }

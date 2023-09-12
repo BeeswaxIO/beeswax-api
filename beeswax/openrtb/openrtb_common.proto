@@ -431,6 +431,7 @@ enum CreativeAttribute {
   AD_CAN_EXPAND_FULLSCREEN = 107;
   AD_SUPPORTS_DYNAMIC_PIXELS = 108;
   AD_SUPPORTS_DYNAMIC_CLICK_URL = 109;
+  AD_HAS_NATIVE_SCRIPTS = 110;
 }
 
 // Boolean-like enumeration used in various attributes.
@@ -451,6 +452,9 @@ message Enums {
         MRAID_1 = 3;  // OpenRTB 2.3
         ORMMA = 4;
         MRAID_2 = 5;
+        MRAID_3 = 6;
+        OMID_1 = 7;
+
         // Following values are not in openRTB standard.
 
         // Mopub requests will have MRAID_PLAYABLE in banner.ext.bapis
@@ -829,7 +833,7 @@ message Enums {
     // Exchange Id.
     // These values are obtained from inventory_source table in fes_buzz_db.
     enum Source {
-      reserved 22, 135, 209; // Deprecated exchanges
+      reserved 135, 209; // Deprecated exchanges
       UNKNOWN_SOURCE       = -1;
       GOOGLE_ADX           =  0;
       LIVERAIL             =  1;
@@ -852,7 +856,8 @@ message Enums {
       SMAATO               =  18;
       APP_LOVIN            =  19;
       MOLABS               =  20;
-      SPOTX                =  21;
+      SPOTX                =  21 [deprecated = true];
+      FYBER                =  22;
       ADBUDDIZ             =  23;
       ADCONDUCTOR          =  24;
       ADEASY               =  25;
@@ -1057,7 +1062,7 @@ message Enums {
       EMX                  =  227;
       SPRINGSERVE          =  228;
       VERVE                =  229;
-      PILOTX               =  230; 
+      PILOTX               =  230;
       ADPRIME              =  231;
       RICHAUDIENCE         =  232;
       CRITEO               =  233;
@@ -1074,6 +1079,7 @@ message Enums {
       TUBI                 =  244;
       THEMEDIAGRID         =  245;
       AIDEM                =  246;
+      VIBE                 =  247;
     }
 
     // Placement Type of the OpenRTB Bid Request
@@ -1137,6 +1143,9 @@ message Enums {
       ALWAYS_USE_TRACKER_FOR_BEESWAX_ONLY = 31; // Always render impression trackers for Beeswax impression url.
                                                 // 3rd Party impression urls will be rendered in the markup.
       VIDEO_USE_TRACKER_FOR_BEESWAX_ONLY = 11;  // Render impression trackers for video creatives in any environment
+                                                // for Beeswax impression url.
+                                                // 3rd Party impression urls will be rendered in the markup.
+      BANNER_USE_TRACKER_FOR_BEESWAX_ONLY = 64; // Render impression trackers for banner creatives in any environment
                                                 // for Beeswax impression url.
                                                 // 3rd Party impression urls will be rendered in the markup.
     }
