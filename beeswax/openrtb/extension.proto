@@ -353,6 +353,10 @@ message UserExtensions {
   optional int32 cookie_age = 3;
   // GDPR-compliant hashed user_id
   optional string user_id_hashed = 8;
+  // Liveramp IDL
+  // For customers interested in receiving liveramp_idl data in bidding agents,
+  // please inquire about the ability to receive this field.
+  optional string liveramp_idl = 14;
   extensions 1000 to max;
 }
 
