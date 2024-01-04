@@ -238,3 +238,14 @@
 |ip_conversions  |236  |Number of IP conversions associated to a particular impression |INT4 | |
 |ip_conversion_order  |237  |IP conversion order, constitutes how many orders a particular IP conversion represents; info provided by the advertiser in Beeswax UI/API |NUMERIC(18,6) | |
 |ip_conversion_value  |238  |Value of a given IP conversion as ispecified by the advertiser in Beeswax UI/API |NUMERIC(18,6) | |
+|master_revenue_share_percent_micros  |239  |If using a master revenue share, a micro value percentage represent the revenue share being taken.  |INT8  | |
+|master_revenue_share_micros_usd  |240  |Master revenue share amount in USD.  |INT8  | |
+|master_revenue_share_micros  |241  |Master revenue share amount in bid currency.  |INT8  | |
+|total_vendor_fees_micros_usd  |242  |Total fee amount withheld in USD, inclusive of master revenue share.  |INT8  | |
+|total_vendor_fees_micros  |243  |Total fee amount withheld in bid currency, inclusive of master revenue share.  |INT8  | |
+|delivery_modifier_id  |244  |The ID of the Delivery Modifier.  |INT4  | |
+|delivery_model_id  |245  |The ID of the Delivery Model.  |VARCHAR(255)  | |
+|bid_model_id  |246  |The ID of the Bid Model, formatted like {buzz_key}-{bid_model_id}-(bid_model_version}.  |VARCHAR(255)  | |
+|bid_model_params  |247  |The cache results for the Bid Model lookup, formatted like {key}={value},{key}={value}  |VARCHAR(600)  | |
+|bid_agent_id  |248  |Holds the agent_id field value of the BidAgentResponse returned by the customer's bidding agent.  |VARCHAR(255)  | |
+|bid_agent_params  |249  |Holds the agent_params field value of the BidAgentResponse return by the customer's bidding agent.  |VARCHAR(600)  | |
