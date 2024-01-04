@@ -179,3 +179,10 @@
 |content_channel_name  |177  |Channel the content is on (e.g., a local channel like “WABC-TV") |VARCHAR(255) | |
 |content_channel_domain  |178  |The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) |VARCHAR(255) | |
 |content_cat  |179  |Array of IAB content categories that describe the content |VARCHAR(255) | |
+|master_revenue_share_percent_micros  |180  |If using a master revenue share, a micro value percentage represent the revenue share being taken.  |INT8  | |
+|delivery_modifier_id  |181  |The ID of the Delivery Modifier.  |INT4  | |
+|delivery_model_id  |182  |The ID of the Delivery Model.  |VARCHAR(255)  | |
+|bid_model_id  |183  |The ID of the Bid Model, formatted like {buzz_key}-{bid_model_id}-(bid_model_version}.  |VARCHAR(255)  | |
+|bid_model_params  |184  |The cache results for the Bid Model lookup, formatted like {key}={value},{key}={value}  |VARCHAR(600)  | |
+|bid_agent_id  |185  |Holds the agent_id field value of the BidAgentResponse returned by the customer's bidding agent.  |VARCHAR(255)  | |
+|bid_agent_params  |186  |Holds the agent_params field value of the BidAgentResponse return by the customer's bidding agent.  |VARCHAR(600)  | |
