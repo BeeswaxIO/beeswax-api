@@ -127,7 +127,7 @@ message BidAgentResponse {
   // Bid agent needs to select a set of Adcandidates from the request
   // and for each Adcandidate, submit a bid containing the following
   // information.
-  // Next Tag: 8
+  // Next Tag: 10
   message Bid {
     optional uint64 line_item_id = 1;
     // Deprecated, use bid_price_micros instead.
@@ -144,6 +144,8 @@ message BidAgentResponse {
     optional AgentData agent_data = 4;
     // This field will be populated by bidding agent iff the line item is enabled for ghost bidding.
     optional adgroup.GhostBidding ghost_bidding = 7;
+    // Will be set if the custom bidding agent wishes to pick a deal ID from the bid request to override what is picked in targeting
+    optional string deal_id = 9;
   }
   repeated Bid bids = 1;
 }
