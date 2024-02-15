@@ -353,6 +353,25 @@ message UserExtensions {
   optional int32 cookie_age = 3;
   // GDPR-compliant hashed user_id
   optional string user_id_hashed = 8;
+  message CrossDeviceIds {
+    repeated string ids = 1;
+  }
+  message CrossDeviceVendorLinkedIds {
+    /*
+    The person and household RampIDs from the Liveramp graph, represented in an object array following this order: 
+
+     1. Person IDs: The primary person-level IDs - will not be exposed in bid request.
+     2. Household IDs: The primary household-level IDs - will not be exposed in the bid request.
+     3. Person RampID: The person-level Liveramp RampID. Requires approval from Liveramp.
+     4. Household RampID: The household-level Liveramp RampID. Requires approval from Liveramp.
+     5. Other Person RampIDs for the Household: The person-level RampIDs linked to the same household. Requires approval from Liveramp.
+
+    Please inquire with your Beeswax account manager. 
+    */
+    repeated CrossDeviceIds link_ids = 1;
+  }
+  // Map of CrossDeviceVendorLinkedIds, keyed by Vendor ID.
+  map<string, CrossDeviceVendorLinkedIds> cross_device_mappings = 16;
   // Liveramp IDL
   // For customers interested in receiving liveramp_idl data in bidding agents,
   // please inquire about the ability to receive this field.
