@@ -358,13 +358,13 @@ message UserExtensions {
   }
   message CrossDeviceVendorLinkedIds {
     /*
-    The person and household RampIDs from the Liveramp graph, represented in an object array following this order: 
+    The person and household RampIDs from the LiveRamp graph, represented in an object array following this order:
 
      1. Person IDs: The primary person-level IDs - will not be exposed in bid request.
      2. Household IDs: The primary household-level IDs - will not be exposed in the bid request.
-     3. Person RampID: The person-level Liveramp RampID. Requires approval from Liveramp.
-     4. Household RampID: The household-level Liveramp RampID. Requires approval from Liveramp.
-     5. Other Person RampIDs for the Household: The person-level RampIDs linked to the same household. Requires approval from Liveramp.
+     3. Person RampID: The person-level LiveRamp RampID. Requires approval from LiveRamp.
+     4. Household RampID: The household-level LiveRamp RampID. Requires approval from LiveRamp.
+     5. Other Person RampIDs for the Household: The person-level RampIDs linked to the same household. Requires approval from LiveRamp.
 
     Please inquire with your Beeswax account manager. 
     */
