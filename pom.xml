@@ -3,10 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.beeswax</groupId>
   <artifactId>beeswax-api</artifactId>
-  <version>2024-01-23</version>
+  <version>2024-02-15</version>
   <name>Beeswax API</name>
   <packaging>jar</packaging>
-  <description>Builds a jar for all Proto Classes in Beeswax</description>
+  <description>Adding cross device linked id in extension proto</description>
   <url>https://github.com/BeeswaxIO/beeswax-api</url>
 
   <licenses>
