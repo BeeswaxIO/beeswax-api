@@ -852,7 +852,7 @@ message Enums {
       INNERACTIVE          =  14;
       TREMOR               =  15;
       INDEX_EXCHANGE       =  16;
-      YAHOO                =  17;
+      YAHOO                =  17 [deprecated = true];
       SMAATO               =  18;
       APP_LOVIN            =  19;
       MOLABS               =  20;
