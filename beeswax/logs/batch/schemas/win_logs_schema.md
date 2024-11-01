@@ -262,3 +262,4 @@
 | audio_minbitrate | 260 | The minimum allowed bitrate, in Kbps. | INT4 |  |
 | audio_maxbitrate | 261 | The maximum allowed bitrate, in Kbps. | INT4 |  |
 | audio_feed | 262 | The type of feed for audio requests. | VARCHAR(50) |  |
+| bidreq_universal_ids | 263 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
