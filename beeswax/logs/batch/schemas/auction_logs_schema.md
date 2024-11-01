@@ -153,3 +153,5 @@
 | audio_minbitrate | 151 | Minimum bitrate for audio requests, in Kbps. | INT4 |  |
 | audio_maxbitrate | 152 | Maximum bitrate for audio requests, in Kbps. | INT4 |  |
 | audio_feed | 153 | Type of feed for audio requests. | VARCHAR(50) |  |
+| audio_companion_required | 154 | A banner companion ad is required to accompany the audio ad: 0=false, 1=true, -1=unknown, not provided, null, etc. | INT4 |  |
+| bidreq_universal_ids | 155 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
