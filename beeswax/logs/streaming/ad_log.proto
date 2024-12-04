@@ -156,6 +156,14 @@ message ActivityLogMessage {
     FULLSCREEN = 11;  // Video Playback full screen
     CLOSE = 12;       // Video Playback closed
     COMPANION_VIEW = 13; // Companion view
+    VIEWABILITY = 15;
+
+    AUDIO_PLAYS = 16;     // Audio Start
+    AUDIO_Q1S = 17;       // Audio Playback 25% complete
+    AUDIO_MIDPOINT = 18;  // Audio Playback 50% complete
+    AUDIO_Q3S = 19;       // Audio Playback 75% complete
+    AUDIO_COMPLETE = 20;  // Audio Playback complete
+    AUDIO_SKIPS = 21;     // Audio Skips
 
     // Deprecated. Companion click will be tracked as ClickEvent instead of ActivityEvent
     // This should be eventually removed by end of Q2 of 2017
