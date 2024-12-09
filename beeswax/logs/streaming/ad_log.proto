@@ -158,6 +158,7 @@ message ActivityLogMessage {
     COMPANION_VIEW = 13; // Companion view
     VIEWABILITY = 15;
 
+    //Audio metrics to be added Jan 14, 2025
     AUDIO_PLAYS = 16;     // Audio Start
     AUDIO_Q1S = 17;       // Audio Playback 25% complete
     AUDIO_MIDPOINT = 18;  // Audio Playback 50% complete
