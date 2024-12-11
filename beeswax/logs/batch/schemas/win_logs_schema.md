@@ -9,7 +9,7 @@
 | auction_id | 7 | Unique ID for every bid request in the system. A joining key for all the   events associated with the bid request, like impression, clicks, and   activities. | VARCHAR(255) |  |
 | beeswax_fee_rate_micros | 8 | For PERCENT fee-type option, applicable Beeswax fee rate in micros 1   micro = 0.000,0001% | INT8 |  |
 | bid_hour | 9 | Datestamp during which a particular bid was made, YYYY-MM-DD HH:00:00 in   ET timezone | TIMESTAMP |  |
-| bid_price_micros_usd | 10 | Bid price returned by the bidding agent (in USD micros); $1.00 CPM =   1,000,000 micros | INT8 |  |
+| bid_price_micros_usd | 10 | Bid price sent to the exchange (in USD micros, post-reduction); $1.00 CPM =   1,000,000 micros | INT8 |  |
 | bid_reduction_rate_micros | 11 | For BID_REDUCTION(rev-share) fee type option, applicable Bid reduction   rate in micros 1 micro = 0.000,0001% | INT8 |  |
 | bid_time | 12 | Time of bid request sent, YYYY-MM-DD HH:MM:SS in ET timezone | TIMESTAMP |  |
 | buzz_key | 13 | Beeswax Buzz key, an identifier for client bidder instances | VARCHAR(255) |  |
@@ -111,7 +111,7 @@
 | currency_code | 109 | Three letter currency codes setup in buzz | VARCHAR(10) |  |
 | clearing_price_micros | 110 | Auction Clearing price(in micros) returned by exchange. This is the raw   media cost 1 Unit of Line Item's set Currency = 1,000,000 micros | INT8 |  |
 | win_cost_micros | 111 | Total win_cost including media cost, beeswax fees, exchange-specific   disprecancy adjustment, vendor fees 1 Unit of Line Item's set Currency =   1,000,000 micros | INT8 |  |
-| bid_price_micros | 112 | Bid price in native currency returned by the bidding agent(in micros). 1   Unit of Line Item's set Currency = 1,000,000 micros | INT8 |  |
+| bid_price_micros | 112 | Bid price sent to the exchange (in micros, post-reduction). 1   Unit of Line Item's set Currency = 1,000,000 micros | INT8 |  |
 | vendor_fee_micros | 113 | Vendor fee in micros. 1 Unit of Vendor Fee's set Currency = 1,000,000   micros | INT8 |  |
 | viewability_vendor_name | 114 | Vendor used for providing viewability metrics | VARCHAR(10) |  |
 | conversion_update_time | 115 | Formerly used internally | TIMESTAMP |  |
