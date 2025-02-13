@@ -160,4 +160,5 @@ message Adcandidate {
   // any experiment grouped by user.
   optional uint64 experiment_user_test_group_id = 14;
   optional string deal_id = 15;
+  optional uint64 flight_id = 25;
 }
