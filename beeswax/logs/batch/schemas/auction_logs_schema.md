@@ -156,4 +156,6 @@
 | audio_companion_required | 154 | A banner companion ad is required to accompany the audio ad: 0=false, 1=true, -1=unknown, not provided, null, etc. | INT4 |  |
 | bidreq_universal_ids | 155 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
 | video_plcmt | 156 | The placement of the video impression. 1=INSTREAM, 2=ACCOMPANYING CONTENT, 3=INTERSTITIAL, 4=NO CONTENT/STANDALONE | VARCHAR(255) |  |
+| wseat | 157 | *Currently not availble, field will be blank* White list of buyer seats allowed to bid on this impression. | VARCHAR(255) |  |
+| deals_wseat | 158 | *Currently not availble, field will be blank* Whitelist of buyer seats allowed to bid on this deal.  | VARCHAR(255) |  |
 
