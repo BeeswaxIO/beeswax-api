@@ -83,7 +83,7 @@
 | video_q3s | 81 | Number of videos watched through the third quarter; Set to 1 if video   watched through the third quarter | INT2 |  |
 | video_skips | 82 | Number of video skips; Set to 1 if video is skipped | INT2 |  |
 | video_start_delay | 83 | Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll   video ad placements. | INT2 |  |
-| win_cost_micros_usd | 84 | Total win_cost including media cost, beeswax fees, exchange-specific   disprecancy adjustment, vendor fees 1 USD = 1,000,000 micros | INT8 |  |
+| win_cost_micros_usd | 84 | 1 USD = 1,000,000 micros. Media Spend + Vendor Fees in USD$ (when 'Spend with Vendor Fees' is selected as the 'Budget Type' on the Line Item. If 'Spend' is selected, this will equal 'Media Spend') | INT8 |  |
 | advertiser_id | 85 | Advertiser ID for the impression | INT8 |  |
 | vendor_fee_micros_usd | 86 | Vendor fee in micros, USD 1 USD = 1,000,000 micros | INT8 |  |
 | test | 87 | Indicator of test mode in which auctions are not billable, where t = live   mode, f = test mode | BOOLEAN |  |
@@ -110,7 +110,10 @@
 | currency_rate | 108 | Currency exchange rate (in decimal) at the auction time | NUMERIC(18,10) |  |
 | currency_code | 109 | Three letter currency codes setup in buzz | VARCHAR(10) |  |
 | clearing_price_micros | 110 | Auction Clearing price(in micros) returned by exchange. This is the raw   media cost 1 Unit of Line Item's set Currency = 1,000,000 micros | INT8 |  |
-| win_cost_micros | 111 | Total win_cost including media cost, beeswax fees, exchange-specific   disprecancy adjustment, vendor fees 1 Unit of Line Item's set Currency =   1,000,000 micros | INT8 |  |
+| win_cost_micros | 111 | 1 Unit of Line Item's set Currency =   1,000,000 micros
+Media Spend + Vendor Fees in USD$ (when 'Spend with Vendor Fees' is selected as the 'Budget Type' on the Line Item. If 'Spend' is selected, this will equal 'Media Spend')
+
+| INT8 |  |
 | bid_price_micros | 112 | Bid price sent to the exchange (in micros, post-reduction). 1   Unit of Line Item's set Currency = 1,000,000 micros | INT8 |  |
 | vendor_fee_micros | 113 | Vendor fee in micros. 1 Unit of Vendor Fee's set Currency = 1,000,000   micros | INT8 |  |
 | viewability_vendor_name | 114 | Vendor used for providing viewability metrics | VARCHAR(10) |  |
