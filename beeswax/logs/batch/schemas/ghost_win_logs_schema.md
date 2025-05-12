@@ -9,7 +9,7 @@
 | auction_id | 7 | Unique ID for every bid request in the system. A joining key for all the events associated with the bid request, like impression, clicks, and activities. | VARCHAR(255) |  |
 | beeswax_fee_rate_micros | 8 | For PERCENT fee-type option, applicable Beeswax fee rate in micros 1 micro = 0.000,0001% | INT8 |  |
 | bid_hour | 9 | Datestamp during which a particular bid was made, YYYY-MM-DD HH:00:00 in ET timezone | TIMESTAMP | YYYY-MM-DD HH24:MI:SS in ET |
-| bid_price_micros_usd | 10 | Bid price returned by the bidding agent (in USD micros); $1.00 CPM = 1,000,000 micros | INT8 |  |
+| bid_price_micros_usd | 10 | Bid price returned by the bidding agent (in USD micros) after bid shading is applied. 1 USD = 1,000,000 micros | INT8 |  |
 | bid_reduction_rate_micros | 11 | For BID_REDUCTION(rev-share) fee type option, applicable Bid reduction rate in micros 1 micro = 0.000,0001% | INT8 |  |
 | bid_time | 12 | Time of bid request sent, YYYY-MM-DD HH:MM:SS in ET timezone | TIMESTAMP | YYYY-MM-DD HH24:MI:SS.MS in ET |
 | buzz_key | 13 | Beeswax Buzz key, an identifier for client bidder instances | VARCHAR(255) |  |
