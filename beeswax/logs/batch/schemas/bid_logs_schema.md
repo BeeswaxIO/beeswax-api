@@ -81,7 +81,7 @@
 | line_item_id | 79 | Line Item ID that was responsible for submitting the bid, as listed in Beeswax | INT4 |  |
 | line_item_revenue_amount_micros | 80 | Amount of revenue booked by line item for winning this impression, in micros. 1 USD = 1,000,000 micros | INT8 |  |
 | line_item_revenue_type | 81 | Type determines how the revenue was booked by the line item e.g. on a CPM or CPC basis | VARCHAR(255) |  |
-| bid_price_micros_usd | 82 | Bid price returned by the bidding agent(in USD micros).  1 USD = 1,000,000 micros | INT8 |  |
+| bid_price_micros_usd | 82 | Bid price returned by the bidding agent (in USD micros) after bid shading is applied. 1 USD = 1,000,000 micros | INT8 | |
 | sent_to_exchange | 83 | Always true. Signifies whether this was the bid internally sent to the exchange | BOOLEAN |  |
 | total_cpm_vendor_fee_amount_micros | 84 | Internal, tracks total vendor fee per CPM. 1 USD = 1,000,000 micros | INT8 |  |
 | total_percent_vendor_fee_amount_micros | 85 | Internal, tracks total vendor fee % of win_cost_micros_usd. 1 USD = 1,000,000 micros | INT8 |  |
