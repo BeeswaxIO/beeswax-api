@@ -158,4 +158,9 @@
 | video_plcmt | 156 | The placement of the video impression. 1=INSTREAM, 2=ACCOMPANYING CONTENT, 3=INTERSTITIAL, 4=NO CONTENT/STANDALONE | VARCHAR(255) |  |
 | wseat | 157 | *Currently not availble, field will be blank* White list of buyer seats allowed to bid on this impression. | VARCHAR(255) |  |
 | deals_wseat | 158 | *Currently not availble, field will be blank* Whitelist of buyer seats allowed to bid on this deal.  | VARCHAR(255) |  |
+| freewheel_person_linked_ids | 159 | Deprecated; will not be populated. | INT4 |  |
+| freewheel_household_linked_ids | 160 | Deprecated; will not be populated. | INT4 |  |
+| freewheel_person_ids | 161 | Deprecated; will not be populated. | INT4 |  |
+| freewheel_household_ids | 162 | Deprecated; will not be populated. | INT4 |  |
+| app_ads_txt | 163 | *Currently not availble, field will be blank until 5/13* Whitelist of buyer seats allowed to bid on this deal.  | VARCHAR(255) |  |
 
