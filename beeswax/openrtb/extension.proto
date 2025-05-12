@@ -38,7 +38,7 @@ message Dimension {
   optional int32 height = 2;
 }
 
-// Next available tag: 19
+// Next available tag: 22
 message BidRequestExtensions {
   optional Enums.Inventory.Source inventory_source = 1;
   optional base.EventId auction_id = 2;
@@ -105,31 +105,41 @@ message BidRequestExtensions {
   optional AppNexusBidRequestExtension appnexus = 7;
   optional AdxBidRequestExtension adx = 9;
 
-  // if you add new values to this enum, remember to update the ads.txt continuous queries which
-  // have a where clause that depend on these values
+  // Please begin using the updated enums (6-10) for inventory_source_rel, as we will be migrating away from ads_txt.
+  // If you add new values to this enum, remember to update the ads.txt continuous queries which
+  // have a "where" clause that depend on these values.
   enum AdsTxtStatus {
+    // Unexpected status
     UNKNOWN = -1;
-    // The request does not contain a domain, either because it is not a web request (ie it is an
-    // app or native request) or it is a web request but does not contain a domain. Since it doesn't
-    // have a domain, we cannot check it's Ads.txt status.
+    // [ads.txt only] The request does not contain a domain.
+    // This can happen either because it is not a web request (i.e., it is an app or native request)
+    // or it is a web request missing the domain.
+    // Without a domain, ads.txt status cannot be checked.
     NO_DOMAIN = 0;
-    // The request's domain does not have an Ads.txt file
+    // [ads.txt only] The request's domain does not have an ads.txt file
     NO_ADS_TXT_FILE = 1;
-    // We have not looked up the Ads.txt file for the request's domain
+    // [ads.txt only] We have not looked up the ads.txt file for the request's domain
     ADS_TXT_NOT_SCANNED = 2;
-    // The request's domain does not allow any advertising
+    // [ads.txt only] The request's domain does not allow any advertising
     NO_ADVERTISING_ALLOWED = 3;
-    // The request is missing a publisher id so we cannot check its Ads.txt status
+    // [ads.txt only] The request is missing a publisher ID so we cannot check its ads.txt status
     MISSING_PUB_ID = 4;
-    // The request's domain does have an Ads.txt file, but it does not allow advertising from this
-    // exchange / publisher ID combination
+    // [ads.txt only] The domain/app does not allow advertising from this exchange & publisher ID combination
     NOT_AUTH = 5;
-    // The domain's Ads.txt file allows this exchange / publisher ID to resell advertising
+    // [ads.txt and app-ads.txt] The domain/app allows advertising from this exchange & publisher ID combination as a reseller
     AUTH_RESELLER = 6;
-    // The domain's Ads.txt file allows this exchange / publisher ID to advertise directly
+    // [ads.txt and app-ads.txt] The domain/app allows advertising from this exchange & publisher ID combination directly
     AUTH_DIRECT = 7;
+    // [ads.txt and app-ads.txt] The request contains required info, but it's not authorized
+    // or no file found (*.txt) or no advertising allowed
+    UNAUTHORIZED = 8;
+    // [ads.txt and app-ads.txt] The domain/app bundle ID or publisher ID is missing in the bid request
+    UNKNOWN_STATUS = 9;
+    // [ads.txt and app-ads.txt] The app bundle ID or publisher ID is present on the internal inclusion list
+    AUTH_AUTHORIZED = 10;
   }
   optional AdsTxtStatus ads_txt = 12;
+  optional AdsTxtStatus inventory_source_rel = 21 [default = UNKNOWN_STATUS];
 
   extensions 1000 to max;
 }
@@ -366,7 +376,7 @@ message UserExtensions {
      4. Household RampID: The household-level LiveRamp RampID. Requires approval from LiveRamp.
      5. Other Person RampIDs for the Household: The person-level RampIDs linked to the same household. Requires approval from LiveRamp.
 
-    Please inquire with your Beeswax account manager. 
+    Please inquire with your Beeswax account manager.
     */
     repeated CrossDeviceIds link_ids = 1;
   }
