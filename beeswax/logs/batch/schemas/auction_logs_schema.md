@@ -162,5 +162,5 @@
 | freewheel_household_linked_ids | 160 | Deprecated; will not be populated. | INT4 |  |
 | freewheel_person_ids | 161 | Deprecated; will not be populated. | INT4 |  |
 | freewheel_household_ids | 162 | Deprecated; will not be populated. | INT4 |  |
-| app_ads_txt | 163 | *Currently not availble, field will be blank until 5/13* App Ads.txt status for the request. It is an enum field, and can be one of the following values: Unauthorized, Authorized - Direct, Authorized - Reseller, Unknown, Authorized  | VARCHAR(255) |  |
+| app_ads_txt | 163 | App Ads.txt status for the request. It is an enum field, and can be one of the following values: Unauthorized, Authorized - Direct, Authorized - Reseller, Unknown, Authorized  | VARCHAR(255) |  |
 
