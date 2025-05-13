@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.beeswax</groupId>
   <artifactId>beeswax-api</artifactId>
-  <version>2024-02-15</version>
+  <version>2025-05-13</version>
   <name>Beeswax API</name>
   <packaging>jar</packaging>
   <description>Adding cross device linked id in extension proto</description>
