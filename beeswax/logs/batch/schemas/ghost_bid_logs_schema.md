@@ -196,3 +196,4 @@
 | audio_companion_required | 194 | A banner companion ad is required to accompany the audio ad: 0=false, 1=true, -1=unknown, not provided, null, etc. | INT4 |  |
 | bidreq_universal_ids | 195 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
 | video_plcmt | 196 | The placement of the video impression. 1=INSTREAM, 2=ACCOMPANYING CONTENT, 3=INTERSTITIAL, 4=NO CONTENT/STANDALONE	 | VARCHAR(255) |  |
+| app_ads_txt | 197 | App Ads.txt status for the request. It is an enum field, and can be one of the following values: Unauthorized, Authorized - Direct, Authorized - Reseller, Unknown, Authorized  | VARCHAR(50) |  |
