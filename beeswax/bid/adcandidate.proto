@@ -137,7 +137,7 @@ message VendorFeesInfo {
 // Adcandidate represents an eligible line item and its attributes.
 // Stinger determines the eligible line items for a given request.
 //
-// Next Tag: 14
+// Next Tag: 28
 message Adcandidate {
   optional uint64 line_item_id = 1;
   optional uint64 campaign_id = 5;
@@ -161,4 +161,5 @@ message Adcandidate {
   optional uint64 experiment_user_test_group_id = 14;
   optional string deal_id = 15;
   optional uint64 flight_id = 25;
+  repeated string targeted_segments = 27;
 }
