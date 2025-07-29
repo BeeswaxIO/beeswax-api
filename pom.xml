@@ -118,7 +118,6 @@
           <publishingServerId>central</publishingServerId>
           <autoPublish>true</autoPublish>
           <waitUntil>published</waitUntil>
-          <deploymentName>beeswax-api-${project.version}</deploymentName>
         </configuration>
       </plugin>
     </plugins>
