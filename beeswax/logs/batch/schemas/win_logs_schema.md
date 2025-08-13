@@ -217,7 +217,7 @@
 | is_skadnetwork | 215 | Flags whether the inventory is SKAdNetwork enabled. | INT2 |  |
 | dnt | 216 | Do Not Track | INT4 |  |
 | lmt | 217 | Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows   users to limit the amount of information sent from their device to ad   exchanges (including omitting their device ID) | INT2 |  |
-| banner_format | 218 | Comma-separated list of banner formats (wxh) that are accepted by the   publisher | VARCHAR(255) |  |
+| banner_format | 218 | Comma-separated list of banner formats (wxh) that are accepted by the publisher. If none are specified, use the banner_height and banner_width fields. If banner_width, banner_height and banner_format are provided, the banner_format array should take precedence. | VARCHAR(255) |  |
 | content_id | 219 | ID uniquely identifying the content | VARCHAR(255) |  |
 | content_episode | 220 | Episode number | VARCHAR(255) |  |
 | content_title | 221 | Content title | VARCHAR(255) |  |
