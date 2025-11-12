@@ -177,7 +177,6 @@
 | sellers_json_seller_type | 175 | The value pulled from the sellers.json file. Options include: Publisher: The inventory sold through this account is owned by the named entity and the advertising system pays them directly. Intermediary: The inventory sold through this account is not owned by the named entity, or the advertising systems does not pay them directly. Both: Both publisher and intermediary inventory are transacted by this account.​ | VARCHAR(50) |  |
 | sellers_json_mapped_name | 176 | The Seller Name listed in the in the sellers.json file mapped to a taxonomy to consolidate into a single standardized name. The taxonomy does not account for all sellers names. The most commonly passed seller names have been prioritized. It's recommended to use both the Seller Name and Mapped Seller Name dimensions. | VARCHAR(1024) |  |
 | guaranteed | 177 | Indicates whether a given bid request is guaranteed or not. | INT2 |  |
-| audio_delivery | 178 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD). If
-none specified, assume all are supported.  | VARCHAR(255) |  |
+| audio_delivery | 178 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD, ALL). | VARCHAR(255) |  |
 | bw_audio_content_genre | 179 | The mapped Beeswax Audio Content Genre from the taxonomy. This field will only be populated for audio bid requests | VARCHAR(255) |  |
 
