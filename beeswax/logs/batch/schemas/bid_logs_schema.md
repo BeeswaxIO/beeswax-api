@@ -134,7 +134,7 @@
 | publisher_name | 132 | Publisher Name as specified on the OpenRTB request. | VARCHAR(255) |  |
 | deal_bid_floors | 133 | Comma-separated list of the bid floors for the available deal IDs | VARCHAR(255) |  |
 | bid_shade | 134 | The Bid Shade Status of the won impression. Will be one of:  NOT_ELIGIBLE - Line Item was ineligible for bid shading BID_SHADED - Line Item had its bid shaded. CONTROL_GROUP - Line Item was eligible for bid shading but was selected for the control group of the algorithm. | VARCHAR(255) |  |
-| bid_reduction_micros | 135 | Value the bid was shaded by in micros. | INT8 |  |
+| bid_shade_reduction_micros | 135 | Value the bid was shaded by in micros. | INT8 |  |
 | video_api | 136 | List of supported API frameworks for this impression. | VARCHAR(255) |  |
 | targeted_segments | 137 | Beeswax segment ID; contains all segments the user qualifies for that were also targeted on the line item that won | VARCHAR(600) |  |
 | require_native_video | 138 | If the creative for the impression is of type Native, this field will be set to 1 when a video asset is required. The field will be 0 in all other cases. | INT2 |  |
