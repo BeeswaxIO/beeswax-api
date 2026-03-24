@@ -187,7 +187,7 @@
 | qag_media_rating | 185 | If defined, contains the QAG Media Rating of the content as defined by   OpenRTB spec. | VARCHAR(255) |  |
 | media_spend_micros | 186 | The total cost of media for the impression expressed in micros in the the   local currency of the line item. 1 Unit of Currency = 1,000,000 micros | INT8 |  |
 | media_spend_micros_usd | 187 | The total cost of media for the impression expressed in micros in US   dollars. 1 Unit of Currency = 1,000,000 micros | INT8 |  |
-| guaranteed | 188 | Indicates whether a given line item is a guaranteed line item or not. | INT2 |  |
+| guaranteed | 188 | Indicates whether a bid request is guaranteed or not. | INT2 |  |
 | creative_alt_id | 189 | If set, the alternative ID of the creative that won the auction will   populate in this column. | VARCHAR(255) |  |
 | creative_name | 190 | The name of the creative as specified in Buzz. | VARCHAR(255) |  |
 | lat_long_list_item_ids | 191 | Comma-separated list of unique keys describing the matching lat/long list   item IDs for this event. Formed as the cocatenation of the List ID and List   Item ID separated by a colon (:). e.g. buzz_key-10:9292 | VARCHAR(255) |  |
