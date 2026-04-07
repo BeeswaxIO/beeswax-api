@@ -1,0 +1,216 @@
+| Header | Position | Definition | SQL Datatype | DDL Desc |
+|---|---|---|---|---|
+| enriched_person_ids | 1 | TBD | VARCHAR |  |
+| enriched_household_ids | 2 | TBD | VARCHAR |  |
+| ad_position | 3 | If applicable, ad position on page | VARCHAR(255) |  |
+| app_bundle | 4 | Application bundle or package name (e.g., com.foo.mygame). This is intended to be a unique ID across multiple exchanges. | VARCHAR(255) |  |
+| app_id | 5 | Application ID on the exchange. For uniqueness, Uses ad exchange/SSP identifier as prefix e.g. pm/ representing pubmatic | VARCHAR(255) |  |
+| app_name | 6 | Mobile app name | VARCHAR(255) |  |
+| auction_id | 7 | Unique ID for every auction in the system. A joining key for all the events associated with the auction, like impression, clicks, and activities. Note that auction_id was previously unique to a single bid request, but it is now possible that a single bid request will contain multiple auctions.  Refer to request_id for a unique id per bid request. | VARCHAR(255) |  |
+| bid_time | 8 | Time of bid request sent, YYYY-MM-DD HH:MM:SS in ET timezone|TIMESTAMP | YYYY-MM-DD HH24:MI:SS.MS in ET |  |
+| category | 9 | CSV of IAB-defined content categories: http://www.iab.com/guidelines/iab-quality-assurance-guidelines-qag-taxonomy/; determine type of content associated with a particular slice of inventory | VARCHAR(255) |  |
+| content_coppa_flag | 10 | Children’s Online Privacy Protection Act (COPPA) Flag; inventory with this flag carries several ad quality limitations | BOOLEAN |  |
+| content_language | 11 | Language in which content associated to the impression is written (as declared by the publisher) | VARCHAR(255) |  |
+| content_rating | 12 | Content parental rating (as declared by the publisher) | VARCHAR(255) |  |
+| domain | 13 | Domain name from which a given impression originated | VARCHAR(255) |  |
+| environment_type | 14 | Environment type (APP or WEB) | VARCHAR(255) |  |
+| geo_city | 15 | City geo code IP address. MaxMindDB Lookup data | VARCHAR(255) |  |
+| geo_country | 16 | Country geo name IP address. MaxMindDB Lookup data | VARCHAR(255) |  |
+| geo_metro | 17 | Metro geo code IP address. MaxMindDB Lookup data | VARCHAR(255) |  |
+| geo_region | 18 | Geo region name IP address. MaxMindDB Lookup data | VARCHAR(255) |  |
+| geo_zip | 19 | Zip code IP address. MaxMindDB Lookup data | VARCHAR(255) |  |
+| inventory_interstitial | 20 | determines if ad tag responsible for the impression accepts interstitial creatives or not; 1 for yes, 0 for no | BOOLEAN |  |
+| inventory_source | 21 | Inventory source - exchange name | VARCHAR(255) |  |
+| inventory_source_relationship | 22 | Inventory source relationship | VARCHAR(255) |  |
+| ip_address | 23 | IP address provided by the exchange during the auction. When no IPv4 address is present, the value is set to '0.0.0.0' | VARCHAR(255) |  |
+| ip_range | 24 | IP address provided by the exchange during the auction (same as ip_address) | VARCHAR(255) |  |
+| placement | 25 | Placement ID/name, as provided by the publisher. Prefixed with exchange handle. | VARCHAR(255) |  |
+| platform_bandwidth | 26 | Shows whether the browser is using wifi or carrier to establish connection with internet to generate the impression | VARCHAR(255) |  |
+| platform_browser | 27 | Name of browser used during the auction for the impression at hand | VARCHAR(255) |  |
+| platform_browser_version | 28 | Version of browser used to during the auction for the impression at hand | VARCHAR(255) |  |
+| platform_carrier | 29 | If the device is using a mobile carrier to establish internet connection, this field will identify which carrier is used | VARCHAR(255) |  |
+| platform_device_didmd5 | 30 | Hardware device ID (e.g., IMEI); hashed via MD5 | VARCHAR(255) |  |
+| platform_device_didsha1 | 31 | Hardware device ID (e.g., IMEI); hashed via SHA1 | VARCHAR(255) |  |
+| platform_device_dpidmd5 | 32 | Platform device ID (e.g., Android ID); hashed via MD5 | VARCHAR(255) |  |
+| platform_device_dpidsha1 | 33 | Platform device ID (e.g., Android ID); hashed via SHA1 | VARCHAR(255) |  |
+| platform_device_idfa | 34 | iOS app ID; "Identifier for Advertisers"; deprecated | VARCHAR(255) |  |
+| platform_device_ifa | 35 | ID sanctioned for advertiser use in the clear (i.e., not hashed) | VARCHAR(255) |  |
+| platform_device_make | 36 | Make of the device used to generate the impression | VARCHAR(255) |  |
+| platform_device_model | 37 | Model of the device used to generate the impression | VARCHAR(255) |  |
+| platform_device_screen_size | 38 | Screensize of the device used to generate the impression | VARCHAR(255) |  |
+| platform_device_type | 39 | Type of the device used to generate the impression | VARCHAR(255) |  |
+| platform_js | 40 | Indicates whether the browser supports JavaScript or not | BOOLEAN |  |
+| platform_os | 41 | Operating system of the device used to generate the impression | VARCHAR(255) |  |
+| platform_os_version | 42 | Operating system version of the device used to generate the impression | VARCHAR(255) |  |
+| segment_id | 43 | Beeswax segment ID | VARCHAR(600) |  |
+| segment_user_id | 44 | Beeswax segment user ID | INT2 |  |
+| site_id | 45 | ID of the site that generated the impression, as provided by the publisher. Prefixed with exchange handle for uniqueness. | VARCHAR(255) |  |
+| site_name | 46 | Name of the site that generated the impression, as provided by the publisher | VARCHAR(255) |  |
+| time_of_week | 47 | Time of week in GPS weekly time during which the impression occurred; Internal | INT4 |  |
+| user_id | 48 | Primary user ID on the request. For web inventory: will populate with a beeswax cookie ID if one is found, and fall back to device ID if not. For app inventory: will populate with a device ID. | VARCHAR(255) |  |
+| video_boxing_allowed | 49 | Indicates if letter-boxing of 4:3 content into a 16:9 window is  allowed, where 0 = no, 1 = yes | BOOLEAN |  |
+| video_companion_required | 50 | A banner companion ad is required to accompany the video ad: 0=false, 1=true | BOOLEAN |  |
+| video_playback_method | 51 | Video playback method, as determined by the publisher. | VARCHAR(255) |  |
+| video_player_size | 52 | Video player size | VARCHAR(255) |  |
+| video_start_delay | 53 | Indicates the start delay in seconds for pre-roll, mid-roll, or  post-roll ad placements | INT2 |  |
+|  | test | 54 |  | BOOLEAN |  |  |  |
+| placement_type | 55 | Placement type, indicates whether the placement is meant for banner, video ads, or both | VARCHAR(255) |  |
+| geo_lat | 56 | Latitude associated with the impression | VARCHAR(50) |  |
+| geo_long | 57 | Longitude associated with the impression | VARCHAR(50) |  |
+| video_min_duration | 58 | Minimum duration of the video creative, as allowed by the publisher | INT4 |  |
+| video_max_duration | 59 | Maximum duration of the video creative, as allowed by the publisher | INT4 |  |
+| video_player_width | 60 | Width of the video player that is responsible for generating the impression | INT4 |  |
+| video_player_height | 61 | Height of the video player that is responsible for generating the impression | INT4 |  |
+| banner_width | 62 | Width of the banner placement tag | INT4 |  |
+| banner_height | 63 | Height of the banner placement tag | INT4 |  |
+| banner_width_max | 64 | Maximum width of the banner placement, as allowed by the publisher | INT4 |  |
+| banner_height_max | 65 | Maximum height of the banner placement, as allowed by the publisher | INT4 |  |
+| banner_width_min | 66 | Minimum width of the banner placement, as allowed by the publisher | INT4 |  |
+| banner_height_min | 67 | Minimum height of the banner placement, as allowed by the publisher | INT4 |  |
+| dnt | 68 | Do Not Track | INT4 |  |
+| geo_type | 69 | LocationType, how the geographic information was determined | VARCHAR(20) |  |
+| bid_time_epoch_in_usecs | 70 | bid timestamp(epoch) with microsecond precision. Allows the customer to calculate the bid_time in any timezone instead of relying on `bid_time` field which is ET timezone | INT8 |  |
+| account_id | 71 | Beeswax bidder account ID; represents the bidder seat for a particular client | INT4 |  |
+| auction_adgroup_id | 72 | Combination of auction ID, buzzkey, account ID, campaign ID, and line item ID | VARCHAR(255) |  |
+| exchange_bid_price_micros_usd | 73 | Bid price in micros sent to the exchange. This includes bid_reduction and vendor_fees. 1 USD = 1,000,000 micros | INT8 |  |
+| buzz_key | 74 | Beeswax Buzz key, an identifier for client bidder instances | VARCHAR(255) |  |
+| campaign_id | 75 | ID of the campaign that submitted the bid | INT4 |  |
+| campaign_revenue_amount_micros | 76 | Campaign revenue in micros. 1 USD = 1,000,000 micros | INT8 |  |
+| campaign_revenue_type | 77 | Campaign revenue type determines how revenue is booked by the advertiser for a particular campaign; CPM or CPC (cost per click) basis | VARCHAR(255) |  |
+| creative_id | 78 | ID of the creative that was submitted within the bid request | INT4 |  |
+| customer_id | 79 | Customer Beeswax ID; cookie ID provided for a particular browser by Beeswax | INT4 |  |
+| deal_id | 80 | Populated with the impression's Deal ID if an impression was sold via a deal. | VARCHAR(255) |  |
+| line_item_id | 81 | Line Item ID that was responsible for submitting the bid, as listed in Beeswax | INT4 |  |
+| line_item_revenue_amount_micros | 82 | Amount of revenue booked by line item for winning this impression, in micros. 1 USD = 1,000,000 micros | INT8 |  |
+| line_item_revenue_type | 83 | Type determines how the revenue was booked by the line item e.g. on a CPM or CPC basis | VARCHAR(255) |  |
+| bid_price_micros_usd | 84 | Bid price returned by the bidding agent (in USD micros) after bid shading is applied. 1 USD = 1,000,000 micros | INT8 |  |
+| sent_to_exchange | 85 | Always true. Signifies whether this was the bid internally sent to the exchange | BOOLEAN |  |
+| total_cpm_vendor_fee_amount_micros | 86 | Internal, tracks total vendor fee per CPM. 1 USD = 1,000,000 micros | INT8 |  |
+| total_percent_vendor_fee_amount_micros | 87 | Internal, tracks total vendor fee % of win_cost_micros_usd. 1 USD = 1,000,000 micros | INT8 |  |
+| agent_id | 88 | Pending renaming to `agent_id`. Holds the `agent_id` field value of the BidAgentResponse return by the customer's bidding agent. If the line item uses Bid Models, this filed will contain the Bid Model ID. This can be used for debugging. | VARCHAR(255) |  |
+| agent_params | 89 | Pending renaming to `agent_params`. Holds the `agent_params` field value of the BidAgentResponse return by the customer's bidding agent. This can be used for debugging. If the line item uses Bid Models, this will contain the cache results for the Bid Model lookup. Format => {key}={value},{key}={value}.. | VARCHAR(600) |  |
+| page_url | 90 | URL of the page responsible for the auction | VARCHAR(255) |  |
+| exchange_predicted_view_rate | 91 | Predicted Viewability Rate of the impression within the auction, as determined by the exchange-auctioner | NUMERIC(18,6) |  |
+| available_deal_ids | 92 | Comma-separated list of all the available deal IDs on the associated Bid Request | VARCHAR(1048576) |  |
+| battrs | 93 | CSV of Creative attributes that are blocked by the publisher, as declared by the publisher | VARCHAR(255) |  |
+| exchange_auction_id | 94 | Auction ID generated by the auction host ; different to that of Beeswax | VARCHAR(255) |  |
+| rewarded | 95 | States whether the placement tag behind the impression is meant for rewarded ads | INT2 |  |
+| bid_price_micros | 96 | Bid price in native currency returned by the bidding agent(in micros). 1 Unit of LIne Item's Set Currency = 1,000,000 micros | INT8 |  |
+| bid_price_micros_currency | 97 | Three letter currency code for bid_price_micros field | VARCHAR(10) |  |
+| bid_price_micros_currency_rate | 98 | Currency exchange rate (in decimal) at the auction time | NUMERIC(18,10) |  |
+| ua | 99 | User agent header that is passed along by the browser to the auction host when an impression is generated | VARCHAR(255) |  |
+| advertiser_id | 100 | Advertiser ID for the impression | INT4 |  |
+| bid_floor_micros | 101 | The floor or lowest allowable clearing price of the auction. 1 USD = 1,000,000 micros | INT8 |  |
+| bid_floor_currency | 102 | If the bid floor is specified and multiple currencies are supported per bid request, the currency of the bid floor using ISO-4217 codes | VARCHAR(10) |  |
+| display_manager | 103 | Name of the ad mediation partner, SDK technology, or player responsible for rendering ad (typically video or mobile). Used by some ad servers to customize ad code by partner. | VARCHAR(255) |  |
+| display_manager_ver | 104 | Version of display_manager | VARCHAR(255) |  |
+| exchange_device_make | 105 | Device make provided by the exchange, e.g. "Apple" | VARCHAR(255) |  |
+| exchange_device_model | 106 | Device model provided by the exchange, e.g. "iPhone" | VARCHAR(255) |  |
+| auction_type | 107 | If 1, first price auction. If 2, second price auction. Additional auction types cna be defined as per the exchange's business rules | INT4 |  |
+| publisher_id | 108 | Publisher ID on the exchange. Prefixed with the exchange handle for uniqueness | VARCHAR(255) |  |
+| ads_txt | 109 | Ads.txt status for the request. It is an enum field, and can be one of the following values: Unauthorized, Authorized - Direct, Authorized - Reseller, Unknown, Authorized. See here for more information https://hub.freewheel.tv/display/BW/Ads.txt+and+App-ads.txt+Targeting | VARCHAR(20) |  |
+| bid_modifier_id | 110 | ID of the Bid Modifier in Buzz | INT8 |  |
+| bid_modifier_multipliers_product | 111 | Combined bid modifier multiplier applied to the bid | NUMERIC(18.6) |  |
+| matched_user_groups | 112 | Matched user IDs for match tables hosted by Beeswax | VARCHAR(255) |  |
+| ipv6_address | 113 | IPv6 address provided by the exchange during the auction. When no IPv6 address is present, the value is set to '0:0:0:0:0:0:0:0' | VARCHAR(255) |  |
+| flight_id | 114 | ID of the Line Item Flight in Buzz (if present) | INT4 |  |
+| user_id_hashed | 115 | GDPR-compliant hashed user_id | VARCHAR(255) |  |
+| ip_address_hashed | 116 | GDPR-compliant hashed ip | VARCHAR(255) |  |
+| ipv6_address_hashed | 117 | GDPR-compliant hashed ipv6 | VARCHAR(255) |  |
+| is_gdpr | 118 | When this field is set to true, Beeswax has determined that this request needs to comply with GDPR | INT2 |  |
+| gdpr_consent_string | 119 | The raw IAB GDPR consent string as provided in the bid request | VARCHAR(255) |  |
+| request_id | 120 | Unique ID for every bid request in the system. A joining key for all the events associated with the bid request, like impression, clicks, and activities. Note that it is possible to have multiple auction_ids for a single request_id | VARCHAR(255) |  |
+| person_linked_ids | 121 | Deprecated; will not be populated. | VARCHAR(600) |  |
+| household_linked_ids | 122 | Deprecated; will not be populated. | VARCHAR(600) |  |
+| video_protocols | 123 | Comma-separated list of video protocols that are accepted by the publisher | VARCHAR(255) |  |
+| banner_top_frame | 124 | Indicates if the banner is in the top frame as opposed to an iframe | INT2 |  |
+| user_time_of_week | 125 | Time of week in GPS weekly time during which the impression occurred using the user's timezone; internal | INT4 |  |
+| bid_time_utc | 126 | Time of bid request sent, in UTC timezone|TIMESTAMP | YYYY-MM-DD HH24:MI:SS.MS in UTC |  |
+| test_group_id | 127 | ID of the Test Group the user fell into within the test plan. Should match the Test Group assigned to the line item | INT4 |  |
+| experiment_user_index | 128 | Random number between 1-1000 assigned to a user. Used for test group assignment | INT4 |  |
+| test_plan_id | 129 | ID of the Test Plan associated with the campaign | INT4 |  |
+| inventory_source_user_id | 130 | Unique consumer ID of the user, as defined by the exchange. | VARCHAR(255) |  |
+| mccmnc | 131 | Mobile carrier as defined by the concatenated MCC-MNC code. | VARCHAR(255) |  |
+| us_privacy | 132 | US Privacy String as defined by the IAB CCPA Compliance Framework, and used to define the regulatory context governing the personal data contained within the associated bid request. | VARCHAR(255) |  |
+| video_placement | 133 | The placement of the video impression (e.g., In-Stream) | VARCHAR(255) |  |
+| publisher_name | 134 | Publisher Name as specified on the OpenRTB request. | VARCHAR(255) |  |
+| deal_bid_floors | 135 | Comma-separated list of the bid floors for the available deal IDs | VARCHAR(255) |  |
+| bid_shade | 136 | The Bid Shade Status of the won impression. Will be one of:  NOT_ELIGIBLE - Line Item was ineligible for bid shading BID_SHADED - Line Item had its bid shaded. CONTROL_GROUP - Line Item was eligible for bid shading but was selected for the control group of the algorithm. | VARCHAR(255) |  |
+| bid_shade_reduction_micros | 137 | Value the bid was shaded by in micros. | INT8 |  |
+| video_api | 138 | List of supported API frameworks for this impression. | VARCHAR(255) |  |
+| targeted_segments | 139 | Beeswax segment ID; contains all segments the user qualifies for that were also targeted on the line item that won | VARCHAR(600) |  |
+| require_native_video | 140 | If the creative for the impression is of type Native, this field will be set to 1 when a video asset is required. The field will be 0 in all other cases. | INT2 |  |
+| is_gdpr_consented | 141 | Whether the auction is regulated by GDPR AND the customer has been granted consent by the end user. | INT2 |  |
+| targeted_lat_long_lists | 142 | The names of the lat/long lists specified that were targeted and matched on the given request. | VARCHAR(255) |  |
+| qag_media_rating | 143 | If defined, contains the QAG Media Rating of the content as defined by OpenRTB spec. | VARCHAR(255) |  |
+| guaranteed | 144 | Indicates whether a given line item is a guaranteed line item or not. | INT2 |  |
+| creative_alt_id | 145 | If set, the alternative ID of the creative that won the auction will populate in this column. | VARCHAR(255) |  |
+| creative_name | 146 | The name of the creative as specified in Buzz. | VARCHAR(255) |  |
+| lat_long_list_item_ids | 147 | Comma-separated list of unique keys describing the matching lat/long list item IDs for this event. Formed as the cocatenation of the List ID and List Item ID. | VARCHAR(255) |  |
+| lat_long_list_item_names | 148 | Comma-separated list of names (if set) for the the matching lat/long list item IDs for this event. Displayed in the same order as the IDs in the previous column. If no name is set for the matched list item then the field will be set to an empty string for each given list item id. If multiple list items match this field may have multiple commas with no values in it. | VARCHAR(255) |  |
+| bcat | 149 | Blocked advertiser categories using the IAB content categories. | VARCHAR(255) |  |
+| platform_device_hwv | 150 | Hardware Version of the Device sent via OpenRTB | VARCHAR(255) |  |
+| platform_device_language | 151 | Browser language using ISO-639-1-alpha-2. Sent via OpenRTB | VARCHAR(255) |  |
+| platform_device_w | 152 | Physical width of the screen in pixels | INT4 |  |
+| platform_device_h | 153 | Physical height of the screen in pixels | INT4 |  |
+| platform_device_ppi | 154 | Screen size as pixels per linear inch. | INT4 |  |
+| platform_device_pxratio | 155 | The ratio of physical pixels to device independent pixels. | NUMERIC(18,6) |  |
+| experiment_id_type | 156 | The ID type used for segregation of impressions for Beeswax's experiment feature. | VARCHAR(255) |  |
+|  | deal_ats | 157 | If the impression was purchased via a deal, this logs the auction type for all deals on the auction in the same order as the deal_ids column. 1 = First Price, 2 = Second Price, 3 = Fixed Price. Overrides "auction_type" |  |  |  |  |
+| account_level_revenue_share_fee_type | 158 | If using the account-level revenue share feature, this column populates whether the fee is expressed as a reduction or fee. | VARCHAR(255) |  |
+| account_level_revenue_share_percent_micros | 159 | If using the account-level revenue share feature, this column populates the percentage of the rev share for the given impression in micros. | INT8 |  |
+| tmax | 160 | The required time in milliseconds for the bid to respond to the exchange to be considered in the auction | INT4 |  |
+| video_skippable | 161 | If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. | INT2 |  |
+| is_skadnetwork | 162 | Flags whether the inventory is SKAdNetwork enabled. | INT2 |  |
+| lmt | 163 | Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) | INT2 |  |
+| banner_format | 164 | Comma-separated list of banner formats (wxh) that are accepted by the publisher. If none are specified, use the banner_height and banner_width fields. If banner_width, banner_height and banner_format are provided, the banner_format array should take precedence. | VARCHAR(255) |  |
+| content_id | 165 | ID uniquely identifying the content | VARCHAR(255) |  |
+| content_episode | 166 | Episode number | VARCHAR(255) |  |
+| content_title | 167 | Content title | VARCHAR(255) |  |
+| content_series | 168 | Content series | VARCHAR(255) |  |
+| content_season | 169 | Content season | VARCHAR(255) |  |
+| content_genre | 170 | Genre that best describes the content | VARCHAR(255) |  |
+| content_contentrating | 171 | Content rating (e.g., MPAA) | VARCHAR(255) |  |
+| content_keywords | 172 | Comma separated list of keywords describing the content | VARCHAR(255) |  |
+| content_livestream | 173 | 0 = not live, 1 = content is live (e.g., stream, live blog) | INT4 |  |
+| content_len | 174 | Length of content in seconds; appropriate for video or audio | VARCHAR(255) |  |
+| content_network_id | 175 | ID of the network the content is on. This may not be a unique identifier across all supply sources | VARCHAR(255) |  |
+| content_network_name | 176 | Network the content is on (e.g., a TV network like “ABC") | VARCHAR(255) |  |
+| content_network_domain | 177 | The primary domain of the network (e.g. “abc.com” in the case of the network ABC). | VARCHAR(255) |  |
+| content_channel_id | 178 | ID of the channel the content is on. This may not be a unique identifier across all supply sources | VARCHAR(255) |  |
+| content_channel_name | 179 | Channel the content is on (e.g., a local channel like “WABC-TV") | VARCHAR(255) |  |
+| content_channel_domain | 180 | The primary domain of the channel (e.g. “abc7ny.com” in the case of the local channel WABC-TV) | VARCHAR(255) |  |
+| content_cat | 181 | Array of IAB content categories that describe the content | VARCHAR(255) |  |
+| master_revenue_share_percent_micros | 182 | If using a master revenue share, a micro value percentage represent the revenue share being taken. | INT8 |  |
+| delivery_modifier_id | 183 | The ID of the Delivery Modifier. | INT4 |  |
+| delivery_model_id | 184 | The ID of the Delivery Model. | VARCHAR(255) |  |
+| bid_model_id | 185 | The ID of the Bid Model, formatted like {buzz_key}-{bid_model_id}-(bid_model_version}. | VARCHAR(255) |  |
+| bid_model_params | 186 | The cache results for the Bid Model lookup, formatted like {key}={value},{key}={value} | VARCHAR(600) |  |
+| bid_agent_id | 187 | Holds the agent_id field value of the BidAgentResponse returned by the customer's bidding agent. | VARCHAR(255) |  |
+| bid_agent_params | 188 | Holds the agent_params field value of the BidAgentResponse return by the customer's bidding agent. | VARCHAR(600) |  |
+| topics_id | 189 | Represents the Topics ID from the taxonomy identified by the Taxonomy Version. | VARCHAR(255) |  |
+| topics_taxonomy_version | 190 | The ID associated with a taxonomy that is registered centrally with the IAB Tech Lab in Enumeration of Taxonomies. | VARCHAR(255) |  |
+| bw_content_genre | 191 | The mapped Beeswax Content Genre from the taxonomy. This field will only be populated for video bid requests. | VARCHAR(255) |  |
+| audio_startdelay | 192 | Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll audio requests. | INT4 |  |
+| audio_minbitrate | 193 | Minimum bitrate for audio requests, in Kbps. | INT4 |  |
+| audio_maxbitrate | 194 | Maximum bitrate for audio requests, in Kbps. | INT4 |  |
+| audio_feed | 195 | Type of feed for audio requests. | VARCHAR(50) |  |
+| audio_companion_required | 196 | A banner companion ad is required to accompany the audio ad: 0=false, 1=true, -1=unknown, not provided, null, etc. | INT4 |  |
+| bidreq_universal_ids | 197 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
+| video_plcmt | 198 | The placement of the video impression. 1=INSTREAM, 2=ACCOMPANYING CONTENT, 3=INTERSTITIAL, 4=NO CONTENT/STANDALONE | VARCHAR(255) |  |
+| app_ads_txt | 199 | App Ads.txt status for the request. It is an enum field, and can be one of the following values: Unauthorized, Authorized - Direct, Authorized - Reseller, Unknown, Authorized | VARCHAR(50) |  |
+| schain_complete | 200 | Flag indicating whether the chain contains all nodes involved in the transaction leading back to the owner of the site, app or other medium of the inventory. | INT8 |  |
+| schain_version | 201 | Version of the supply chain specification in use. Applies to the entire schain object. | VARCHAR(50) |  |
+| schain_node_asi | 202 | The canonical domain name of the SSP, Exchange, Header Wrapper, etc. system that bidders connect to. This should be the same value as used to identify sellers in an ads.txt file if one exists. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. For example, if this field is reprsented as '1.com', '2.com' then domain 1.com corresponds with the 1st node in the schain, while 2.com represents the 2nd. | VARCHAR(1024) |  |
+| schain_node_sid | 203 | Identifier associated with the seller or reseller account within the advertising system. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. | VARCHAR(1024) |  |
+| schain_node_rid | 204 | OpenRTB RequestId of the request as issued by this seller. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. | VARCHAR(1024) |  |
+| schain_node_name | 205 | Name of the company (the legal entity) that is paid for inventory transacted under the given seller_id. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. | VARCHAR(1024) |  |
+| schain_node_domain | 206 | Business domain name of the entity represented by this node. This value is optional and is not included if it exists in the advertising system’s sellers.json file. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. | VARCHAR(1024) |  |
+| schain_node_hp | 207 | Indicates whether this node will be involved in the flow of payment for the inventory. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object. | VARCHAR(1024) |  |
+| schain_node_internal_sid | 208 | Identifier associated with the seller or reseller account within the advertising system. The SID is augmented to include the exchange handle to match the seller_id field in logs. This field represents values across all nodes in the object in the form of a comma separated varchar array. The index of each value corresponds to the index of each node on the schain object.​ | VARCHAR(1024) |  |
+| sellers_json_seller_name | 209 | Seller Name listed on the sellers.json file. ​ | VARCHAR(1024) |  |
+| sellers_json_status | 210 | Whether a match was found when looking up the Publisher ID in sellers.json files. Values include: Unknown: No Publisher ID was passed in the bid request to lookup against sellers. Seller Not Found: No match was found to the Publisher ID passed in the bid request. Authorized: This seller is authorized based on the sellers.json table, but the seller type cannot be identified for various reasons. Authorized - Publisher: A match was found to the Publisher ID and the Seller Type is "Publisher". Authorized - Intermediary: A match was found to the Publisher ID and the Seller Type is "Intermediary". Authorized - Both: A match was found to the Publisher ID and the Seller Type is "Both"​ | VARCHAR(50) |  |
+| sellers_json_seller_type | 211 | The value pulled from the sellers.json file. Options include: Publisher: The inventory sold through this account is owned by the named entity and the advertising system pays them directly. Intermediary: The inventory sold through this account is not owned by the named entity, or the advertising systems does not pay them directly. Both: Both publisher and intermediary inventory are transacted by this account.​ | VARCHAR(50) |  |
+| sellers_json_mapped_name | 212 | The Seller Name listed in the in the sellers.json file mapped to a taxonomy to consolidate into a single standardized name. The taxonomy does not account for all sellers names. The most commonly passed seller names have been prioritized. It's recommended to use both the Seller Name and Mapped Seller Name dimensions. | VARCHAR(1024) |  |
+| audio_delivery | 213 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD, ALL). | VARCHAR(255) |  |
+| bw_audio_content_genre | 214 | The mapped Beeswax Audio Content Genre from the taxonomy. This field will only be populated for audio bid requests | VARCHAR(255) |  |
