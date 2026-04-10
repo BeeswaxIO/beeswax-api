@@ -1,7 +1,7 @@
 | Header | Position | Definition | SQL_Datatype | DDL Description |
 |---|---|---|---|---|
-| enriched_person_ids | 1 | TBD | VARCHAR | |
-| enriched_household_ids | 2 | TBD | VARCHAR | |
+| enriched_person_ids | 1 | Person-level enriched IDs in the customer-configured identity namespace that the FreeWheel Identity Network has linked to this impression. Contains all matched person-level IDs for the selected enrichment ID type, or is empty when no eligible matches are found. | VARCHAR | |
+| enriched_household_ids | 2 | Household-level enriched IDs in the customer-configured identity namespace that the FreeWheel Identity Network has linked to this impression. Contains all household-level matches the FreeWheel Identity Network has linked to this impression for the selected enrichment type, or is empty when no eligible matches are found. | VARCHAR | |
 |account_id | 3 | Beeswax bidder account ID; represents the bidder seat for a particular   client | INT4 |  |
 | ad_position | 4 | If applicable, ad position on page | VARCHAR(255) |  |
 | app_bundle | 5 | Application bundle or package name (e.g., com.foo.mygame). This is   intended to be a unique ID across multiple exchanges. | VARCHAR(255) |  |
