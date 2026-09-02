@@ -47,7 +47,7 @@ message ImpressionLogMessage {
   // There can be multiple impression definitions in a single bid request from the
   // inventory source; each one Beeswax actually bids on creates a unique auctionid.
   optional base.EventId auctionid = 1;
-  // NOTE: auction_id_str is an opaque unique id. Clients should not rely on the meaning
+  // NOTE: auctionid_str is an opaque unique id. Clients should not rely on the meaning
   // of elements within it or on the format of the id.
   optional string auctionid_str = 12;
   // The unique identifier of the bid request per buzz_key. This represents a BidRequest
