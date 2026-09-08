@@ -179,4 +179,6 @@
 | guaranteed | 177 | Indicates whether a given bid request is guaranteed or not. | INT2 |  |
 | audio_delivery | 178 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD, ALL). | VARCHAR(255) |  |
 | bw_audio_content_genre | 179 | The mapped Beeswax Audio Content Genre from the taxonomy. This field will only be populated for audio bid requests | VARCHAR(255) |  |
+| gpp | 180 | Global Privacy Protocol string as defined by the IAB, and used to define the consent preferences governing the personal data contained within the associated bid request. | VARCHAR(4096) |  |
+| gpp_sid | 181 | Global Privacy Protocol section identifier(s) as defined by the IAB, and used to indicate which privacy framework(s) within the GPP string govern the personal data contained within the associated bid request. | VARCHAR(4096) |  |
 

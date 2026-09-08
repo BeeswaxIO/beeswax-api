@@ -214,3 +214,5 @@
 | sellers_json_mapped_name | 212 | The Seller Name listed in the in the sellers.json file mapped to a taxonomy to consolidate into a single standardized name. The taxonomy does not account for all sellers names. The most commonly passed seller names have been prioritized. It's recommended to use both the Seller Name and Mapped Seller Name dimensions. | VARCHAR(1024) |  |
 | audio_delivery | 213 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD, ALL). | VARCHAR(255) |  |
 | bw_audio_content_genre | 214 | The mapped Beeswax Audio Content Genre from the taxonomy. This field will only be populated for audio bid requests | VARCHAR(255) |  |
+| gpp | 215 | Global Privacy Protocol string as defined by the IAB, and used to define the consent preferences governing the personal data contained within the associated bid request. | VARCHAR(4096) |  |
+| gpp_sid | 216 | Global Privacy Protocol section identifier(s) as defined by the IAB, and used to indicate which privacy framework(s) within the GPP string govern the personal data contained within the associated bid request. | VARCHAR(4096) |  |

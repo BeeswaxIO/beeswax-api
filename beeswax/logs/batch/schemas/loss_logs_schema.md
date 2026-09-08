@@ -131,3 +131,5 @@ _AKA Bid Response Feedback Logs_
 |video_skippable  |127  |If the ad is a video ad, this field indicates whether the creative trafficked could have been skippable. |INT2 | |
 |advertiser_id  |128  |Advertiser ID |INT8 | |
 |lmt  |129  |Limit Ad Tracking (LMT) is a device-level opt-out setting, that allows users to limit the amount of information sent from their device to ad exchanges (including omitting their device ID) |INT2 | |
+|gpp  |130  |Global Privacy Protocol string as defined by the IAB, and used to define the consent preferences governing the personal data contained within the associated bid request. |VARCHAR(4096) | |
+|gpp_sid  |131  |Global Privacy Protocol section identifier(s) as defined by the IAB, and used to indicate which privacy framework(s) within the GPP string govern the personal data contained within the associated bid request. |VARCHAR(4096) | |
