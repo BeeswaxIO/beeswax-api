@@ -25,8 +25,8 @@
 | content_language | 23 | Language in which content associated to the impression is written (as   declared by the publisher) | VARCHAR(255) |  |
 | content_rating | 24 | Content parental rating (as declared by the publisher) | VARCHAR(255) |  |
 | conversions | 25 | Number of conversions associated to a particular impression | INT4 |  |
-| conversion_order | 26 | Conversion order, constitutes how many orders a particular conversion   represents; info provided by the advertiser in Beeswax UI/API | NUMERIC(18,6) |  |
-| conversion_value | 27 | Value of a given conversion as ispecified by the advertiser in Beeswax   UI/API | NUMERIC(18,6) |  |
+| conversion_order | 26 | Conversion order, constitutes how many orders a particular conversion   represents; info provided by the advertiser in Beeswax UI/API | NUMERIC(38,0) |  |
+| conversion_value | 27 | Value of a given conversion as ispecified by the advertiser in Beeswax   UI/API | NUMERIC(38,0) |  |
 | create_time | 28 | Time created; Beeswax internal bookkeeping field | TIMESTAMP |  |
 | creative_id | 29 | Beeswax ID for the creative that won an impression | INT8 |  |
 | customer_id | 30 | Customer Beeswax ID | INT8 |  |
@@ -260,9 +260,9 @@
 | audio_completes | 258 | Set to 1 if audio ad is watched through the fourth quartile. | INT2 |  |
 | audio_skips | 259 | Set to 1 if audio ad is skipped. | INT2 |  |
 | bw_content_genre | 260 | The mapped Beeswax Content Genre from the taxonomy. This field will only   be populated for video bid requests. | VARCHAR(255) |  |
-| audio_startdelay | 261 | Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll   audio ad placements. | Numeric(38,0) |  |
-| audio_minbitrate | 262 | The minimum allowed bitrate, in Kbps. | Numeric(38,0) |  |
-| audio_maxbitrate | 263 | The maximum allowed bitrate, in Kbps. | Numeric(38,0) |  |
+| audio_startdelay | 261 | Indicates the start delay in seconds for pre-roll, mid-roll, or post-roll   audio ad placements. | INT8 |  |
+| audio_minbitrate | 262 | The minimum allowed bitrate, in Kbps. | INT8 |  |
+| audio_maxbitrate | 263 | The maximum allowed bitrate, in Kbps. | INT8 |  |
 | audio_feed | 264 | The type of feed for audio requests. | VARCHAR(50) |  |
 | audio_companion_required | 265 | A banner companion ad is required to accompany the audio ad: 0=false, 1=true, -1=unknown, not provided, null, etc. | INT2 |  |
 | bidreq_universal_ids | 266 | Comma-separated list of encrypted ID5 universal ID values | VARCHAR(255) |  |
@@ -283,5 +283,8 @@
 | sellers_json_mapped_name | 281 | The Seller Name listed in the in the sellers.json file mapped to a taxonomy to consolidate into a single standardized name. The taxonomy does not account for all sellers names. The most commonly passed seller names have been prioritized. It's recommended to use both the Seller Name and Mapped Seller Name dimensions. | VARCHAR(1024) |  |
 | audio_delivery | 282 | Supported delivery methods (STREAMING, PROGRESSIVE, DOWNLOAD, ALL).| VARCHAR(255) |  |
 | bw_audio_content_genre | 283 | The mapped Beeswax Audio Content Genre from the taxonomy. This field will only be populated for audio bid requests | VARCHAR(255) |  |
-| gpp | 284 | Global Privacy Protocol string as defined by the IAB, and used to define the consent preferences governing the personal data contained within the associated bid request. | VARCHAR(4096) |  |
-| gpp_sid | 285 | Global Privacy Protocol section identifier(s) as defined by the IAB, and used to indicate which privacy framework(s) within the GPP string govern the personal data contained within the associated bid request. | VARCHAR(4096) |  |
+| geo_congressional_district | 284 |  | VARCHAR(255) |  |
+| geo_state_senate_district | 285 |  | VARCHAR(255) |  |
+| geo_state_house_district | 286 |  | VARCHAR(255) |  |
+| gpp | 287 | Global Privacy Protocol string as defined by the IAB, and used to define the consent preferences governing the personal data contained within the associated bid request. | VARCHAR(4096) |  |
+| gpp_sid | 288 | Global Privacy Protocol section identifier(s) as defined by the IAB, and used to indicate which privacy framework(s) within the GPP string govern the personal data contained within the associated bid request. | VARCHAR(4096) |  |
